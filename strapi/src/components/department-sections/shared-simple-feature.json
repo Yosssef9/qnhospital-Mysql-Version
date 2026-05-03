@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_department_sections_shared_simple_features",
+  "info": {
+    "displayName": "shared.simple-feature"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

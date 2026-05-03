@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_department_sections_items",
+  "info": {
+    "displayName": "items"
+  },
+  "options": {},
+  "attributes": {
+    "item": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "website_links",
+  "info": {
+    "singularName": "website-link",
+    "pluralName": "website-links",
+    "displayName": "Website Links"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "socialMediaLinks": {
+      "type": "component",
+      "component": "website-links.social-media-links",
+      "repeatable": false
+    },
+    "mobileAppLinks": {
+      "type": "component",
+      "component": "website-links.mobile-app-links",
+      "repeatable": false
+    },
+    "contactInfo": {
+      "type": "component",
+      "component": "website-links.contact-info",
+      "repeatable": false
+    }
+  }
+}

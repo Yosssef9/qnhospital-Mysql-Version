@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_department_sections_overviews",
+  "info": {
+    "displayName": "overview"
+  },
+  "options": {},
+  "attributes": {
+    "sectionLabel": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "paragraphs": {
+      "type": "component",
+      "component": "department-sections.paragraph",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

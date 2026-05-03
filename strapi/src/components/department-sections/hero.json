@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_department_sections_heroes",
+  "info": {
+    "displayName": "hero",
+    "icon": "archive"
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "text"
+    },
+    "tag": {
+      "type": "string"
+    },
+    "schedule": {
+      "type": "string"
+    },
+    "emergencySupport": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

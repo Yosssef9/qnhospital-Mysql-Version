@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main-color: rgb(21, 98, 160);
+  --main-light: rgb(26, 132, 196);
+  --main-soft: rgba(21, 98, 160, 0.12);
+}
+
+/* ===== Scrollbar Customization ===== */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* track */
+::-webkit-scrollbar-track {
+  background: #f1f5f9; /* slate-100 */
+  border-radius: 999px;
+}
+
+/* thumb */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--main-light), var(--main-color));
+  border-radius: 999px;
+  border: 2px solid #f1f5f9;
+  transition: all 0.25s ease;
+}
+
+/* hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--main-color), rgb(12, 74, 128));
+}
+
+/* corner */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ===== Carousel Customization (FORCE OVERRIDE) ===== */
+
+.swiper-pagination {
+  bottom: 16px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 999px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  margin: 0 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+  transform: scale(1) !important;
+}

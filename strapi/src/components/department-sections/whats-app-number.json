@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_department_sections_whats_app_numbers",
+  "info": {
+    "displayName": "whatsAppNumber"
+  },
+  "options": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {},
+  "config": {}
+}

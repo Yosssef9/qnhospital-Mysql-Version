@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_website_links_mobile_app_links",
+  "info": {
+    "displayName": "Mobile App Links"
+  },
+  "options": {},
+  "attributes": {
+    "mobileAppAndroid": {
+      "type": "string"
+    },
+    "mobileAppIos": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

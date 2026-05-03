@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_department_sections_highlights",
+  "info": {
+    "displayName": "highlights"
+  },
+  "options": {},
+  "attributes": {
+    "sectionLabel": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "department-sections.paragraph",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

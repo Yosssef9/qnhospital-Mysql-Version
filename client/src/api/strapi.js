@@ -1,0 +1,684 @@
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+
+const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
+
+export function useEntityBySlug(collection, slug, populateFields = []) {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: [collection, slug, locale, populateFields],
+    queryFn: async () => {
+      // await new Promise((res) => setTimeout(res, 2000000));
+      const query = new URLSearchParams({
+        "filters[slug][$eq]": slug,
+        locale,
+      });
+
+      // dynamically add populate fields
+      populateFields.forEach((field, index) => {
+        query.append(`populate[${index}]`, field);
+      });
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/${collection}?${query.toString()}`,
+      );
+
+      if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+
+      const json = await res.json();
+      return json?.data?.[0] || null;
+    },
+    enabled: !!slug,
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
+export const useDepartments = (collection, page, search, pageSize = 3) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["departments", collection, page, search, pageSize, locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      // locale
+      params.append("locale", locale);
+
+      // pagination
+      params.append("pagination[page]", page);
+      params.append("pagination[pageSize]", pageSize);
+
+      // fields
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "slug");
+      params.append("fields[2]", "cardDesc");
+
+      // populate image
+      params.append("populate", "image");
+
+      // server-side search
+      if (search) {
+        params.append("filters[title][$containsi]", search);
+      }
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/${collection}?${params.toString()}`,
+      );
+      console.log("res", res);
+
+      if (!res.ok) throw new Error("Failed to fetch " + collection);
+
+      const json = await res.json();
+
+      return {
+        data: json.data.map((item) => ({
+          id: item.id,
+          title: item.title,
+          cardDesc: item.cardDesc,
+          slug: item.slug,
+          image: item.image?.url ? STRAPI_URL + item.image.url : "",
+          to: `/${collection}/${item.slug}`,
+        })),
+        meta: json.meta.pagination,
+      };
+    },
+
+    placeholderData: (previousData) => previousData,
+  });
+};
+
+export const useJoinUsSettings = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["join-us-setting", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      // locale
+      params.append("locale", locale);
+
+      // fields
+      params.append("fields[0]", "isFormActive");
+      params.append("fields[1]", "title");
+      params.append("fields[2]", "description");
+      params.append("fields[3]", "jobCampaignBadge");
+      params.append("fields[4]", "jobCampaignTitle");
+      params.append("fields[5]", "jobCampaignDescription");
+      params.append("fields[6]", "formStartDate");
+      params.append("fields[7]", "formEndDate");
+      // ✅ IMPORTANT
+      params.append("populate", "breadcrumbImage");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/join-us-setting?${params.toString()}`,
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch join us settings");
+
+      const json = await res.json();
+
+      const imageUrl = json.data?.breadcrumbImage?.url
+        ? STRAPI_URL + json.data.breadcrumbImage.url
+        : "";
+
+      return {
+        id: json.data?.id,
+        isFormActive: json.data?.isFormActive ?? false,
+        formStartDate: json.data?.formStartDate || null,
+        formEndDate: json.data?.formEndDate || null,
+        title: json.data?.title || "",
+        description: json.data?.description || "",
+        jobCampaignBadge: json.data?.jobCampaignBadge || "",
+        jobCampaignTitle: json.data?.jobCampaignTitle || "",
+        jobCampaignDescription: json.data?.jobCampaignDescription || "",
+        breadcrumbImage: imageUrl,
+      };
+    },
+  });
+};
+
+export async function fetchHeroSlides(locale = "en") {
+  const params = new URLSearchParams();
+
+  params.append("locale", locale);
+  params.append("sort[0]", "order:asc");
+  params.append("fields[0]", "title");
+  params.append("fields[1]", "subtitle");
+  params.append("fields[2]", "tab");
+  params.append("fields[3]", "order");
+  params.append("populate", "media");
+
+  const res = await fetch(
+    `${STRAPI_URL}/api/homepage-hero-slides?${params.toString()}`,
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch hero slides");
+
+  const json = await res.json();
+
+  return json.data.map((item) => {
+    const media = item.media;
+
+    return {
+      id: item.id,
+      title: item.title || "",
+      subtitle: item.subtitle || "",
+      tab: item.tab || "",
+      order: item.order ?? 0,
+      media: media?.url ? STRAPI_URL + media.url : "",
+      mime: media?.mime || "",
+      isVideo: media?.mime?.startsWith("video") || false,
+    };
+  });
+}
+
+export const useHeroSlides = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["hero-slides", locale],
+    queryFn: () => fetchHeroSlides(locale),
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useOurDoctorsSection = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["our-doctors-section", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "customDescription");
+      params.append("populate[doctor][fields][0]", "name");
+      params.append("populate[doctor][fields][1]", "slug");
+      params.append("populate[doctor][fields][2]", "experience");
+      params.append("populate[doctor][fields][3]", "doctorRank");
+      params.append("populate[doctor][fields][4]", "shortBio");
+
+      params.append("populate[doctor][populate][image]", "true");
+      params.append("populate[doctor][populate][clinic][fields][0]", "title");
+      params.append(
+        "populate[doctor][populate][clinic][fields][1]",
+        "shortTitle",
+      );
+      params.append("populate[doctor][populate][clinic][fields][2]", "slug");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/our-doctors-section?${params.toString()}`,
+      );
+      console.log("useOurDoctorsSection res", res);
+
+      if (!res.ok) throw new Error("Failed to fetch our doctors section");
+
+      const json = await res.json();
+      const data = json?.data;
+      const doctor = data?.doctor;
+      console.log("json useOurDoctorsSection", json);
+      return {
+        title: data?.title || "",
+        doctorDescription: data?.customDescription || doctor?.shortBio || "",
+
+        doctorName: doctor?.name || "",
+        doctorSlug: doctor?.slug || "",
+        doctorExperience: doctor?.experience || 10,
+        doctorImage: doctor?.image?.url ? STRAPI_URL + doctor.image.url : "",
+        doctorSpecialty: doctor?.clinic?.title || "",
+        doctorDepartment:
+          doctor?.clinic?.shortTitle || doctor?.clinic?.title || "",
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+export const useMobileAppHomeSection = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["mobile-app-home-section", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "description");
+      params.append("fields[2]", "quickInfoLabel1");
+      params.append("fields[3]", "quickInfoValue1");
+      params.append("fields[4]", "quickInfoLabel2");
+      params.append("fields[5]", "quickInfoValue2");
+      params.append("fields[6]", "floatingCardLabel");
+      params.append("fields[7]", "floatingCardValue");
+      params.append("fields[8]", "floatingCardDesc");
+      params.append("fields[9]", "mockupTitle");
+      params.append("fields[10]", "mockupDesc");
+
+      params.append("populate[0]", "phoneImage");
+      params.append("populate[1]", "features");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/mobile-app-home-section?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch mobile app home section");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        title: data?.title || "",
+        description: data?.description || "",
+        quickInfoLabel1: data?.quickInfoLabel1 || "",
+        quickInfoValue1: data?.quickInfoValue1 || "",
+        quickInfoLabel2: data?.quickInfoLabel2 || "",
+        quickInfoValue2: data?.quickInfoValue2 || "",
+        floatingCardLabel: data?.floatingCardLabel || "",
+        floatingCardValue: data?.floatingCardValue || "",
+        floatingCardDesc: data?.floatingCardDesc || "",
+        mockupTitle: data?.mockupTitle || "",
+        mockupDesc: data?.mockupDesc || "",
+        phoneImage: data?.phoneImage?.url
+          ? `${STRAPI_URL}${data.phoneImage.url}`
+          : "",
+        features:
+          data?.features?.map((item, index) => ({
+            id: item?.id || index,
+            title: item?.title || "",
+            desc: item?.desc || "",
+          })) || [],
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useDoctors = (
+  page,
+  search,
+  clinicSlug,
+  pageSize = 6,
+  sort = ["featured:desc", "name:asc"],
+) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+  const allValue = "all";
+
+  return useQuery({
+    queryKey: ["doctors", page, search, clinicSlug, pageSize, locale, sort],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("pagination[page]", page);
+      params.append("pagination[pageSize]", pageSize);
+
+      sort.forEach((item, index) => {
+        params.append(`sort[${index}]`, item);
+      });
+
+      params.append("fields[0]", "name");
+      params.append("fields[1]", "slug");
+      params.append("fields[2]", "experience");
+      params.append("fields[3]", "featured");
+      params.append("fields[4]", "doctorRank");
+
+      params.append("populate[0]", "image");
+      params.append("populate[1]", "clinic");
+
+      if (search) {
+        params.append("filters[$or][0][name][$containsi]", search);
+        params.append("filters[$or][1][clinic][title][$containsi]", search);
+        params.append(
+          "filters[$or][2][clinic][shortTitle][$containsi]",
+          search,
+        );
+      }
+
+      if (clinicSlug && clinicSlug !== allValue) {
+        params.append("filters[clinic][slug][$eq]", clinicSlug);
+      }
+
+      const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
+
+      if (!res.ok) throw new Error("Failed to fetch doctors");
+
+      const json = await res.json();
+      console.log("json doctors", json);
+      return {
+        data:
+          json.data?.map((item) => ({
+            id: item.id,
+            documentId: item.documentId,
+            name: item.name || "",
+            slug: item.slug || "",
+            description: item?.clinic?.cardDesc || "",
+            experience: item.experience || "",
+            doctorRank: item.doctorRank || "",
+            featured: item.featured || false,
+            image: item.image?.url ? STRAPI_URL + item.image.url : "",
+            specialty: item.clinic?.title || "",
+            department: item.clinic?.shortTitle || item.clinic?.title || "",
+            clinicSlug: item.clinic?.slug || "",
+            to: `/our-doctors/${item.slug || item.id}`,
+          })) || [],
+        meta: json.meta?.pagination || null,
+      };
+    },
+    placeholderData: (previousData) => previousData,
+  });
+};
+
+export const useDoctorClinics = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["doctor-clinics", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("pagination[page]", 1);
+      params.append("pagination[pageSize]", 200);
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "shortTitle");
+      params.append("fields[2]", "slug");
+
+      const res = await fetch(`${STRAPI_URL}/api/clinics?${params.toString()}`);
+
+      if (!res.ok) throw new Error("Failed to fetch clinics");
+
+      const json = await res.json();
+
+      return (
+        json.data?.map((item) => ({
+          title: item.title || "",
+          shortTitle: item.shortTitle || "",
+          slug: item.slug || "",
+        })) || []
+      );
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useDoctorBySlug = (slug) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["doctor-by-slug", slug, locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("filters[slug][$eq]", slug);
+
+      params.append("fields[0]", "name");
+      params.append("fields[1]", "slug");
+      params.append("fields[2]", "experience");
+      params.append("fields[3]", "featured");
+      params.append("fields[4]", "doctorRank");
+      params.append("fields[5]", "shortBio");
+
+      params.append("populate[0]", "image");
+      params.append("populate[1]", "clinic");
+      params.append("populate[2]", "specializations");
+      params.append("populate[3]", "qualifications");
+
+      const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
+
+      if (!res.ok) throw new Error("Failed to fetch doctor profile");
+
+      const json = await res.json();
+      console.log("json useDoctorBySlug", json);
+      const item = json?.data?.[0];
+
+      if (!item) return null;
+
+      return {
+        id: item.id,
+        documentId: item.documentId,
+        name: item.name || "",
+        slug: item.slug || "",
+        experience: item.experience || 0,
+        featured: item.featured || false,
+        doctorRank: item.doctorRank || "",
+        shortBio: item.shortBio || "",
+        image: item.image?.url ? STRAPI_URL + item.image.url : "",
+        clinic: {
+          title: item.clinic?.title || "",
+          shortTitle: item.clinic?.shortTitle || "",
+          slug: item.clinic?.slug || "",
+        },
+        specializations:
+          item.specializations?.map((sp, index) => ({
+            id: sp.id || index,
+            title: sp.title || "",
+          })) || [],
+        qualifications:
+          item.qualifications?.map((q, index) => ({
+            id: q.id || index,
+            title: q.title || "",
+          })) || [],
+      };
+    },
+    enabled: !!slug,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useWebsiteLinks = () => {
+  return useQuery({
+    queryKey: ["website-links"],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("populate[0]", "socialMediaLinks");
+      params.append("populate[1]", "mobileAppLinks");
+      params.append("populate[2]", "contactInfo");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/website-link?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch website links");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        socialMediaLinks: {
+          youtube: data?.socialMediaLinks?.youtube || "",
+          instagram: data?.socialMediaLinks?.instagram || "",
+          facebook: data?.socialMediaLinks?.facebook || "",
+          twitter: data?.socialMediaLinks?.twitter || "",
+        },
+        mobileAppLinks: {
+          android: data?.mobileAppLinks?.mobileAppAndroid || "",
+          ios: data?.mobileAppLinks?.mobileAppIos || "",
+        },
+        contactInfo: {
+          phone: data?.contactInfo?.phone || "",
+          email: data?.contactInfo?.email || "",
+        },
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useNewsAchievementsHomeSection = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["news-achievements-home-section", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      // Featured News
+      params.append("populate[featuredNews][fields][0]", "title");
+      params.append("populate[featuredNews][fields][1]", "description");
+      params.append("populate[featuredNews][fields][2]", "publishedDate");
+      params.append("populate[featuredNews][populate]", "coverImage");
+
+      // Featured Achievements
+      params.append("populate[featuredAchievements][fields][0]", "title");
+      params.append("populate[featuredAchievements][fields][1]", "description");
+      params.append(
+        "populate[featuredAchievements][fields][2]",
+        "publishedDate",
+      );
+      params.append("populate[featuredAchievements][populate]", "coverImage");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/news-achievements-home-section?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch home news & achievements section");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+      console.log("useNewsAchievementsHomeSection data", data);
+      return {
+        featuredNews: (data?.featuredNews || []).slice(0, 4).map((item) => ({
+          id: item.id,
+          title: item.title || "",
+          description: item.description || "",
+          publishedDate: item.publishedDate || "",
+          coverImage: item.coverImage?.url
+            ? `${STRAPI_URL}${item.coverImage.url}`
+            : "",
+        })),
+
+        featuredAchievements: (data?.featuredAchievements || [])
+          .slice(0, 4)
+          .map((item) => ({
+            id: item.id,
+            title: item.title || "",
+            description: item.description || "",
+            publishedDate: item.publishedDate || "",
+            coverImage: item.coverImage?.url
+              ? `${STRAPI_URL}${item.coverImage.url}`
+              : "",
+          })),
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useNews = (page = 1, search = "", pageSize = 8) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["news", page, search, pageSize, locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("pagination[page]", page);
+      params.append("pagination[pageSize]", pageSize);
+      params.append("sort[0]", "publishedDate:desc");
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "publishedDate");
+      params.append("fields[2]", "description");
+      params.append("populate", "coverImage");
+
+      if (search) {
+        params.append("filters[title][$containsi]", search);
+      }
+
+      const res = await fetch(`${STRAPI_URL}/api/news?${params.toString()}`);
+      if (!res.ok) throw new Error("Failed to fetch news");
+
+      const json = await res.json();
+
+      return {
+        data:
+          json?.data?.map((item) => ({
+            id: item.id,
+            title: item.title || "",
+            description: item.description || "",
+            publishedDate: item.publishedDate || "",
+            coverImage: item.coverImage?.url
+              ? `${STRAPI_URL}${item.coverImage.url}`
+              : "",
+          })) || [],
+        meta: json?.meta?.pagination || null,
+      };
+    },
+    placeholderData: (prev) => prev,
+  });
+};
+
+export const useAchievements = (page = 1, search = "", pageSize = 8) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["achievements", page, search, pageSize, locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("pagination[page]", page);
+      params.append("pagination[pageSize]", pageSize);
+      params.append("sort[0]", "publishedDate:desc");
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "publishedDate");
+      params.append("fields[2]", "description");
+      params.append("populate", "coverImage");
+
+      if (search) {
+        params.append("filters[title][$containsi]", search);
+      }
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/achievements?${params.toString()}`,
+      );
+      if (!res.ok) throw new Error("Failed to fetch achievements");
+
+      const json = await res.json();
+
+      return {
+        data:
+          json?.data?.map((item) => ({
+            id: item.id,
+            title: item.title || "",
+            description: item.description || "",
+            publishedDate: item.publishedDate || "",
+            coverImage: item.coverImage?.url
+              ? `${STRAPI_URL}${item.coverImage.url}`
+              : "",
+          })) || [],
+        meta: json?.meta?.pagination || null,
+      };
+    },
+    placeholderData: (prev) => prev,
+  });
+};

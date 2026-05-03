@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_doctors_shared_simple_list_item_s",
+  "info": {
+    "displayName": "shared.simple-list-item,"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,732 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "qnhHistory": "QNH History",
+    "missionVision": "Mission & Vision",
+    "patientsRights": "Patients Rights",
+    "hospitalAccreditations": "Hospital Accreditations",
+    "staffPortal": "Staff Portal",
+    "departments": "Departments",
+    "ourDoctors": "Our Doctors",
+    "findDoctor": "Find a Doctor",
+    "doctorSchedule": "Doctor Schedule",
+    "eServices": "E-Services",
+    "media": "Media",
+    "LatestAchievement": "Latest Achievements",
+    "NewsAchievements": "News & Achievements",
+    "LatestNews": "Latest News",
+    "JoinUs": "Join Us",
+    "contact": "Contact"
+  },
+  "footer": {
+    "cta": {
+      "eyebrow": "Need assistance?",
+      "title": "We are here to support you 24/7"
+    },
+    "brand": {
+      "name": "Qassim National Hospital",
+      "tagline": "Patient-first care • Modern healthcare services",
+      "description": "Qassim National Hospital provides trusted, patient-focused medical care supported by dedicated teams, advanced facilities, and a strong commitment to quality across Al-Qassim."
+    },
+    "contact": {
+      "address": "Buraydah, Al-Qassim, Saudi Arabia"
+    },
+    "quickLinks": "Quick Links",
+    "poweredBy": "Powered by",
+    "chi": {
+      "label": "Council of Health Insurance",
+      "visit": "Visit"
+    }
+  },
+  "departments": {
+    "introEyebrow": "Departments",
+    "introTitle": "Explore Our Medical Departments",
+    "introDesc": "Discover clinics, centers, units, and medical services designed to provide complete patient care across Qassim National Hospital.",
+    "clinics": "Clinics",
+    "units": "Units",
+    "medicalServices": "Medical Services",
+    "centers": "Centers",
+    "viewAllClinics": "View All Clinics",
+    "viewAllUnits": "View All Units",
+    "viewAllServices": "View All Services",
+    "viewAllCenters": "View All Centers",
+    "viewAllDepartments": "View All Departments",
+    "items": {
+      "cardiology": "Cardiology",
+      "dermatology": "Dermatology",
+      "pediatrics": "Pediatrics",
+      "ent": "ENT",
+      "ophthalmology": "Ophthalmology",
+      "cardiacCatheterization": "Cardiac Catheterization",
+      "emergency": "Emergency",
+      "intensiveCare": "Intensive Care",
+      "newbornIntensiveCare": "Newborn Intensive Care",
+      "pediatricIntensiveCare": "Pediatric Intensive Care",
+      "radiology": "Radiology",
+      "laboratory": "Laboratory",
+      "anesthesiology": "Anesthesiology",
+      "operations": "Operations",
+      "infectionControl": "Infection Control",
+      "physiotherapyCenter": "Physiotherapy Center"
+    }
+  },
+  "medicalDepartments": {
+    "title": "Medical Departments",
+    "introTitle": "Specialized care across key medical services",
+    "viewAllDepartments": "View All Departments",
+    "description": "Highly skilled physicians across multiple specialties to provide comprehensive medical care from diagnosis to recovery.",
+    "search": "Search in {{tab}}...",
+
+    "viewDoctors": "View {{clinic}} Doctors"
+  },
+  "departmentTabs": {
+    "clinics": "Clinics",
+    "centers": "Centers",
+    "units": "Units",
+    "medical-services": "Medical Services"
+  },
+  "topnav": {
+    "services24": "24/7 Services",
+    "location": "Al Qassim, Saudi Arabia",
+    "emergency": "Emergency"
+  },
+  "common": {
+    "bookAppointment": "Book Appointment",
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "noResults": "No results found.",
+    "showingPage": "Showing page",
+    "of": "of",
+    "paginationInfo": "Showing page {{page}} of {{pageCount}}",
+    "search": "Search...",
+    "close": "Close"
+  },
+  "missionVisionPage": {
+    "breadcrumbTitle": "Mission & Vision",
+    "sections": {
+      "mission": {
+        "title": "Mission",
+        "description": "Qassim National Hospital provides medical care with high patient safety and excellent quality of care through evidence-based medicine, learning environment and employee’s empowerment."
+      },
+      "vision": {
+        "title": "Vision",
+        "description": "To be a well-recognized hospital and among the distinguished healthcare providers in the Kingdom of Saudi Arabia."
+      }
+    }
+  },
+  "qnhHistoryPage": {
+    "breadcrumbTitle": "QNH History",
+    "sections": {
+      "year1993": {
+        "date": "Year 1993",
+        "paragraph": "A number of consulting offices were invited to study the first stage of the economic feasibility and prepare the basic designs necessary for the hospital after the approval of Ministry of Health and to implement the third stage, which includes medical devices and hospital licenses by Health Affairs and licensing committees in the Ministry, Al-Qassim Branch."
+      },
+      "year1998": {
+        "date": "Year 1998",
+        "paragraph": "The foundation stone was laid for the hospital by His Royal Highness Prince Sultan bin Abdulaziz Al Saud."
+      },
+      "year1999_2008": {
+        "date": "Year 1999 - 2008",
+        "paragraph": "The start of the implementation of the project and completing equipping the hospital with equipment, medical devices, and information systems."
+      },
+      "year2009": {
+        "date": "Year 2009",
+        "paragraph": "The trial run of the hospital."
+      },
+      "year2010Now": {
+        "date": "Year 2010 – Now",
+        "paragraphs": [
+          "The hospital was officially opened on December 28, 2010, by His Royal Highness Prince Faisal bin Bandar bin Abdulaziz Al Saud, Prince of Qassim region, with a capacity of 100 beds. It includes orthopedic, ENT, urology and dialysis units, Internal, endocrine and diabetes clinic, general surgery, gastroenterology, and endoscopy unit, neurosurgery, dermatology, cardiology and catheter center, radiology department, chest clinic, pediatric clinic, gynecology, and obstetrics clinic, gynecology physiotherapy department supervised by specialized female staff, laboratory Department, ICU unit, ICU unit for newborns, Incubation department for premature babies, ER, and Anesthesia. It also includes a Continuous Education and Training section that offers many seminars, scientific conferences and short courses approved by the Saudi Commission for Health Specialties that will develop and increase knowledge, skills, and performance of our medical staff. AlQassim National Hospital keep to attract distinguished medical staff of consultants, specialists, and administrators, which has about 400 employees.",
+          "Every year, Al Qassim National Hospital looks forward to develop its medical services to achieve the highest quality standards by recently obtaining the accreditation certificate from the Saudi Central Board for Accreditation of Healthcare Institutions (CBAHI), after it succeeded in achieving the required accreditation standards that aim to ensure high quality in the provision of health care. The achievement is an extension of the hospital’s success in achieving the American Health Services Quality Certification (JCI)."
+        ]
+      }
+    }
+  },
+  "patientsRightsPage": {
+    "breadcrumbTitle": "Patients Rights",
+    "imageAlt": "Patients Rights",
+    "sections": {
+      "patientRights": {
+        "title": "Patient Rights",
+        "points": [
+          {
+            "text": "Receive a copy of Patient and Family Bill of Rights and Responsibilities at the earliest possible moment from reception or admission office or Nursing staff, and if for any reason you cannot understand it, please contact Patient Relations for help."
+          },
+          {
+            "text": "Receive comprehensive care given without discrimination by competent personnel that reflects consideration of your personal values and beliefs, with effective use of time and as per MOH laws and regulations."
+          },
+          {
+            "text": "Expect emergency procedures to be carried out without delay."
+          },
+          {
+            "text": "Have the appropriate assessment and management of pain."
+          },
+          {
+            "text": "Participate in your treatment plan details including care decisions and process, and be provided with information upon discharge about your continuing health care requirements and the means for meeting them."
+          },
+          {
+            "text": "Refuse or discontinue the treatment to the extent permitted by law, and be informed of the potential consequences of any such action, and accordingly, you will sign the prepared consent for that."
+          },
+          {
+            "text": "Sign the necessary informed consent prior to the start of any surgery, invasive procedures, anesthesia, blood/blood products transfusion, and high-risk procedures except in emergencies."
+          },
+          {
+            "text": "To know the hospital mission and vision."
+          },
+          {
+            "text": "To know the identity of your caregiver."
+          },
+          {
+            "text": "To receive complete and current information from the treating doctor once a final diagnosis is reached regarding the diagnosis, treatment, and potential benefits and drawbacks of proposed treatment, likelihood of successful treatment, and possible problems related to treatment in terms that you can understand (an interpreter is available if needed). When it is not medically advisable, the information pertaining to your condition shall be given on your behalf to your designated/legal representative."
+          },
+          {
+            "text": "To receive an appropriate explanation of the cost of your treatment."
+          },
+          {
+            "text": "Voice complaints regarding your care through the patient relations office (Ext.3015) or through suggestion boxes."
+          },
+          {
+            "text": "The result will be given to you by patient relations as soon as possible."
+          },
+          {
+            "text": "To know the available sources of care for your condition and other alternative treatments inside or outside the hospital."
+          },
+          {
+            "text": "We support your choice if you are willing to donate organs and tissues. Although we do not provide this service, you can call the Saudi Center for Organ Donation toll-free at 8001245500, and you will receive the full information that supports your choice from patient relations."
+          },
+          {
+            "text": "Protect your privacy while receiving services."
+          },
+          {
+            "text": "Request a room transfer if another patient in the room is unreasonably disturbing you and another room equally suitable for your care needs is available."
+          },
+          {
+            "text": "Have all information and records pertaining to your medical care treated as confidential, except as otherwise provided by law or third-party contractual agreement."
+          },
+          {
+            "text": "Have your medical records kept confidential, protected from loss or misuse, and read only by individuals involved in your care or by individuals authorized by law or regulation."
+          },
+          {
+            "text": "Not to be involved in any experimental, research, donor program, or educational activities unless you have given prior informed consent."
+          },
+          {
+            "text": "To be provided with a safety mechanism surrounding your care within the framework established by the hospital."
+          },
+          {
+            "text": "To be provided with a safety mechanism for your valuables to prevent loss when needed."
+          },
+          {
+            "text": "To be protected from physical, verbal, or psychological assault."
+          }
+        ]
+      },
+      "duties": {
+        "title": "Duties of Patients and Their Families",
+        "points": [
+          {
+            "text": "You have the responsibility to deal with hospital staff and other patients in a decent manner and respect their privacy."
+          },
+          {
+            "text": "You are responsible to follow and respect the hospital rules and regulations such as:",
+            "subText": [
+              "a) Visiting Hours",
+              "b) Not bringing food from outside",
+              "c) Following safety and security instructions including:"
+            ]
+          },
+          {
+            "text": "You are responsible for the consequences of refusing the treatment."
+          },
+          {
+            "text": "You are responsible for keeping your appointments."
+          },
+          {
+            "text": "If you can't keep the appointment, it is your responsibility to notify the appointment office as early as possible."
+          },
+          {
+            "text": "You assume the financial responsibility of paying for all services rendered either through third-party payers (your insurance company) or being personally responsible."
+          },
+          {
+            "text": "You have to respect and consider the priority for emergency cases."
+          },
+          {
+            "text": "Avoid bringing valuable personal belongings to the hospital since the hospital is not responsible for saving them. In special conditions, you can submit your valuables to the nurse taking care of your condition in the presence of a security staff member after checking their ID."
+          },
+          {
+            "text": "You should receive a copy of the patient's valuable receipt to hand it over to the nursing staff to receive back your valuables."
+          }
+        ]
+      }
+    }
+  },
+  "joinUsPage": {
+    "breadcrumbTitle": "Join Us",
+
+    "eyebrow": "Careers",
+    "title": "Join Our Team",
+    "description": "Be part of Qassim National Hospital and contribute to delivering high-quality services across all departments, supporting excellence in patient care and organizational success.",
+    "sideCard": {
+      "eyebrow": "Why Work With Us",
+      "title": "Build Your Career in a Trusted Healthcare Environment",
+      "description": "We are always looking for skilled and passionate professionals to join our growing team and contribute to high-quality patient care.",
+      "points": {
+        "point1": "A professional and supportive work environment.",
+        "point2": "Opportunities for growth and continuous development.",
+        "point3": "Advanced healthcare technologies and teamwork.",
+        "point4": "A real opportunity to impact patients’ lives."
+      }
+    },
+
+    "form": {
+      "title": "Application Form",
+      "description": "Please complete the form below and upload your CV.",
+
+      "fields": {
+        "fullName": "Full Name",
+        "mobile": "Saudi Mobile Number",
+        "dateOfBirth": "Date of Birth",
+        "gender": "Gender",
+        "email": "Email Address",
+        "nationality": "Nationality",
+        "specialization": "Specialization",
+        "academicDegree": "Academic Degree",
+        "yearsOfExperience": "Years of Experience",
+        "cv": "Upload CV"
+      },
+
+      "placeholders": {
+        "fullName": "Enter your full name",
+        "mobile": "05XXXXXXXX or +9665XXXXXXXX",
+        "email": "Enter your email",
+        "nationality": "Enter your nationality",
+        "specialization": "Enter your specialization",
+        "academicDegree": "Select degree",
+        "yearsOfExperience": "Enter years of experience",
+        "searchNationality": "Search nationality",
+        "searchAcademicDegree": "Search academic degree",
+        "dateOfBirth": "Select date of birth"
+      },
+
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female"
+      },
+
+      "degreeOptions": {
+        "diploma": "Diploma",
+        "bachelor": "Bachelor",
+        "master": "Master",
+        "phd": "PhD",
+        "board": "Board / Fellowship"
+      },
+
+      "uploadTitle": "Click to upload your CV",
+      "uploadHint": "PDF, DOC, DOCX",
+
+      "submit": "Submit Application",
+      "submitting": "Submitting...",
+
+      "successMessage": "Application submitted successfully."
+    },
+
+    "validation": {
+      "fullNameRequired": "Full name is required.",
+      "mobileRequired": "Mobile number is required.",
+      "mobileInvalid": "Invalid Saudi mobile number.",
+      "dateOfBirthRequired": "Date of birth is required.",
+      "genderRequired": "Gender is required.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Invalid email address.",
+      "nationalityRequired": "Nationality is required.",
+      "specializationRequired": "Specialization is required.",
+      "academicDegreeRequired": "Academic degree is required.",
+      "yearsOfExperienceRequired": "Years of experience is required.",
+      "yearsOfExperienceInvalid": "Years cannot be negative.",
+      "cvRequired": "Please upload your CV."
+    },
+    "closed": {
+      "title": "Applications Are Currently Closed",
+      "description": "We are not accepting applications at the moment.",
+      "note": "Please check back later or contact our HR team for more information.",
+      "contact": "Contact HR"
+    }
+  },
+  "newsPage": {
+    "badge": "Newsroom",
+    "title": "Latest News",
+    "description": "Stay updated with the latest hospital announcements, official updates, and community news.",
+    "search": "Search news..."
+  },
+  "achievementsPage": {
+    "badge": "Achievements",
+    "title": "Medical Achievements",
+    "description": "Discover our latest medical milestones, successful procedures, and clinical accomplishments.",
+    "search": "Search achievements..."
+  },
+  "aboutQNHsection": {
+    "badge": "About QNH",
+    "title": "Trusted care with modern facilities and a human-centered approach.",
+    "imageAlt": "About Qassim National Hospital",
+    "hospitalName": "Qassim National Hospital",
+    "establishedLabel": "Established",
+    "establishedYear": "2010",
+    "establishedDescription": "Trusted healthcare services supporting families across Al-Qassim.",
+    "stats": {
+      "beds": {
+        "value": "100",
+        "label": "Beds"
+      },
+      "emergency": {
+        "value": "24/7",
+        "label": "Emergency"
+      }
+    },
+    "description": {
+      "beforeDate": "Since its official opening on",
+      "openDate": "December 28, 2010",
+      "afterDate": ", Qassim National Hospital has grown into a trusted healthcare provider with a capacity of",
+      "beds": "100 beds",
+      "afterBeds": ", delivering safe, efficient, and patient-focused medical services to the community."
+    },
+    "highlights": {
+      "items": {
+        "comprehensiveMedicalServices": {
+          "title": "Comprehensive Medical Services",
+          "desc": "From outpatient clinics and emergency care to critical and specialized units."
+        },
+        "patientFocusedExperience": {
+          "title": "Patient-Focused Experience",
+          "desc": "A smoother healthcare journey built around comfort, clarity, and support."
+        },
+        "accreditedQualityStandards": {
+          "title": "Accredited Quality Standards",
+          "desc": "Continuous quality improvement aligned with recognized healthcare benchmarks."
+        }
+      }
+    },
+    "featurePoints": {
+      "point1": "Clear guidance for patients and visitors",
+      "point2": "Advanced services with dedicated medical teams",
+      "point3": "Strong focus on safety, reliability, and quality",
+      "point4": "Recognized accreditation-driven improvement"
+    }
+  },
+  "ourDoctorsSection": {
+    "badge": "Our Doctors",
+    "title": "Meet one of our distinguished medical specialists",
+    "featuredDoctor": "Featured Doctor",
+    "experienceLabel": "Experience",
+    "experienceCard": "{{count}}+ {{word}}",
+    "doctorExperience": "{{count}}+ {{word}} Experience",
+    "experienceValue": "15+ Years",
+    "experienceDescription": "Trusted specialist delivering safe and patient-focused care.",
+    "departmentLabel": "Department",
+    "button": "View All Doctors",
+    "doctor": {
+      "name": "Dr. Hatim Alnosayan",
+      "specialty": "Consultant Urologist",
+      "description": "Providing advanced urological care with a strong focus on accurate diagnosis, modern treatment approaches, and continuous follow-up to ensure the best outcomes for patients.",
+      "experience": "15+ Years Experience",
+      "department": "Urology Clinic"
+    }
+  },
+  "accreditationsSection": {
+    "badge": "Accredited Quality",
+    "title": "Recognized accreditations that reflect trusted care",
+    "description": "Our accreditations reflect Qassim National Hospital’s commitment to safe care, clinical quality, patient confidence, and continuous improvement aligned with national and international standards.",
+    "button": "Explore All Accreditations",
+    "items": {
+      "cbahi": "Saudi Central Board for Accreditation of Healthcare Institutions",
+      "achc": "Accreditation Commission for Health Care",
+      "aabb": "Association for the Advancement of Blood & Biotherapies",
+      "jci": "Joint Commission International Accreditation",
+      "cap": "College of American Pathologists"
+    }
+  },
+  "hospitalStorySection": {
+    "badge": "About QNH",
+    "title": "Modern care, local trust, and a patient-first experience.",
+    "description": "Qassim National Hospital combines medical expertise, modern facilities, and a compassionate care philosophy to support the health of individuals and families across the region.",
+    "locationLabel": "Location",
+    "locationValue": "Buraydah, Al-Qassim",
+    "button": "Explore Hospital Story",
+    "features": {
+      "item1": "Safe, efficient, and coordinated care pathways",
+      "item2": "Specialized departments supported by experienced teams",
+      "item3": "Comfortable environment designed around patient needs"
+    },
+    "stats": {
+      "emergency": {
+        "value": "24/7",
+        "label": "Emergency"
+      },
+      "specialties": {
+        "value": "30+",
+        "label": "Specialties"
+      },
+      "beds": {
+        "value": "100",
+        "label": "Bed Capacity"
+      }
+    }
+  },
+  "newsAreaSection": {
+    "badge": "News Room",
+    "title": "Hospital News & Achievements",
+    "browseBy": "Browse by",
+    "tabsAriaLabel": "News categories",
+    "tabs": {
+      "news": "News",
+      "achievements": "Achievements"
+    },
+    "featuredAchievement": "Featured Achievement",
+    "featuredNews": "Featured News",
+    "featuredAchievementExcerpt": "Discover our latest medical achievements, successful procedures, and outstanding clinical outcomes delivered by our expert healthcare teams.",
+    "featuredNewsExcerpt": "Stay updated with the latest official announcements, institutional updates, and important news from Qassim National Hospital.",
+    "readMore": "Read More",
+    "moreAchievements": "More Achievements",
+    "latestNews": "Latest News",
+    "sideDescription": "Browse recent hospital highlights",
+    "viewAll": "View all",
+    "newsItems": {
+      "item1": {
+        "title": "Announcement for Board of Directors Nomination",
+        "date": "20 Apr 2025"
+      },
+      "item2": {
+        "title": "Invitation to the Ordinary General Assembly of Al-Qassim Medical Services Company",
+        "date": "27 May 2025"
+      },
+      "item3": {
+        "title": "Invitation to the Extraordinary General Assembly of Al-Qassim Medical Company",
+        "date": "30 Aug 2023"
+      }
+    },
+    "achievementItems": {
+      "item1": {
+        "title": "Achievements of the Kidney Department",
+        "date": "16 Oct 2022",
+        "excerpt": "Highlights of the kidney department’s recent achievement and outcomes."
+      },
+      "item2": {
+        "title": "Spleen Removal Ends the Suffering of a 34-Year-Old Patient",
+        "date": "27 Jan 2025",
+        "excerpt": "A successful case that improved the patient’s quality of life significantly."
+      },
+      "item3": {
+        "title": "A Complicated Surgery Saves an Elderly Woman at QNH",
+        "date": "10 Oct 2019",
+        "excerpt": "The medical team successfully handled a complex surgery with excellent results."
+      },
+      "item4": {
+        "title": "A Lady Gives Birth to Triplets",
+        "date": "18 Oct 2023",
+        "excerpt": "A remarkable delivery case managed by our experienced obstetrics team."
+      }
+    }
+  },
+  "mapSection": {
+    "badge": "Our Location",
+    "title": "Visit Qassim National Hospital in Buraydah",
+    "description": "Find us easily in Buraydah, with convenient access to hospital services, emergency care, and outpatient departments.",
+    "mapTitle": "Qassim National Hospital Location",
+    "buttons": {
+      "directions": "Get Directions",
+      "call": "Call Hospital"
+    }
+  },
+  "appointmentsAppPage": {
+    "breadcrumb": "Book Appointment",
+    "badge": "Mobile App Booking",
+    "title": "Book your appointment easily through the QNH mobile app.",
+    "description": "Download the Qassim National Hospital mobile application to book appointments, explore doctors and services, and enjoy a faster and more convenient patient experience.",
+    "buttons": {
+      "android": "Download for Android",
+      "ios": "Download for iPhone"
+    },
+    "quickInfo": {
+      "availableLabel": "Availability",
+      "availableValue": "Android & iOS",
+      "bookingLabel": "Booking",
+      "bookingValue": "Fast and simple appointment access"
+    },
+    "mockup": {
+      "topLabel": "Smart Booking",
+      "title": "Your hospital services in one app",
+      "desc": "A simple experience for appointments, doctors, and hospital access.",
+      "button": "Book Appointment",
+      "cards": {
+        "card1": {
+          "title": "Choose department",
+          "desc": "Browse available specialties quickly"
+        },
+        "card2": {
+          "title": "Select doctor",
+          "desc": "Find the right doctor for your visit"
+        },
+        "card3": {
+          "title": "Confirm your booking",
+          "desc": "Complete your appointment in moments"
+        }
+      }
+    },
+    "floatingCard": {
+      "label": "App Access",
+      "value": "24/7",
+      "desc": "Access booking anytime from your phone"
+    },
+    "featuresBadge": "Why Use the App",
+    "featuresTitle": "Everything patients need in one simple place.",
+    "features": {
+      "book": {
+        "title": "Easy appointment booking",
+        "desc": "Book your visit in a few simple steps without needing to call."
+      },
+      "doctors": {
+        "title": "Browse doctors and specialties",
+        "desc": "Explore available doctors, clinics, and hospital departments."
+      },
+      "time": {
+        "title": "Save time",
+        "desc": "Reduce waiting and access appointment information faster."
+      },
+      "safe": {
+        "title": "Convenient and reliable",
+        "desc": "A smooth patient-first digital experience from anywhere."
+      },
+      "records": {
+        "title": "Medical Reports & Insurance Services",
+        "desc": "Access medical reports, sick leave, prescriptions, and insurance approvals easily through the app."
+      }
+    },
+    "stepsBadge": "How It Works",
+    "stepsTitle": "Start booking in four easy steps.",
+    "steps": {
+      "step1": "Download the QNH mobile app from Google Play or the App Store.",
+      "step2": "Create your account or sign in securely.",
+      "step3": "Choose the doctor, department, or service you need.",
+      "step4": "Confirm your appointment and follow your booking details."
+    },
+    "cta": {
+      "title": "Ready to book your next visit?",
+      "desc": "Download the mobile app now and enjoy a smooth appointment experience with Qassim National Hospital."
+    }
+  },
+  "ourDoctorsPage": {
+    "badge": "Our Doctors",
+    "title": "Meet Our Distinguished Doctors",
+    "description": "Explore a selected group of highly experienced physicians across various specialties, committed to delivering high-quality healthcare at Qassim National Hospital.",
+    "searchPlaceholder": "Search by doctor name, clinic, or department",
+    "featuredDoctor": "Featured Doctor",
+    "featuredBadge": "Featured Consultant",
+    "featuredLabel": "Featured",
+    "experienceLabel": "Experience",
+    "experienceMoreThan": "More than {{count}} {{word}} Experience",
+    "consultantLabel": "Consultant {{name}}",
+    "doctorRankBadge": "{{rank}} of {{department}}",
+    "doctorRank": {
+      "consultant": "Consultant",
+      "specialist": "Specialist"
+    },
+    "clinicLabel": "{{name}} Clinic",
+    "featuredExperienceDesc": "A distinguished physician with strong clinical experience and patient-centered care.",
+    "departmentLabel": "Department",
+    "searchSpecialtyPlaceholder": "Filter by clinic",
+    "noSpecialtyResults": "No matching clinics found",
+    "gridBadge": "Doctors Directory",
+    "heroStats": {
+      "doctors": "Doctors",
+      "specialties": "Clinics",
+      "support": "Care & Support"
+    },
+    "highlightCard": {
+      "title": "Trusted Medical Expertise",
+      "desc": "Meet a selection of our experienced physicians across multiple clinics, dedicated to providing high-quality care with compassion and professionalism."
+    },
+    "resultsLabel": "results",
+    "emptyState": {
+      "title": "No doctors found",
+      "desc": "Try adjusting your search or selecting another clinic to explore more doctors."
+    },
+    "gridTitle": "Explore Our Medical Team",
+    "bookButton": "Book Appointment",
+    "profileButton": "View Profile",
+    "filters": {
+      "all": "All",
+      "urology": "Urology Consultant",
+      "cardiology": "Cardiology Consultant",
+      "pediatrics": "Pediatrics Consultant",
+      "dermatology": "Dermatology Consultant"
+    },
+    "stats": {
+      "specialists": {
+        "value": "+20",
+        "label": "Specialist Doctors"
+      },
+      "specialties": {
+        "value": "+15",
+        "label": "Medical Specialties"
+      },
+      "care": {
+        "value": "100%",
+        "label": "Patient-Centered Care"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "Medical Support"
+      }
+    },
+    "cta": {
+      "title": "Need help choosing the right doctor?",
+      "desc": "Book your appointment now or contact our team to help you find the right specialty for your needs.",
+      "contact": "Contact Us"
+    }
+  },
+  "mobileAppHome": {
+    "badge": "Mobile App",
+    "primaryButtonText": "Get it on Google Play",
+    "secondaryButtonText": "Download on the App Store",
+    "learnMoreText": "Learn More",
+    "learnMoreLink": "/appointments-App",
+    "mockupTopLabel": "Mobile App",
+    "mockupButton": "Start Now",
+    "errorTitle": "Something went wrong",
+    "errorDesc": "Unable to load mobile app section."
+  },
+  "doctor": {
+    "prefix": "Dr."
+  },
+  "doctorProfile": {
+    "specializations": "Specializations",
+    "qualifications": "Qualifications"
+  },
+  "newsAchievementsPage": {
+    "badge": "Media Center",
+    "title": "News & Achievements",
+    "description": "Browse the latest hospital news, announcements, and achievements.",
+    "zoomImage": "Click to zoom",
+    "panel": {
+      "newsTitle": "Latest News",
+      "newsDescription": "Stay updated with hospital announcements, events, and latest updates.",
+      "achievementsTitle": "Hospital Achievements",
+      "achievementsDescription": "Explore medical successes, milestones, and institutional achievements."
+    },
+
+    "grid": {
+      "newsTitle": "All News",
+      "achievementsTitle": "All Achievements"
+    },
+
+    "searchPlaceholder": "Search by title",
+
+    "resultsLabel": "results",
+
+    "emptyState": {
+      "title": "No items found",
+      "desc": "Try another search term or switch to the other tab."
+    },
+
+    "viewDetails": "View Details"
+  }
+}
