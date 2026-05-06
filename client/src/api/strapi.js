@@ -524,6 +524,71 @@ export const useWebsiteLinks = () => {
   });
 };
 
+// export const useNewsAchievementsHomeSection = () => {
+//   const { i18n } = useTranslation();
+//   const locale = i18n.language || "en";
+//   console.log("CURRENT LANGUAGE:", i18n.language);
+//   console.log("CURRENT LOCALE SENT TO STRAPI:", locale);
+//   return useQuery({
+//     queryKey: ["news-achievements-home-section", locale],
+//     queryFn: async () => {
+//       const params = new URLSearchParams();
+
+//       params.append("locale", locale);
+
+//       // Featured News
+//       params.append("populate[featuredNews][fields][0]", "title");
+//       params.append("populate[featuredNews][fields][1]", "description");
+//       params.append("populate[featuredNews][fields][2]", "publishedDate");
+//       params.append("populate[featuredNews][populate]", "coverImage");
+
+//       // Featured Achievements
+//       params.append("populate[featuredAchievements][fields][0]", "title");
+//       params.append("populate[featuredAchievements][fields][1]", "description");
+//       params.append(
+//         "populate[featuredAchievements][fields][2]",
+//         "publishedDate",
+//       );
+//       params.append("populate[featuredAchievements][populate]", "coverImage");
+
+//       const res = await fetch(
+//         `${STRAPI_URL}/api/news-achievements-home-section?${params.toString()}`,
+//       );
+
+//       if (!res.ok) {
+//         throw new Error("Failed to fetch home news & achievements section");
+//       }
+
+//       const json = await res.json();
+//       const data = json?.data;
+//       console.log("useNewsAchievementsHomeSection data", data);
+//       return {
+//         featuredNews: (data?.featuredNews || []).slice(0, 4).map((item) => ({
+//           id: item.id,
+//           title: item.title || "",
+//           description: item.description || "",
+//           publishedDate: item.publishedDate || "",
+//           coverImage: item.coverImage?.url
+//             ? `${STRAPI_URL}${item.coverImage.url}`
+//             : "",
+//         })),
+
+//         featuredAchievements: (data?.featuredAchievements || [])
+//           .slice(0, 4)
+//           .map((item) => ({
+//             id: item.id,
+//             title: item.title || "",
+//             description: item.description || "",
+//             publishedDate: item.publishedDate || "",
+//             coverImage: item.coverImage?.url
+//               ? `${STRAPI_URL}${item.coverImage.url}`
+//               : "",
+//           })),
+//       };
+//     },
+//     staleTime: 5 * 60 * 1000,
+//   });
+// };
 export const useNewsAchievementsHomeSection = () => {
   const { i18n } = useTranslation();
   const locale = i18n.language || "en";
@@ -531,58 +596,52 @@ export const useNewsAchievementsHomeSection = () => {
   return useQuery({
     queryKey: ["news-achievements-home-section", locale],
     queryFn: async () => {
-      const params = new URLSearchParams();
+      const newsParams = new URLSearchParams();
+      newsParams.append("locale", locale);
+      newsParams.append("pagination[page]", 1);
+      newsParams.append("pagination[pageSize]", 4);
+      newsParams.append("sort[0]", "publishedDate:desc");
+      newsParams.append("fields[0]", "title");
+      newsParams.append("fields[1]", "description");
+      newsParams.append("fields[2]", "publishedDate");
+      newsParams.append("populate", "coverImage");
 
-      params.append("locale", locale);
+      const achievementsParams = new URLSearchParams();
+      achievementsParams.append("locale", locale);
+      achievementsParams.append("pagination[page]", 1);
+      achievementsParams.append("pagination[pageSize]", 4);
+      achievementsParams.append("sort[0]", "publishedDate:desc");
+      achievementsParams.append("fields[0]", "title");
+      achievementsParams.append("fields[1]", "description");
+      achievementsParams.append("fields[2]", "publishedDate");
+      achievementsParams.append("populate", "coverImage");
 
-      // Featured News
-      params.append("populate[featuredNews][fields][0]", "title");
-      params.append("populate[featuredNews][fields][1]", "description");
-      params.append("populate[featuredNews][fields][2]", "publishedDate");
-      params.append("populate[featuredNews][populate]", "coverImage");
+      const [newsRes, achievementsRes] = await Promise.all([
+        fetch(`${STRAPI_URL}/api/news?${newsParams.toString()}`),
+        fetch(
+          `${STRAPI_URL}/api/achievements?${achievementsParams.toString()}`,
+        ),
+      ]);
 
-      // Featured Achievements
-      params.append("populate[featuredAchievements][fields][0]", "title");
-      params.append("populate[featuredAchievements][fields][1]", "description");
-      params.append(
-        "populate[featuredAchievements][fields][2]",
-        "publishedDate",
-      );
-      params.append("populate[featuredAchievements][populate]", "coverImage");
+      if (!newsRes.ok) throw new Error("Failed to fetch news");
+      if (!achievementsRes.ok) throw new Error("Failed to fetch achievements");
 
-      const res = await fetch(
-        `${STRAPI_URL}/api/news-achievements-home-section?${params.toString()}`,
-      );
+      const newsJson = await newsRes.json();
+      const achievementsJson = await achievementsRes.json();
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch home news & achievements section");
-      }
+      const mapItem = (item) => ({
+        id: item.id,
+        title: item.title || "",
+        description: item.description || "",
+        publishedDate: item.publishedDate || "",
+        coverImage: item.coverImage?.url
+          ? `${STRAPI_URL}${item.coverImage.url}`
+          : "",
+      });
 
-      const json = await res.json();
-      const data = json?.data;
-      console.log("useNewsAchievementsHomeSection data", data);
       return {
-        featuredNews: (data?.featuredNews || []).slice(0, 4).map((item) => ({
-          id: item.id,
-          title: item.title || "",
-          description: item.description || "",
-          publishedDate: item.publishedDate || "",
-          coverImage: item.coverImage?.url
-            ? `${STRAPI_URL}${item.coverImage.url}`
-            : "",
-        })),
-
-        featuredAchievements: (data?.featuredAchievements || [])
-          .slice(0, 4)
-          .map((item) => ({
-            id: item.id,
-            title: item.title || "",
-            description: item.description || "",
-            publishedDate: item.publishedDate || "",
-            coverImage: item.coverImage?.url
-              ? `${STRAPI_URL}${item.coverImage.url}`
-              : "",
-          })),
+        featuredNews: newsJson?.data?.map(mapItem) || [],
+        featuredAchievements: achievementsJson?.data?.map(mapItem) || [],
       };
     },
     staleTime: 5 * 60 * 1000,

@@ -888,6 +888,85 @@ export interface ApiHomepageHeroSlideHomepageHeroSlide
   };
 }
 
+export interface ApiHospitalAccreditationHospitalAccreditation
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hospital_accreditations';
+  info: {
+    displayName: 'hospital-accreditation';
+    pluralName: 'hospital-accreditations';
+    singularName: 'hospital-accreditation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    certificateImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    iconImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    isActive: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hospital-accreditation.hospital-accreditation'
+    >;
+    order: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiJobApplicationJobApplication
   extends Struct.CollectionTypeSchema {
   collectionName: 'job_applications';
@@ -2258,6 +2337,7 @@ declare module '@strapi/strapi' {
       'api::clinic.clinic': ApiClinicClinic;
       'api::doctor.doctor': ApiDoctorDoctor;
       'api::homepage-hero-slide.homepage-hero-slide': ApiHomepageHeroSlideHomepageHeroSlide;
+      'api::hospital-accreditation.hospital-accreditation': ApiHospitalAccreditationHospitalAccreditation;
       'api::job-application.job-application': ApiJobApplicationJobApplication;
       'api::join-us-setting.join-us-setting': ApiJoinUsSettingJoinUsSetting;
       'api::medical-service.medical-service': ApiMedicalServiceMedicalService;

@@ -45,7 +45,7 @@ export default function NewsAreaDesignV2() {
         currentItem.description && currentItem.description.trim()
           ? currentItem.description
           : fallbackExcerpt,
-      image: currentItem.coverImage || "/images/NewsArea/default.png",
+      image: currentItem.coverImage || "/images/defalutImageNews.jpg",
       date: currentItem.publishedDate || "",
     };
   }, [tab, active, achievements, news, t]);

@@ -1,4 +1,4 @@
-# 🏥 Hospital System – Deployment Guide
+# Deployment Guide
 
 This project consists of three main components:
 
@@ -34,13 +34,13 @@ npm install
 
 ## 2.2 Environment variables (Frontend)
 
-Create a `.env` file inside:
+There are `.env` file inside clinet folder:
 
 ```
 /client/.env
 ```
 
-Add:
+Contain the API URL:
 
 ```
 VITE_STRAPI_URL=http://localhost:1337
@@ -112,7 +112,15 @@ npm install mysql2
 
 ## 3.2 Environment variables (REQUIRED)
 
-Create `.env` inside `/strapi`:
+The `.env` file already exists inside the `/strapi` folder :
+
+```
+/strapi/.env
+```
+
+The deployment team must update the **database credentials** inside this file according to the production MySQL server.
+
+Update these values:
 
 ```
 HOST=0.0.0.0
@@ -125,10 +133,17 @@ DATABASE_NAME=qnh_db
 DATABASE_USERNAME=root
 DATABASE_PASSWORD=yourpassword
 
-JWT_SECRET=your_jwt_secret
-ADMIN_JWT_SECRET=your_admin_secret
-APP_KEYS=your_app_keys
 ```
+
+### ⚠️ Important
+
+- `DATABASE_HOST` must be the MySQL server host.
+- `DATABASE_PORT` is usually `3306`.
+- `DATABASE_NAME` must match the database created in MySQL.
+- `DATABASE_USERNAME` and `DATABASE_PASSWORD` must be the real MySQL credentials provided by the hosting/server.
+- Make sure these values are correct **before running Strapi or importing the backup**.
+
+The other existing Strapi secret values should remain as they are unless the deployment team needs to change them:
 
 ---
 

@@ -332,7 +332,7 @@ export default function NewsAchievementsPage() {
 
                         <img
                           src={
-                            item.coverImage || "/images/NewsArea/default.png"
+                            item.coverImage || "/images/defalutImageNews.jpg"
                           }
                           alt={item.title}
                           className="h-[260px] w-full object-cover transition duration-500 group-hover:scale-[1.04]"
@@ -492,7 +492,7 @@ function NewsAchievementModal({ item, activeTab, isRTL, t, onClose }) {
           <div className="max-h-[90vh] overflow-y-auto">
             <div className="relative h-[320px] overflow-hidden bg-white md:h-[460px]">
               <img
-                src={item.coverImage || "/images/NewsArea/default.png"}
+                src={item.coverImage || "/images/defalutImageNews.jpg"}
                 alt={item.title}
                 onClick={() => setShowFullImage(true)}
                 className="h-full w-full cursor-zoom-in object-contain transition duration-300 hover:scale-[1.02]"
@@ -575,7 +575,7 @@ function NewsAchievementModal({ item, activeTab, isRTL, t, onClose }) {
             </button>
 
             <motion.img
-              src={item.coverImage || "/images/NewsArea/default.png"}
+              src={item.coverImage || "/images/defalutImageNews.jpg"}
               alt={item.title}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
