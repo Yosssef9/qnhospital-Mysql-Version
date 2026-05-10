@@ -72,9 +72,9 @@ export default function MedicalDepartments() {
 
       {/* Tabs + Search */}
       <section className="mx-auto mt-10 max-w-7xl px-6 pb-6 md:px-10 lg:px-16">
-        <div className="m-6 rounded-[30px] border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="rounded-[30px] border border-slate-200 bg-white p-4 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide lg:flex-wrap">
               {collections.map((collection, idx) => {
                 const tabName = tabs[idx];
                 return (
@@ -275,7 +275,7 @@ export default function MedicalDepartments() {
 
             {/* Pagination Controls */}
             <div
-              className={`flex items-center gap-2 ${
+              className={`flex flex-wrap items-center justify-center gap-2 ${
                 i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
               }`}
             >

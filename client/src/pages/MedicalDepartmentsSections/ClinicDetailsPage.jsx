@@ -19,6 +19,8 @@ import getMediaUrl from "../../helpers/getMediaUrl";
 import getItems from "../../helpers/getItems";
 import { useTranslation } from "react-i18next";
 import MedicalDepartmentsDetailsSkeletonPage from "../../components/reusableComponents/MedicalDepartmentsDetailsSkeletonPage";
+import { trackEvent } from "../../utils/analytics";
+import { useEffect } from "react";
 
 export default function ClinicDetailsPage() {
   const { t, i18n } = useTranslation();
@@ -40,14 +42,25 @@ export default function ClinicDetailsPage() {
     "cta",
   ]);
   console.log("data", data);
-  if (isLoading) {
-    return <MedicalDepartmentsDetailsSkeletonPage />;
-  }
-  if (isError || !data)
-    return <Navigate to="/medical-departments?tab=Clinics" replace />;
 
   const clinic = data;
 
+  useEffect(() => {
+    if (!clinic) return;
+
+    trackEvent("clinic_view", {
+      clinic_name: clinic.title,
+      slug: clinic.slug,
+    });
+  }, [clinic]);
+
+  if (isLoading) {
+    return <MedicalDepartmentsDetailsSkeletonPage />;
+  }
+
+  if (isError || !data) {
+    return <Navigate to="/medical-departments?tab=Clinics" replace />;
+  }
   const mainImage =
     getMediaUrl(clinic.image) ||
     getMediaUrl(clinic?.attributes?.image) ||
@@ -248,10 +261,14 @@ export default function ClinicDetailsPage() {
               </p>
             </div>
 
-            <div className="flex flex-nowrap gap-3">
+            <div
+              className={`flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto ${
+                isRTL ? "lg:justify-start" : "lg:justify-end"
+              }`}
+            >
               <Link
                 to={`/our-doctors?page=1&clinic=${clinic.slug}`}
-                className="inline-flex items-center whitespace-nowrap gap-2 rounded-full bg-white px-6 py-3 text-sm font-main text-[rgb(21,98,160)] transition hover:opacity-95"
+                className="inline-flex w-full min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-main text-[rgb(21,98,160)] transition hover:opacity-95 sm:w-auto"
               >
                 {t("medicalDepartments.viewDoctors", { clinic: clinic.title })}
                 {isRTL ? (
@@ -265,10 +282,16 @@ export default function ClinicDetailsPage() {
                 <a
                   href={`https://wa.me/966${clinic?.whatsAppNumber}`}
                   target="_blank"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "clinic_details_page",
+                      clinic: clinic.title,
+                    })
+                  }
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:bg-white/10 hover:border-blue-400"
+                  className="inline-flex w-full min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:border-blue-400 hover:bg-white/10 sm:w-auto"
                 >
-                  <FaWhatsapp className="h-4 w-4 " />
+                  <FaWhatsapp className="h-4 w-4" />
                   WhatsApp
                 </a>
               )}

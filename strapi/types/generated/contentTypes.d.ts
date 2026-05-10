@@ -816,6 +816,97 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiHeroSection2HeroSection2 extends Struct.SingleTypeSchema {
+  collectionName: 'hero_section_2s';
+  info: {
+    displayName: 'hero-section-2';
+    pluralName: 'hero-section-2s';
+    singularName: 'hero-section-2';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    badgeText: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    bottomSubtitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    bottomTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hero-section-2.hero-section-2'
+    >;
+    primaryButtonLink: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    primaryButtonText: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    stats: Schema.Attribute.JSON &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    trustChips: Schema.Attribute.JSON &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomepageHeroSlideHomepageHeroSlide
   extends Struct.CollectionTypeSchema {
   collectionName: 'homepage_hero_slides';
@@ -952,7 +1043,7 @@ export interface ApiHospitalAccreditationHospitalAccreditation
     slug: Schema.Attribute.UID &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     title: Schema.Attribute.String &
@@ -2336,6 +2427,7 @@ declare module '@strapi/strapi' {
       'api::center.center': ApiCenterCenter;
       'api::clinic.clinic': ApiClinicClinic;
       'api::doctor.doctor': ApiDoctorDoctor;
+      'api::hero-section-2.hero-section-2': ApiHeroSection2HeroSection2;
       'api::homepage-hero-slide.homepage-hero-slide': ApiHomepageHeroSlideHomepageHeroSlide;
       'api::hospital-accreditation.hospital-accreditation': ApiHospitalAccreditationHospitalAccreditation;
       'api::job-application.job-application': ApiJobApplicationJobApplication;

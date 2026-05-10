@@ -333,13 +333,13 @@ export default function OurDoctorsPage() {
                           </div>
                         )}
                       </div>
-                      {doctor.experience && (
+                      {/* {doctor.experience && (
                         <div
                           className={`absolute bottom-4 ${isRTL ? "right-4" : "left-4"}  z-10`}
                         >
                           <ExperienceBadge experience={doctor.experience} />
                         </div>
-                      )}
+                      )} */}
                       {doctor.featured && (
                         <div className="absolute right-4 top-4 z-10">
                           <div className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(21,98,160)] px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
@@ -354,6 +354,26 @@ export default function OurDoctorsPage() {
                         alt={doctor.name}
                         className="h-[320px] w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                       />
+                      <div className="absolute inset-0 flex translate-y-4 flex-col items-center justify-center gap-4 bg-slate-950/55 px-5 text-center opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                        {doctor.experience && (
+                          <div className="rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-[rgb(21,98,160)] shadow-sm">
+                            <ExperienceBadge experience={doctor.experience} />
+                          </div>
+                        )}
+
+                        <Link
+                          to={doctor.to}
+                          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[rgb(21,98,160)] shadow-md transition hover:scale-[1.03]"
+                        >
+                          {t("ourDoctorsPage.profileButton")}
+
+                          {isRTL ? (
+                            <ArrowLeft className="h-4 w-4" />
+                          ) : (
+                            <ArrowRight className="h-4 w-4" />
+                          )}
+                        </Link>
+                      </div>
                     </div>
                   </div>
 

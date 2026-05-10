@@ -5,7 +5,7 @@ import NavBarQNH from "../components/NavBarQNH";
 import ScrollToTop from "../helpers/ScrollToTop";
 import { Suspense } from "react";
 import LoadingOverlay2 from "../components/LoadingOverlay-2";
-
+import AnalyticsTracker from "../components/AnalyticsTracker";
 export default function MainLayout() {
   const location = useLocation();
 
@@ -13,6 +13,8 @@ export default function MainLayout() {
 
   return (
     <div className="overflow-x-hidden">
+      <AnalyticsTracker />
+
       <ScrollToTop />
       <NavBarQNH />
 

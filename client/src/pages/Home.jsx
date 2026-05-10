@@ -26,6 +26,7 @@ import MapDesignV2_edits1 from "../components/MapDesignV2_edits1";
 import NavBarQNH from "../components/NavBarQNH";
 import OurDoctorsSection from "../components/OurDoctorsSection";
 import MobileAppHomeSection from "../components/MobileAppHomeSection";
+import HeroSection2 from "../components/HeroSection2";
 
 export default function Home() {
   const images = [
@@ -39,6 +40,9 @@ export default function Home() {
   return (
     <div className=" ">
       <HeroWithNvabar />
+
+      {/* <HeroSection />
+      <HeroSection2 /> */}
       <OurDoctorsSection />
       <MobileAppHomeSection />
       <DepartmentsSection />

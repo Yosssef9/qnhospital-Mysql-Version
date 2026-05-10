@@ -4,7 +4,7 @@ const {
   syncLocalizedPublish,
 } = require("../../../../utils/sync-localized-publish");
 
-const UID = "api::doctor.hospital-accreditation";
+const UID = "api::doctor.doctor";
 
 async function syncPublish(event) {
   const { result } = event;

@@ -17,6 +17,7 @@ module.exports = [
   },
   "strapi::poweredBy",
   "strapi::query",
+  "global::upload-rate-limit",
   "strapi::body",
   "strapi::session",
   "strapi::favicon",

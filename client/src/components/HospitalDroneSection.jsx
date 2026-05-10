@@ -41,7 +41,7 @@ export default function HospitalStorySection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, delay: 0.1 }}
             viewport={{ once: true, amount: 0.25 }}
-            className="relative"
+            className="relative order-2 lg:order-1"
           >
             <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-slate-100 shadow-sm">
               <video
@@ -76,7 +76,7 @@ export default function HospitalStorySection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, delay: 0.1 }}
             viewport={{ once: true, amount: 0.25 }}
-            className={isRTL ? "text-right" : "text-left"}
+            className={`${isRTL ? "text-right" : "text-left"} order-1 lg:order-2`}
           >
             <SectionBadge>{t("hospitalStorySection.badge")}</SectionBadge>
 

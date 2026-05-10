@@ -21,7 +21,7 @@ import { CONTACT } from "../data/contact";
 import { getSiteNav } from "../data/navData";
 import { motion, useAnimation } from "framer-motion";
 import { useWebsiteLinks } from "../api/strapi";
-
+import GlobalSearchBox from "./GlobalSearchBox";
 export default function NavBarQNH() {
   const [open, setOpen] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
@@ -662,12 +662,16 @@ export default function NavBarQNH() {
                   {t("common.bookAppointment")}
                 </Link>
 
-                <div className="relative">
+                {/* <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
                   <input
                     placeholder={t("common.search") || "Search..."}
                     className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 text-sm outline-none transition focus:border-[rgba(21,98,160,0.35)] focus:bg-white"
                   />
+                </div> */}
+
+                <div className="relative">
+                  <GlobalSearchBox onSelect={() => setOpen(false)} />
                 </div>
               </div>
             </div>
@@ -792,12 +796,15 @@ export default function NavBarQNH() {
               </a>
             </div>
 
-            <div className="relative hidden md:block">
+            {/* <div className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
               <input
                 placeholder={t("common.search") || "Search..."}
                 className="h-8 w-[220px] rounded-xl bg-white/70 border border-white/60 pl-9 pr-3 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:bg-white focus:border-[rgba(21,98,160,0.35)]"
               />
+            </div> */}
+            <div className="hidden w-[260px] md:block">
+              <GlobalSearchBox />
             </div>
           </div>
         </div>

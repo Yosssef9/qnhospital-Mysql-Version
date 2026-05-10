@@ -12,7 +12,7 @@ import {
   SmartphoneCharging,
   FileText,
 } from "lucide-react";
-import { FaGooglePlay, FaApple } from "react-icons/fa";
+import { FaGooglePlay, FaApple, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
@@ -20,6 +20,7 @@ import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import { CONTACT } from "../data/contact";
 import { useWebsiteLinks } from "../api/strapi";
+import { trackEvent } from "../utils/analytics";
 
 export default function AppointmentsAppPage() {
   const { t, i18n } = useTranslation();
@@ -93,6 +94,11 @@ export default function AppointmentsAppPage() {
               <a
                 href={websiteLinks?.mobileAppLinks?.android}
                 target="_blank"
+                onClick={() =>
+                  trackEvent("app_download_android", {
+                    location: "appointments_app_page",
+                  })
+                }
                 rel="noreferrer"
                 className={`inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[rgb(21,98,160)] shadow-sm transition hover:bg-slate-50 hover:shadow-md ${
                   isRTL ? "flex-row-reverse" : ""
@@ -113,6 +119,11 @@ export default function AppointmentsAppPage() {
                 href={websiteLinks?.mobileAppLinks?.ios}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  trackEvent("app_download_ios", {
+                    location: "appointments_app_page",
+                  })
+                }
                 className={`inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-[rgb(21,98,160)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95 ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -122,6 +133,19 @@ export default function AppointmentsAppPage() {
                 {/* <FaApple className="h-6 w-6 text-[rgb(21,98,160)]" /> */}
 
                 {t("appointmentsAppPage.buttons.ios")}
+              </a>
+              <a
+                href={`https://wa.me/966${websiteLinks?.contactInfo?.callCenterPhone}`}
+                target="_blank"
+                rel="noreferrer"
+                className={`inline-flex items-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:scale-[1.02] hover:shadow-md ${
+                  isRTL ? "flex-row-reverse" : ""
+                }`}
+              >
+                <FaWhatsapp className="h-5 w-5" />
+
+                {isRTL ? "تواصل معنا" : "Contact Us"}
+                {/* {isRTL ? "احجز الآن" : "Book Now"} */}
               </a>
             </div>
 
@@ -340,6 +364,18 @@ export default function AppointmentsAppPage() {
                 <FaApple className="h-6 w-6 text-[rgb(255,255,255)]" />
                 {t("appointmentsAppPage.buttons.ios")}
               </a>
+              {/* <a
+                href={`https://wa.me/966${websiteLinks?.contactInfo?.callCenterPhone}`}
+                target="_blank"
+                rel="noreferrer"
+                className={`inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-95 ${
+                  isRTL ? "flex-row-reverse" : ""
+                }`}
+              >
+                <FaWhatsapp className="h-5 w-5" />
+
+                {isRTL ? "تواصل معنا" : "Contact Us"}
+              </a> */}
             </div>
           </div>
         </div>

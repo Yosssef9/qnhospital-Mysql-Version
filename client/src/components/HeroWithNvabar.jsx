@@ -9,7 +9,7 @@ import "swiper/css/effect-fade";
 import { useHeroSlides } from "../api/strapi";
 import SectionSpinner from "./SectionSpinner";
 import LoadingOverlay2 from "./LoadingOverlay-2";
-
+import { useTranslation } from "react-i18next";
 const slides = [
   {
     type: "video",
@@ -45,7 +45,8 @@ export default function HeroSwiperStyle() {
   const swiperRef = useRef(null);
   const videoRefs = useRef({});
   const [active, setActive] = useState(0);
-
+  const { i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
   const { data: slides = [], isLoading, error } = useHeroSlides();
 
   useEffect(() => {
@@ -155,20 +156,39 @@ export default function HeroSwiperStyle() {
                       />
                     )}
 
-                    <div className="relative z-10 flex h-full items-center px-6 md:px-12 xl:px-20">
-                      <div className="ml-auto max-w-[620px] text-right text-white">
+                    <div
+                      className={`relative z-10 flex h-full items-center px-6 md:px-12 xl:px-20 ${
+                        isArabic ? "" : "justify-start"
+                      }`}
+                    >
+                      <div
+                        className={`max-w-[620px] text-white ${
+                          isArabic ? "ml-auto text-right" : "mr-auto text-left"
+                        }`}
+                      >
+                        {" "}
                         <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85 backdrop-blur-md md:text-xs">
                           <span className="h-1.5 w-1.5 rounded-full bg-[rgb(99,179,237)]"></span>
                           Qassim National Hospital
                         </div>
-
                         <h2 className="mt-5 text-4xl font-main leading-[1] tracking-[-0.04em] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] md:text-6xl xl:text-7xl">
                           <span className="block">{slide.title}</span>
                         </h2>
-
-                        <div className="mt-4 ml-auto h-[3px] w-24 rounded-full bg-gradient-to-l from-[rgb(21,98,160)] via-[rgb(99,179,237)] to-white/70" />
-
-                        <p className="mt-6 ml-auto max-w-[470px] text-sm leading-7 text-white/78 drop-shadow-[0_4px_18px_rgba(0,0,0,0.2)] md:text-base">
+                        <div
+                          className={`mt-4 h-[3px] w-24 rounded-full ${
+                            isArabic
+                              ? "ml-auto bg-gradient-to-l"
+                              : "mr-auto bg-gradient-to-r"
+                          } from-[rgb(21,98,160)] via-[rgb(99,179,237)] to-white/70`}
+                        />{" "}
+                        <p
+                          className={`mt-6 max-w-[470px] text-sm leading-7 text-white/78 drop-shadow-[0_4px_18px_rgba(0,0,0,0.2)] md:text-base ${
+                            isArabic
+                              ? "ml-auto text-right"
+                              : "mr-auto text-left"
+                          }`}
+                        >
+                          {" "}
                           {slide.subtitle}
                         </p>
                       </div>
@@ -406,15 +426,15 @@ function FloatingCircleImages() {
   const items = [
     {
       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.20.59_852243e0.jpg",
-      link: "/hospital-accreditations/CBAHI",
+      link: "/hospital-accreditations/cbahi-accreditation",
     },
     {
       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.01_5642488e.jpg",
-      link: "/hospital-accreditations/CAP",
+      link: "/hospital-accreditations/cap-accreditation",
     },
     {
       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.00_75624687.jpg",
-      link: "/hospital-accreditations/JCI",
+      link: "/hospital-accreditations/jci-accreditation",
     },
   ];
 

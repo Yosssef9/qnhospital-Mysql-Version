@@ -10,6 +10,9 @@
     },
     "email": {
       "type": "email"
+    },
+    "CallCenterPhone": {
+      "type": "string"
     }
   },
   "config": {}

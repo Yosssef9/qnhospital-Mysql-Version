@@ -142,6 +142,7 @@ export interface WebsiteLinksContactInfo extends Struct.ComponentSchema {
     displayName: 'Contact Info';
   };
   attributes: {
+    CallCenterPhone: Schema.Attribute.String;
     email: Schema.Attribute.Email;
     phone: Schema.Attribute.String;
   };

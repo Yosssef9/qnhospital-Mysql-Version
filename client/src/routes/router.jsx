@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <HospitalAccreditations />,
       },
       {
-        path: "medical-Departments",
+        path: "medical-departments",
         element: <MedicalDepartments />,
       },
       { path: "join-us", element: <JoinUs /> },
@@ -72,6 +72,10 @@ const router = createBrowserRouter([
       },
       { path: "latest-news", element: <NewsPage /> },
       { path: "News&Achievements", element: <NewsAchievementsPage /> },
+      // {
+      //   path: "*",
+      //   element: <ErrorPage />,
+      // },
     ],
   },
 ]);

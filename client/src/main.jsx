@@ -10,6 +10,9 @@ import "@fontsource/plus-jakarta-sans/700.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./i18n";
+import { initGA } from "./utils/analytics";
+
+initGA();
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,7 +27,9 @@ createRoot(document.getElementById("root")).render(
     <LoadingProvider>
       <QueryClientProvider client={queryClient}>
         <App />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {import.meta.env.DEV && (
+          <ReactQueryDevtools initialIsOpen={false} />
+        )}{" "}
       </QueryClientProvider>
     </LoadingProvider>
   </StrictMode>,

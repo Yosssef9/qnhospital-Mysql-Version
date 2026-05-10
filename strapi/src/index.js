@@ -535,7 +535,58 @@ async function syncDoctorSlugFromEnglish({ strapi, documentId }) {
     });
   }
 }
+async function syncHospitalAccreditationSlugFromEnglish({
+  strapi,
+  documentId,
+}) {
+  const englishEntry = await strapi
+    .documents("api::hospital-accreditation.hospital-accreditation")
+    .findOne({
+      documentId,
+      locale: "en",
+      fields: ["slug", "title"],
+    });
 
+  let englishSlug = englishEntry?.slug;
+
+  if (!englishSlug && englishEntry?.title) {
+    englishSlug = makeSlug(englishEntry.title);
+
+    await strapi
+      .documents("api::hospital-accreditation.hospital-accreditation")
+      .update({
+        documentId,
+        locale: "en",
+        data: {
+          slug: englishSlug,
+          _skipHospitalAccreditationSync: true,
+        },
+      });
+  }
+
+  if (!englishSlug) return;
+
+  const arabicEntry = await strapi
+    .documents("api::hospital-accreditation.hospital-accreditation")
+    .findOne({
+      documentId,
+      locale: "ar",
+      fields: ["slug"],
+    });
+
+  if (arabicEntry && arabicEntry.slug !== englishSlug) {
+    await strapi
+      .documents("api::hospital-accreditation.hospital-accreditation")
+      .update({
+        documentId,
+        locale: "ar",
+        data: {
+          slug: englishSlug,
+          _skipHospitalAccreditationSync: true,
+        },
+      });
+  }
+}
 module.exports = {
   register({ strapi }) {
     strapi.documents.use(async (context, next) => {
@@ -731,7 +782,81 @@ module.exports = {
 
         return result;
       }
+      // ==================================================
+      // HOSPITAL ACCREDITATIONS
+      // ==================================================
+      if (uid === "api::hospital-accreditation.hospital-accreditation") {
+        if (!["create", "update", "publish"].includes(action)) {
+          return next();
+        }
 
+        if (data._skipHospitalAccreditationSync) {
+          const cleanData = { ...data };
+          delete cleanData._skipHospitalAccreditationSync;
+          context.params.data = cleanData;
+          return next();
+        }
+
+        if (params._skipHospitalAccreditationSiblingPublish) {
+          const cleanParams = { ...params };
+          delete cleanParams._skipHospitalAccreditationSiblingPublish;
+          context.params = cleanParams;
+          return next();
+        }
+
+        if (action === "create" || action === "update") {
+          if (locale === "en" && data.title) {
+            context.params.data = {
+              ...data,
+              slug: makeSlug(data.title),
+            };
+          }
+
+          const result = await next();
+          const currentDocumentId = documentId || result?.documentId;
+
+          if (!currentDocumentId) return result;
+
+          try {
+            await syncHospitalAccreditationSlugFromEnglish({
+              strapi,
+              documentId: currentDocumentId,
+            });
+          } catch (err) {
+            strapi.log.error("Hospital accreditation sync failed:", err);
+          }
+
+          return result;
+        }
+
+        if (action === "publish") {
+          const result = await next();
+
+          try {
+            if (!documentId) return result;
+
+            await syncHospitalAccreditationSlugFromEnglish({
+              strapi,
+              documentId,
+            });
+
+            await publishSiblingLocale(
+              strapi,
+              "api::hospital-accreditation.hospital-accreditation",
+              documentId,
+              locale,
+              "_skipHospitalAccreditationSiblingPublish",
+            );
+          } catch (err) {
+            strapi.log.error(
+              "Hospital accreditation sibling publish failed:",
+              err,
+            );
+          }
+
+          return result;
+        }
+      }
       return next();
     });
   },

@@ -88,7 +88,7 @@ export default function OurDoctorsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.08 }}
             viewport={{ once: true, amount: 0.25 }}
-            className="relative"
+            className="relative order-2 lg:order-1"
           >
             {/* Decorative shapes behind image */}
             <div className="pointer-events-none absolute -top-6 -left-6 h-24 w-24 rounded-[28px] border border-white/60 bg-white/30 backdrop-blur-md shadow-lg" />
@@ -170,7 +170,7 @@ export default function OurDoctorsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.12 }}
             viewport={{ once: true, amount: 0.3 }}
-            className={`${isRTL ? "text-right" : "text-left"}`}
+            className={`${isRTL ? "text-right" : "text-left"} order-1 lg:order-2`}
           >
             <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-8 xl:p-10">
               <div className="pointer-events-none absolute top-0 right-0 h-40 w-40 rounded-full bg-[rgba(21,98,160,0.08)] blur-3xl" />

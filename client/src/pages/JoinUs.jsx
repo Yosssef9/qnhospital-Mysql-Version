@@ -153,15 +153,48 @@ function JoinUsForm() {
 
     if (files) {
       const file = files[0] || null;
+
+      if (!file) return;
+
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+
+      // File type validation
+      if (!allowedTypes.includes(file.type)) {
+        setErrors((prev) => ({
+          ...prev,
+          cv: "Only PDF, DOC, or DOCX files are allowed.",
+        }));
+
+        return;
+      }
+
+      // File size validation (5 MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors((prev) => ({
+          ...prev,
+          cv: "File size must be less than 5 MB.",
+        }));
+
+        return;
+      }
+
+      // Save valid file
       setForm((prev) => ({
         ...prev,
         [name]: file,
       }));
-      setCvName(file ? file.name : "");
+
+      setCvName(file.name);
+
       setErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
+
       return;
     }
 

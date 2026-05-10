@@ -18,7 +18,8 @@ import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import { useDoctorBySlug } from "../api/strapi";
 import { formatArabicYears } from "../helpers/formatArabicYears";
-
+import { trackEvent } from "../utils/analytics";
+import { useEffect } from "react";
 export default function DoctorProfilePage() {
   const { slug } = useParams();
   const { t, i18n } = useTranslation();
@@ -27,6 +28,14 @@ export default function DoctorProfilePage() {
   const doctorQuery = useDoctorBySlug(slug);
   const doctor = doctorQuery.data;
   console.log("doctor", doctor);
+  useEffect(() => {
+  if (!doctor) return;
+
+  trackEvent("doctor_profile_view", {
+    doctor_name: doctor.name,
+    clinic: doctor.clinic?.title || "",
+  });
+}, [doctor]);
   if (doctorQuery.isLoading) {
     return (
       <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f6fbff]">
@@ -180,7 +189,7 @@ export default function DoctorProfilePage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="relative"
+              className="relative order-2 lg:order-1"
             >
               <div className="group relative overflow-hidden rounded-[34px] border-2 border-[rgb(21,98,160)]/30 bg-gradient-to-br from-white via-[#f7fbff] to-[#eef6fc] p-[10px] shadow-[0_25px_70px_rgba(2,32,71,0.10)]">
                 {/* outer soft glow */}
@@ -217,14 +226,15 @@ export default function DoctorProfilePage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className={isRTL ? "text-right" : "text-left"}
+              className={`${isRTL ? "text-right" : "text-left"} order-1 lg:order-2`}
             >
               <SectionBadge>{doctor.clinic?.title}</SectionBadge>
 
               <SectionTitle className="max-w-3xl font-light leading-tight">
                 {t("doctor.prefix")} {doctor.name}
               </SectionTitle>
-              <div className="flex gap-4">
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                {" "}
                 {doctor.doctorRank && (
                   <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[rgb(21,98,160)] shadow-sm">
                     <Stethoscope className="h-4 w-4" />
@@ -238,7 +248,6 @@ export default function DoctorProfilePage() {
                     })}
                   </div>
                 )}
-
                 {doctor.experience ? (
                   <div className="mt-4">
                     <ExperienceBadge experience={doctor.experience} />
@@ -253,7 +262,12 @@ export default function DoctorProfilePage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to="/appointments-App"
-                  className="inline-flex items-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(21,98,160,0.22)] transition hover:-translate-y-0.5 hover:bg-[rgb(15,75,125)]"
+                  onClick={() =>
+                    trackEvent("book_appointment_click", {
+                      location: "doctor_profile_page",
+                    })
+                  }
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(21,98,160,0.22)] transition hover:-translate-y-0.5 hover:bg-[rgb(15,75,125)] sm:w-auto"
                 >
                   <CalendarDays className="h-4 w-4" />
                   {t("common.bookAppointment")}

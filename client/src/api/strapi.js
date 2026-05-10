@@ -517,6 +517,7 @@ export const useWebsiteLinks = () => {
         contactInfo: {
           phone: data?.contactInfo?.phone || "",
           email: data?.contactInfo?.email || "",
+          callCenterPhone: data?.contactInfo?.CallCenterPhone || "",
         },
       };
     },
@@ -739,5 +740,203 @@ export const useAchievements = (page = 1, search = "", pageSize = 8) => {
       };
     },
     placeholderData: (prev) => prev,
+  });
+};
+
+export const useHeroSection2 = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["hero-section-2", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("fields[0]", "badgeText");
+      params.append("fields[1]", "title");
+      params.append("fields[2]", "description");
+      params.append("fields[3]", "primaryButtonText");
+      params.append("fields[4]", "primaryButtonLink");
+      params.append("fields[5]", "bottomTitle");
+      params.append("fields[6]", "bottomSubtitle");
+      params.append("fields[7]", "trustChips");
+      params.append("fields[8]", "stats");
+      params.append("populate", "image");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/hero-section-2?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch hero section 2");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      if (!data) return null;
+
+      return {
+        badgeText: data?.badgeText || "",
+        title: data?.title || "",
+        description: data?.description || "",
+        primaryButtonText: data?.primaryButtonText || "",
+        primaryButtonLink: data?.primaryButtonLink || "",
+        bottomTitle: data?.bottomTitle || "",
+        bottomSubtitle: data?.bottomSubtitle || "",
+        trustChips: data?.trustChips || [],
+        stats: data?.stats || [],
+        image: data?.image?.url ? `${STRAPI_URL}${data.image.url}` : "",
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+export const useHospitalAccreditations = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["hospital-accreditations", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("pagination[page]", 1);
+      params.append("pagination[pageSize]", 50);
+      params.append("sort[0]", "order:asc");
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "slug");
+      params.append("fields[2]", "description");
+      params.append("fields[3]", "order");
+      params.append("fields[4]", "isActive");
+
+      params.append("populate[0]", "certificateImage");
+      params.append("populate[1]", "iconImage");
+
+      params.append("filters[isActive][$eq]", "true");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/hospital-accreditations?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch hospital accreditations");
+      }
+
+      const json = await res.json();
+
+      return (
+        json?.data?.map((item) => ({
+          id: item.id,
+          documentId: item.documentId,
+          title: item.title || "",
+          slug: item.slug || "",
+          description: item.description || "",
+          order: item.order || 0,
+          certificateImage: item.certificateImage?.url
+            ? `${STRAPI_URL}${item.certificateImage.url}`
+            : "",
+          iconImage: item.iconImage?.url
+            ? `${STRAPI_URL}${item.iconImage.url}`
+            : "",
+        })) || []
+      );
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useGlobalSearch = (search = "") => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["global-search", search, locale],
+    enabled: search.trim().length >= 2,
+    queryFn: async () => {
+      const q = search.trim();
+
+      const buildParams = (titleField = "title") => {
+        const params = new URLSearchParams();
+        params.append("locale", locale);
+        params.append("pagination[page]", 1);
+        params.append("pagination[pageSize]", 5);
+        params.append(`filters[${titleField}][$containsi]`, q);
+        params.append("fields[0]", titleField);
+        params.append("fields[1]", "slug");
+        return params;
+      };
+
+      const requests = [
+        {
+          type: "Doctor",
+          url: `${STRAPI_URL}/api/doctors?${buildParams("name")}`,
+          to: (item) => `/our-doctors/${item.slug}`,
+          title: (item) => item.name,
+        },
+        {
+          type: "Clinic",
+          url: `${STRAPI_URL}/api/clinics?${buildParams("title")}`,
+          to: (item) => `/clinics/${item.slug}`,
+          title: (item) => item.title,
+        },
+        {
+          type: "Center",
+          url: `${STRAPI_URL}/api/centers?${buildParams("title")}`,
+          to: (item) => `/centers/${item.slug}`,
+          title: (item) => item.title,
+        },
+        {
+          type: "Unit",
+          url: `${STRAPI_URL}/api/units?${buildParams("title")}`,
+          to: (item) => `/units/${item.slug}`,
+          title: (item) => item.title,
+        },
+        {
+          type: "Service",
+          url: `${STRAPI_URL}/api/medical-services?${buildParams("title")}`,
+          to: (item) => `/medical-services/${item.slug}`,
+          title: (item) => item.title,
+        },
+        {
+          type: "News",
+          url: `${STRAPI_URL}/api/news?${buildParams("title")}`,
+          to: () => `/News&Achievements?tab=news&page=1`,
+          title: (item) => item.title,
+        },
+        {
+          type: "Achievement",
+          url: `${STRAPI_URL}/api/achievements?${buildParams("title")}`,
+          to: () => `/News&Achievements?tab=achievements&page=1`,
+          title: (item) => item.title,
+        },
+      ];
+
+      const results = await Promise.allSettled(
+        requests.map(async (req) => {
+          const res = await fetch(req.url);
+          if (!res.ok) return [];
+
+          const json = await res.json();
+
+          return (
+            json?.data?.map((item) => ({
+              id: `${req.type}-${item.id}`,
+              title: req.title(item),
+              type: req.type,
+              to: req.to(item),
+            })) || []
+          );
+        }),
+      );
+
+      return results.flatMap((result) =>
+        result.status === "fulfilled" ? result.value : [],
+      );
+    },
+    staleTime: 60 * 1000,
   });
 };

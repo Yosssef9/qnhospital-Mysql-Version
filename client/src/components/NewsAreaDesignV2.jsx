@@ -191,8 +191,10 @@ export default function NewsAreaDesignV2() {
             className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(2,32,71,0.08)]"
           >
             {featured ? (
-              <div className="grid h-[520px] overflow-hidden lg:grid-cols-[1.05fr_0.95fr]">
-                <div className="relative h-[280px] overflow-hidden md:h-[420px] lg:h-[520px]">
+              <div className="grid overflow-hidden lg:h-[520px] lg:grid-cols-[1.05fr_0.95fr]">
+                {" "}
+                <div className="relative order-2 h-[280px] overflow-hidden md:h-[420px] lg:order-1 lg:h-[520px]">
+                  {" "}
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={featured.title + "-image"}
@@ -207,9 +209,8 @@ export default function NewsAreaDesignV2() {
                   </AnimatePresence>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-white/5" />
                 </div>
-
                 <div
-                  className={`flex h-full flex-col justify-between overflow-hidden p-6 md:p-8 lg:h-[520px] ${
+                  className={`order-1 flex flex-col justify-between overflow-hidden p-6 md:p-8 lg:order-2 lg:h-[520px] ${
                     isRTL ? "text-right" : "text-left"
                   }`}
                 >
