@@ -1,0 +1,71 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_qnh_section_home_pages",
+  "info": {
+    "singularName": "about-qnh-section-home-page",
+    "pluralName": "about-qnh-section-home-pages",
+    "displayName": "about-qnh-section-home-page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "badge": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "hospitalName": {
+      "type": "string"
+    },
+    "establishedLabel": {
+      "type": "string"
+    },
+    "establishedYear": {
+      "type": "string"
+    },
+    "establishedDescription": {
+      "type": "string"
+    },
+    "bedValue": {
+      "type": "string"
+    },
+    "bedLabel": {
+      "type": "string"
+    },
+    "emergencyValue": {
+      "type": "string"
+    },
+    "emergencyLabel": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "highlights": {
+      "type": "component",
+      "component": "about-qnh-section-home-page.about-highlight",
+      "repeatable": true
+    },
+    "featurePoints": {
+      "type": "component",
+      "component": "about-qnh-section-home-page.about-feature-point",
+      "repeatable": true
+    }
+  }
+}

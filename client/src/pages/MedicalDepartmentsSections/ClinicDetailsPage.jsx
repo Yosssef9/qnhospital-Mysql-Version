@@ -289,7 +289,7 @@ export default function ClinicDetailsPage() {
                     })
                   }
                   rel="noopener noreferrer"
-                  className="inline-flex w-full min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:border-blue-400 hover:bg-white/10 sm:w-auto"
+                  className="inline-flex w-full min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#25D366]/40 bg-[#25D366] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(37,211,102,0.28)] transition hover:scale-[1.02] hover:bg-[#20bd5a] sm:w-auto"
                 >
                   <FaWhatsapp className="h-4 w-4" />
                   WhatsApp

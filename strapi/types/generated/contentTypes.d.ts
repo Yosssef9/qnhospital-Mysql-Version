@@ -430,6 +430,55 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAboutQnhSectionHomePageAboutQnhSectionHomePage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'about_qnh_section_home_pages';
+  info: {
+    displayName: 'about-qnh-section-home-page';
+    pluralName: 'about-qnh-section-home-pages';
+    singularName: 'about-qnh-section-home-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    bedLabel: Schema.Attribute.String;
+    bedValue: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    emergencyLabel: Schema.Attribute.String;
+    emergencyValue: Schema.Attribute.String;
+    establishedDescription: Schema.Attribute.String;
+    establishedLabel: Schema.Attribute.String;
+    establishedYear: Schema.Attribute.String;
+    featurePoints: Schema.Attribute.Component<
+      'about-qnh-section-home-page.about-feature-point',
+      true
+    >;
+    highlights: Schema.Attribute.Component<
+      'about-qnh-section-home-page.about-highlight',
+      true
+    >;
+    hospitalName: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    imageAlt: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-qnh-section-home-page.about-qnh-section-home-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
   collectionName: 'achievements';
   info: {
@@ -2423,6 +2472,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about-qnh-section-home-page.about-qnh-section-home-page': ApiAboutQnhSectionHomePageAboutQnhSectionHomePage;
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::center.center': ApiCenterCenter;
       'api::clinic.clinic': ApiClinicClinic;

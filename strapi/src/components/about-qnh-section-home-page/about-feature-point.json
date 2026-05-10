@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_about_qnh_section_home_page_about_feature_points",
+  "info": {
+    "displayName": "about-feature-point"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

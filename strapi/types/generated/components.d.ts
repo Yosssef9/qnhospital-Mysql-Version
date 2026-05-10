@@ -1,5 +1,31 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AboutQnhSectionHomePageAboutFeaturePoint
+  extends Struct.ComponentSchema {
+  collectionName: 'components_about_qnh_section_home_page_about_feature_points';
+  info: {
+    displayName: 'about-feature-point';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
+  };
+}
+
+export interface AboutQnhSectionHomePageAboutHighlight
+  extends Struct.ComponentSchema {
+  collectionName: 'components_about_qnh_section_home_page_about_highlights';
+  info: {
+    displayName: 'about-highlight';
+  };
+  attributes: {
+    desc: Schema.Attribute.Text;
+    iconKey: Schema.Attribute.Enumeration<
+      ['heartPulse', 'shieldCheck', 'award']
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface DepartmentSectionsCta extends Struct.ComponentSchema {
   collectionName: 'components_department_sections_ctas';
   info: {
@@ -175,6 +201,8 @@ export interface WebsiteLinksSocialMediaLinks extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'about-qnh-section-home-page.about-feature-point': AboutQnhSectionHomePageAboutFeaturePoint;
+      'about-qnh-section-home-page.about-highlight': AboutQnhSectionHomePageAboutHighlight;
       'department-sections.cta': DepartmentSectionsCta;
       'department-sections.hero': DepartmentSectionsHero;
       'department-sections.highlights': DepartmentSectionsHighlights;

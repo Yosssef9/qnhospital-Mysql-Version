@@ -940,3 +940,81 @@ export const useGlobalSearch = (search = "") => {
     staleTime: 60 * 1000,
   });
 };
+
+export const useAboutQnhSection = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["about-qnh-section", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("fields[0]", "badge");
+      params.append("fields[1]", "title");
+      params.append("fields[2]", "description");
+      params.append("fields[3]", "imageAlt");
+      params.append("fields[4]", "hospitalName");
+      params.append("fields[5]", "establishedLabel");
+      params.append("fields[6]", "establishedYear");
+      params.append("fields[7]", "establishedDescription");
+      params.append("fields[8]", "bedValue");
+      params.append("fields[9]", "bedLabel");
+      params.append("fields[10]", "emergencyValue");
+      params.append("fields[11]", "emergencyLabel");
+
+      params.append("populate[0]", "image");
+      params.append("populate[1]", "highlights");
+      params.append("populate[2]", "featurePoints");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/about-qnh-section?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch about QNH section");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      if (!data) return null;
+
+      return {
+        badge: data.badge || "",
+        title: data.title || "",
+        description: data.description || "",
+        imageAlt: data.imageAlt || "",
+        hospitalName: data.hospitalName || "",
+
+        establishedLabel: data.establishedLabel || "",
+        establishedYear: data.establishedYear || "",
+        establishedDescription: data.establishedDescription || "",
+
+        bedValue: data.bedValue || "",
+        bedLabel: data.bedLabel || "",
+        emergencyValue: data.emergencyValue || "",
+        emergencyLabel: data.emergencyLabel || "",
+
+        image: data.image?.url ? `${STRAPI_URL}${data.image.url}` : "",
+
+        highlights:
+          data.highlights?.map((item, index) => ({
+            id: item.id || index,
+            iconKey: item.iconKey || "heartPulse",
+            title: item.title || "",
+            desc: item.desc || "",
+          })) || [],
+
+        featurePoints:
+          data.featurePoints?.map((item, index) => ({
+            id: item.id || index,
+            text: item.text || "",
+          })) || [],
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};

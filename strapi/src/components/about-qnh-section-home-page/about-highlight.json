@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_about_qnh_section_home_page_about_highlights",
+  "info": {
+    "displayName": "about-highlight"
+  },
+  "options": {},
+  "attributes": {
+    "iconKey": {
+      "type": "enumeration",
+      "enum": [
+        "heartPulse",
+        "shieldCheck",
+        "award"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
