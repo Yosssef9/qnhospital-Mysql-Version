@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_privacy_policy_points_s",
+  "info": {
+    "displayName": "points "
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

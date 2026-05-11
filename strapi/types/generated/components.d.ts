@@ -162,6 +162,134 @@ export interface NewsAchievementsContentBase extends Struct.ComponentSchema {
   };
 }
 
+export interface PrivacyPolicyPoints extends Struct.ComponentSchema {
+  collectionName: 'components_privacy_policy_points_s';
+  info: {
+    displayName: 'points ';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
+  };
+}
+
+export interface PrivacyPolicyPrivacySection extends Struct.ComponentSchema {
+  collectionName: 'components_privacy_policy_privacy_sections';
+  info: {
+    displayName: 'privacy-section';
+  };
+  attributes: {
+    iconKey: Schema.Attribute.Enumeration<
+      [
+        'heartPulse',
+        'stethoscope',
+        'hospital',
+        'ambulance',
+        'activity',
+        'syringe',
+        'pill',
+        'heart',
+        'cross',
+        'shieldPlus',
+        'microscope',
+        'scanHeart',
+        'clipboardPlus',
+        'bone',
+        'brain',
+        'eyeMedical',
+        'ear',
+        'thermometer',
+        'flask',
+        'bed',
+        'badgePlus',
+        'shieldCheck',
+        'shield',
+        'shieldAlert',
+        'lock',
+        'lockKeyhole',
+        'fingerprint',
+        'key',
+        'userRoundCheck',
+        'building2',
+        'building',
+        'briefcase',
+        'fileText',
+        'folder',
+        'database',
+        'server',
+        'globe',
+        'network',
+        'cpu',
+        'hardDrive',
+        'cloud',
+        'users',
+        'user',
+        'userCheck',
+        'userPlus',
+        'userCog',
+        'contact',
+        'mail',
+        'phone',
+        'smartphone',
+        'messageCircle',
+        'messagesSquare',
+        'bell',
+        'calendar',
+        'calendarDays',
+        'clock',
+        'timerReset',
+        'check',
+        'checkCircle2',
+        'badgeCheck',
+        'star',
+        'sparkles',
+        'trophy',
+        'medal',
+        'award',
+        'thumbsUp',
+        'chevronDown',
+        'chevronRight',
+        'arrowRight',
+        'arrowLeft',
+        'refresh',
+        'search',
+        'filter',
+        'settings',
+        'sliders',
+        'activitySquare',
+        'lineChart',
+        'barChart',
+        'pieChart',
+        'trendingUp',
+        'trendingDown',
+        'bookOpen',
+        'graduationCap',
+        'newspaper',
+        'fileBadge',
+        'clipboardList',
+        'alertTriangle',
+        'siren',
+        'triangleAlert',
+        'car',
+        'plane',
+        'hotel',
+        'coffee',
+        'utensils',
+        'wifi',
+        'mapPin',
+        'image',
+        'camera',
+        'playCircle',
+        'video',
+        'headphones',
+        'languages',
+      ]
+    >;
+    order: Schema.Attribute.Integer;
+    points: Schema.Attribute.Component<'privacy-policy.points', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface WebsiteLinksContactInfo extends Struct.ComponentSchema {
   collectionName: 'components_website_links_contact_infos';
   info: {
@@ -214,6 +342,8 @@ declare module '@strapi/strapi' {
       'department-sections.whats-app-number': DepartmentSectionsWhatsAppNumber;
       'doctors.shared-simple-list-item': DoctorsSharedSimpleListItem;
       'news-achievements.content-base': NewsAchievementsContentBase;
+      'privacy-policy.points': PrivacyPolicyPoints;
+      'privacy-policy.privacy-section': PrivacyPolicyPrivacySection;
       'website-links.contact-info': WebsiteLinksContactInfo;
       'website-links.mobile-app-links': WebsiteLinksMobileAppLinks;
       'website-links.social-media-links': WebsiteLinksSocialMediaLinks;

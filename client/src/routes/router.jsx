@@ -31,7 +31,7 @@ const DoctorProfilePage = lazy(() => import("../pages/DoctorProfilePage"));
 const NewsAchievementsPage = lazy(
   () => import("../pages/NewsAchievementsPage"),
 );
-
+const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,6 +72,7 @@ const router = createBrowserRouter([
       },
       { path: "latest-news", element: <NewsPage /> },
       { path: "News&Achievements", element: <NewsAchievementsPage /> },
+      { path: "privacy-policy", element: <PrivacyPolicy /> },
       // {
       //   path: "*",
       //   element: <ErrorPage />,

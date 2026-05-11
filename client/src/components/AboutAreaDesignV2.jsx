@@ -321,25 +321,15 @@ import SectionTitle from "./reusableComponents/SectionTitle";
 import SectionBadge from "./reusableComponents/SectionBadge";
 import { useAboutQnhSection } from "../api/strapi";
 import SectionSpinner from "./sectionSpinner";
-
-const iconMap = {
-  heartPulse: HeartPulse,
-  shieldCheck: ShieldCheck,
-  award: Award,
-  building2: Building2,
-  checkCircle2: CheckCircle2,
-  stethoscope: Stethoscope,
-  hospital: Hospital,
-  activity: Activity,
-};
+import { iconMap } from "../constants/iconMap";
 
 export default function AboutAreaDesignV2() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
 
   const { data, isLoading, isError } = useAboutQnhSection();
-console.log("About QNH Section Data:", data);
-console.log("About QNH Section isError:", isError);
+  console.log("About QNH Section Data:", data);
+  console.log("About QNH Section isError:", isError);
 
   if (isLoading) {
     return (

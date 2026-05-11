@@ -438,7 +438,7 @@ export const useDoctorBySlug = (slug) => {
       params.append("fields[3]", "featured");
       params.append("fields[4]", "doctorRank");
       params.append("fields[5]", "shortBio");
-params.append("fields[6]", "gender");
+      params.append("fields[6]", "gender");
       params.append("populate[0]", "image");
       params.append("populate[1]", "clinic");
       params.append("populate[2]", "specializations");
@@ -1018,6 +1018,74 @@ export const useAboutQnhSection = () => {
             id: item.id || index,
             text: item.text || "",
           })) || [],
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const usePrivacyPolicy = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["privacy-policy", locale],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("fields[0]", "title");
+      params.append("fields[1]", "subtitle");
+      params.append("fields[2]", "lastUpdated");
+      params.append("fields[3]", "intro");
+      params.append("fields[4]", "contactTitle");
+      params.append("fields[5]", "contactText");
+      params.append("fields[6]", "contactPhone");
+      params.append("fields[7]", "contactServiceLabel");
+
+      params.append("populate[breadcrumbImage]", "true");
+      params.append("populate[sections][populate][points]", "true");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/privacy-policy?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch privacy policy");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        title: data?.title || "",
+        subtitle: data?.subtitle || "",
+        lastUpdated: data?.lastUpdated || "",
+        intro: data?.intro || "",
+        contactTitle: data?.contactTitle || "",
+        contactText: data?.contactText || "",
+        contactPhone: data?.contactPhone || "",
+        contactServiceLabel: data?.contactServiceLabel || "",
+        breadcrumbImage: data?.breadcrumbImage?.url
+          ? `${STRAPI_URL}${data.breadcrumbImage.url}`
+          : "/images/about.jpg",
+
+        sections:
+          data?.sections
+            ?.slice()
+            ?.sort((a, b) => (a.order || 0) - (b.order || 0))
+            ?.map((item, index) => ({
+              id: item.id || index,
+              title: item.title || "",
+              iconKey: item.iconKey || "fileText",
+              order: item.order || index,
+              points:
+                item?.points?.map((point, pointIndex) => ({
+                  id: point.id || pointIndex,
+                  text: point.text || "",
+                })) || [],
+            })) || [],
       };
     },
     staleTime: 5 * 60 * 1000,
