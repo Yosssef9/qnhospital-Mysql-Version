@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 
+let privacyNoticeClosed = false;
+
 export default function PrivacyNotice() {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
@@ -12,21 +14,19 @@ export default function PrivacyNotice() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const hasSeenPrivacyNotice = localStorage.getItem("hasSeenPrivacyNotice");
-
-    if (!hasSeenPrivacyNotice) {
+    if (!privacyNoticeClosed) {
       setShow(true);
     }
   }, []);
 
   const closeNotice = (e) => {
     e.stopPropagation();
-    localStorage.setItem("hasSeenPrivacyNotice", "true");
+    privacyNoticeClosed = true;
     setShow(false);
   };
 
   const goToPrivacyPolicy = () => {
-    localStorage.setItem("hasSeenPrivacyNotice", "true");
+    privacyNoticeClosed = true;
     setShow(false);
     navigate("/privacy-policy");
   };

@@ -4,12 +4,13 @@ import SplashScreen from "./components/SplashScreen";
 import { RouterProvider } from "react-router-dom";
 import GlobalSpinner from "./components/GlobalSpinner";
 import { useTranslation } from "react-i18next";
+import FloatingSocialLogo from "./components/FloatingSocialLogo";
 
 export default function App() {
-   const [showSplash, setShowSplash] = useState(() => {
-      const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
-      return !hasSeenSplash;
-    });
+  const [showSplash, setShowSplash] = useState(() => {
+    const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
+    return !hasSeenSplash;
+  });
   // const [showSplash, setShowSplash] = useState(false);
 
   useEffect(() => {
@@ -37,7 +38,10 @@ export default function App() {
       {showSplash ? (
         <SplashScreen onFinish={handleFinish} />
       ) : (
-        <RouterProvider router={router} />
+        <>
+          <RouterProvider router={router} />
+          <FloatingSocialLogo />
+        </>
       )}
     </>
   );
