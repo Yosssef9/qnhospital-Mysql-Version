@@ -126,6 +126,46 @@ export default function ClinicDetailsPage() {
                 </div>
               )}
             </div>
+
+            {/* Buttons */}
+            <div
+              className={`mt-8 flex flex-wrap gap-3 ${
+                isRTL ? "justify-start" : "justify-start"
+              }`}
+            >
+              <Link
+                to={`/our-doctors?page=1&clinic=${clinic.slug}`}
+                className="inline-flex min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.22)] bg-[rgb(21,98,160)] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(21,98,160,0.22)] transition hover:scale-[1.02] hover:border-white/40 hover:bg-[rgb(17,84,138)]"
+              >
+                {t("medicalDepartments.viewDoctors", {
+                  clinic: clinic.title,
+                })}
+
+                {/* {isRTL ? (
+                  <ArrowLeft className="h-4 w-4" />
+                ) : (
+                  <ArrowRight className="h-4 w-4" />
+                )} */}
+              </Link>
+
+              {clinic?.whatsAppNumber && (
+                <a
+                  href={`https://wa.me/966${clinic?.whatsAppNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "clinic_details_page",
+                      clinic: clinic.title,
+                    })
+                  }
+                  className="inline-flex min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/25 bg-[#25D366] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(37,211,102,0.28)] transition hover:scale-[1.02] hover:border-white/40 hover:bg-[#20bd5a]"
+                >
+                  <FaWhatsapp className="h-4 w-4" />
+                  WhatsApp
+                </a>
+              )}
+            </div>
           </div>
 
           <motion.div
@@ -246,7 +286,7 @@ export default function ClinicDetailsPage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-16">
+      {/* <section className="mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-16">
         <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-[linear-gradient(135deg,rgba(21,98,160,1),rgba(36,124,194,1))] p-8 text-white shadow-[0_24px_60px_rgba(21,98,160,0.22)] md:p-10">
           <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
           <div className="pointer-events-none absolute -bottom-10 left-10 h-36 w-36 rounded-full bg-white/10 blur-2xl" />
@@ -297,7 +337,7 @@ className="inline-flex w-full min-w-max items-center justify-center gap-2 whites
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

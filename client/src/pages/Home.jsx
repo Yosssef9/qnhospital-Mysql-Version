@@ -27,7 +27,7 @@ import NavBarQNH from "../components/NavBarQNH";
 import OurDoctorsSection from "../components/OurDoctorsSection";
 import MobileAppHomeSection from "../components/MobileAppHomeSection";
 import HeroSection2 from "../components/HeroSection2";
-
+import PrivacyNotice from "../components/PrivacyNotice";
 export default function Home() {
   const images = [
     "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_f8fa0789.jpg",
@@ -39,6 +39,8 @@ export default function Home() {
 
   return (
     <div className=" ">
+      <PrivacyNotice />
+
       <HeroWithNvabar />
 
       {/* <HeroSection />
