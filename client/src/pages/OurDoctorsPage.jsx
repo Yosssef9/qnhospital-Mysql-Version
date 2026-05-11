@@ -350,8 +350,12 @@ export default function OurDoctorsPage() {
                       )}
 
                       <img
-                        src={doctor.image || "/images/doctor-defalut.png"}
-                        alt={doctor.name}
+  src={
+    doctor.image ||
+    (doctor.gender === "female"
+      ? "/images/female-doctor-default.png"
+      : "/images/doctor-defalut.png")
+  }                        alt={doctor.name}
                         className="h-[320px] w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                       />
                       <div className="absolute inset-0 flex translate-y-4 flex-col items-center justify-center gap-4 bg-slate-950/55 px-5 text-center opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">

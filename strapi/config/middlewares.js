@@ -5,10 +5,10 @@ module.exports = [
   {
     name: "strapi::cors",
     config: {
-      origin: [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "https://h6cntfzw-5173.euw.devtunnels.ms",
+       origin: [
+        "http://localhost:4174",
+        "http://127.0.0.1:4174",
+        "http://10.0.110.28:4174",
       ],
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],

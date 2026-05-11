@@ -22,6 +22,7 @@ import { getSiteNav } from "../data/navData";
 import { motion, useAnimation } from "framer-motion";
 import { useWebsiteLinks } from "../api/strapi";
 import GlobalSearchBox from "./GlobalSearchBox";
+import { FaXTwitter } from "react-icons/fa6";
 export default function NavBarQNH() {
   const [open, setOpen] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
@@ -786,7 +787,7 @@ export default function NavBarQNH() {
                 className="p-1.5 rounded-lg hover:bg-white/70 hover:text-[rgb(21,98,160)] transition"
                 href={websiteLinks?.socialMediaLinks?.twitter}
               >
-                <Twitter className="h-4 w-4" />
+                <FaXTwitter className="h-4 w-4" />{" "}
               </a>
               <a
                 className="p-1.5 rounded-lg hover:bg-white/70 hover:text-[rgb(21,98,160)] transition"

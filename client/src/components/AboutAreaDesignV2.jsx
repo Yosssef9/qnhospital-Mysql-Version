@@ -320,6 +320,7 @@ import { useTranslation } from "react-i18next";
 import SectionTitle from "./reusableComponents/SectionTitle";
 import SectionBadge from "./reusableComponents/SectionBadge";
 import { useAboutQnhSection } from "../api/strapi";
+import SectionSpinner from "./sectionSpinner";
 
 const iconMap = {
   heartPulse: HeartPulse,
@@ -333,13 +334,39 @@ const iconMap = {
 };
 
 export default function AboutAreaDesignV2() {
-  const { i18n } = useTranslation();
+const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
 
   const { data, isLoading, isError } = useAboutQnhSection();
+console.log("About QNH Section Data:", data);
+console.log("About QNH Section isError:", isError);
 
-  if (isLoading) return null;
-  if (isError || !data) return null;
+  if (isLoading) {
+    return (
+      <section className="bg-[#f8fbfe] px-6 py-16 md:px-16 xl:px-24 md:py-24">
+        <div className="mx-auto flex max-w-7xl justify-center">
+          <SectionSpinner />
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="bg-[#f8fbfe] px-6 py-16 md:px-16 xl:px-24 md:py-24">
+        <div className="mx-auto max-w-7xl text-center">
+          <h3 className="text-lg font-semibold text-slate-900">
+            {t("mobileAppHome.errorTitle")}
+          </h3>
+          <p className="mt-2 text-sm text-slate-600">
+            {t("mobileAppHome.errorDesc")}
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!data) return null;
 
   const highlights = data.highlights.map((item) => ({
     ...item,

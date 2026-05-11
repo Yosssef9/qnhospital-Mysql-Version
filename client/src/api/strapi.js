@@ -305,7 +305,6 @@ export const useMobileAppHomeSection = () => {
     staleTime: 5 * 60 * 1000,
   });
 };
-
 export const useDoctors = (
   page,
   search,
@@ -335,6 +334,7 @@ export const useDoctors = (
       params.append("fields[2]", "experience");
       params.append("fields[3]", "featured");
       params.append("fields[4]", "doctorRank");
+      params.append("fields[5]", "gender");
 
       params.append("populate[0]", "image");
       params.append("populate[1]", "clinic");
@@ -357,7 +357,7 @@ export const useDoctors = (
       if (!res.ok) throw new Error("Failed to fetch doctors");
 
       const json = await res.json();
-      console.log("json doctors", json);
+
       return {
         data:
           json.data?.map((item) => ({
@@ -368,8 +368,13 @@ export const useDoctors = (
             description: item?.clinic?.cardDesc || "",
             experience: item.experience || "",
             doctorRank: item.doctorRank || "",
+            gender: item.gender || "male",
             featured: item.featured || false,
-            image: item.image?.url ? STRAPI_URL + item.image.url : "",
+            image: item.image?.url
+              ? STRAPI_URL + item.image.url
+              : item.gender === "female"
+                ? "/images/female-doctor-default.png"
+                : "/images/doctor-defalut.png",
             specialty: item.clinic?.title || "",
             department: item.clinic?.shortTitle || item.clinic?.title || "",
             clinicSlug: item.clinic?.slug || "",
@@ -381,7 +386,6 @@ export const useDoctors = (
     placeholderData: (previousData) => previousData,
   });
 };
-
 export const useDoctorClinics = () => {
   const { i18n } = useTranslation();
   const locale = i18n.language || "en";
@@ -434,7 +438,7 @@ export const useDoctorBySlug = (slug) => {
       params.append("fields[3]", "featured");
       params.append("fields[4]", "doctorRank");
       params.append("fields[5]", "shortBio");
-
+params.append("fields[6]", "gender");
       params.append("populate[0]", "image");
       params.append("populate[1]", "clinic");
       params.append("populate[2]", "specializations");
@@ -459,6 +463,7 @@ export const useDoctorBySlug = (slug) => {
         featured: item.featured || false,
         doctorRank: item.doctorRank || "",
         shortBio: item.shortBio || "",
+        gender: item.gender || "male",
         image: item.image?.url ? STRAPI_URL + item.image.url : "",
         clinic: {
           title: item.clinic?.title || "",
@@ -946,7 +951,7 @@ export const useAboutQnhSection = () => {
   const locale = i18n.language || "en";
 
   return useQuery({
-    queryKey: ["about-qnh-section", locale],
+    queryKey: ["about-qnh-section-home-page", locale],
     queryFn: async () => {
       const params = new URLSearchParams();
 
@@ -970,7 +975,7 @@ export const useAboutQnhSection = () => {
       params.append("populate[2]", "featurePoints");
 
       const res = await fetch(
-        `${STRAPI_URL}/api/about-qnh-section?${params.toString()}`,
+        `${STRAPI_URL}/api/about-qnh-section-home-page?${params.toString()}`,
       );
 
       if (!res.ok) {

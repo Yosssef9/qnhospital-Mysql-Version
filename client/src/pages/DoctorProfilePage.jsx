@@ -214,10 +214,15 @@ export default function DoctorProfilePage() {
                   )}
 
                   <img
-                    src={doctor.image || "/images/doctor-defalut.png"}
-                    alt={doctor.name}
+ src={
+    doctor.image ||
+    (doctor.gender === "female"
+      ? "/images/female-doctor-default.png"
+      : "/images/doctor-defalut.png")
+  }                    alt={doctor.name}
                     className="relative z-[1] h-[420px] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                   />
+                  
                 </div>
               </div>
             </motion.div>

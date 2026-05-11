@@ -115,7 +115,8 @@ export default function HeroSwiperStyle() {
               {slides.map((slide, index) => (
                 <SwiperSlide key={slide.id}>
                   <div className="relative h-full w-full">
-                    {slide.isVideo ? (
+{/* <div className="relative h-full w-full bg-gradient-to-b from-white via-[#eef6fb] to-[rgb(21,98,160)]"> */}
+                      {slide.isVideo ? (
                       <video
                         ref={(el) => {
                           videoRefs.current[index] = el;
@@ -135,10 +136,13 @@ export default function HeroSwiperStyle() {
                         src={slide.media}
                         alt={slide.title}
                         className="absolute inset-0 h-full w-full object-cover"
+                        // className="absolute inset-0 h-full w-full object-contain"
                         animate={
                           active === index
                             ? { scale: [1.15, 1.05] }
                             : { scale: 1.12 }
+                              // ? { scale: [1.02, 1] }
+                              //  : { scale: 1.02 }
                         }
                         transition={
                           active === index

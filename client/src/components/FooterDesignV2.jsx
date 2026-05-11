@@ -7,6 +7,7 @@ import { getSiteNav } from "../data/navData";
 // import { CONTACT } from "../data/contact";
 import SectionPrimaryButton from "./SectionPrimaryButton";
 import { useWebsiteLinks } from "../api/strapi";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function FooterDesignV2() {
   const { t, i18n } = useTranslation();
@@ -30,7 +31,7 @@ export default function FooterDesignV2() {
 
   const socialLinks = [
     { Icon: FaFacebookF, href: `${websiteLinks?.socialMediaLinks?.facebook}` },
-    { Icon: FaTwitter, href: `${websiteLinks?.socialMediaLinks?.twitter}` },
+    { Icon: FaXTwitter, href: `${websiteLinks?.socialMediaLinks?.twitter}` },
     { Icon: FaInstagram, href: `${websiteLinks?.socialMediaLinks?.instagram}` },
     { Icon: FaYoutube, href: `${websiteLinks?.socialMediaLinks?.youtube}` },
   ];
@@ -188,7 +189,7 @@ export default function FooterDesignV2() {
             </span>
           </div>
 
-          <div
+          {/* <div
             className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}
           >
             <span className="text-sm text-slate-600">
@@ -209,7 +210,7 @@ export default function FooterDesignV2() {
               className="h-9 w-auto object-contain"
               alt="CHI Logo"
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
