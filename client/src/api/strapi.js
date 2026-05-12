@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { getDoctorParent } from "../helpers/getDoctorParent";
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
 
@@ -214,7 +215,34 @@ export const useOurDoctorsSection = () => {
         "shortTitle",
       );
       params.append("populate[doctor][populate][clinic][fields][2]", "slug");
+      params.append("populate[doctor][populate][unit][fields][0]", "title");
+      params.append(
+        "populate[doctor][populate][unit][fields][1]",
+        "shortTitle",
+      );
+      params.append("populate[doctor][populate][unit][fields][2]", "slug");
 
+      params.append("populate[doctor][populate][center][fields][0]", "title");
+      params.append(
+        "populate[doctor][populate][center][fields][1]",
+        "shortTitle",
+      );
+      params.append("populate[doctor][populate][center][fields][2]", "slug");
+
+      params.append(
+        "populate[doctor][populate][medical_service][fields][0]",
+        "title",
+      );
+
+      params.append(
+        "populate[doctor][populate][medical_service][fields][1]",
+        "shortTitle",
+      );
+
+      params.append(
+        "populate[doctor][populate][medical_service][fields][2]",
+        "slug",
+      );
       const res = await fetch(
         `${STRAPI_URL}/api/our-doctors-section?${params.toString()}`,
       );
@@ -225,7 +253,9 @@ export const useOurDoctorsSection = () => {
       const json = await res.json();
       const data = json?.data;
       const doctor = data?.doctor;
-      console.log("json useOurDoctorsSection", json);
+
+      const parent = getDoctorParent(doctor);
+
       return {
         title: data?.title || "",
         doctorDescription: data?.customDescription || doctor?.shortBio || "",
@@ -233,10 +263,12 @@ export const useOurDoctorsSection = () => {
         doctorName: doctor?.name || "",
         doctorSlug: doctor?.slug || "",
         doctorExperience: doctor?.experience || 10,
+
         doctorImage: doctor?.image?.url ? STRAPI_URL + doctor.image.url : "",
-        doctorSpecialty: doctor?.clinic?.title || "",
-        doctorDepartment:
-          doctor?.clinic?.shortTitle || doctor?.clinic?.title || "",
+
+        doctorSpecialty: parent?.title || "",
+
+        doctorDepartment: parent?.shortTitle || parent?.title || "",
       };
     },
     staleTime: 5 * 60 * 1000,
@@ -308,7 +340,7 @@ export const useMobileAppHomeSection = () => {
 export const useDoctors = (
   page,
   search,
-  clinicSlug,
+  parentSlug,
   pageSize = 6,
   sort = ["featured:desc", "name:asc"],
 ) => {
@@ -317,7 +349,7 @@ export const useDoctors = (
   const allValue = "all";
 
   return useQuery({
-    queryKey: ["doctors", page, search, clinicSlug, pageSize, locale, sort],
+    queryKey: ["doctors", page, search, parentSlug, pageSize, locale, sort],
     queryFn: async () => {
       const params = new URLSearchParams();
 
@@ -338,6 +370,9 @@ export const useDoctors = (
 
       params.append("populate[0]", "image");
       params.append("populate[1]", "clinic");
+      params.append("populate[2]", "unit");
+      params.append("populate[3]", "center");
+      params.append("populate[4]", "medical_service");
 
       if (search) {
         params.append("filters[$or][0][name][$containsi]", search);
@@ -346,10 +381,28 @@ export const useDoctors = (
           "filters[$or][2][clinic][shortTitle][$containsi]",
           search,
         );
+        params.append("filters[$or][3][unit][title][$containsi]", search);
+        params.append("filters[$or][4][unit][shortTitle][$containsi]", search);
+        params.append("filters[$or][5][center][title][$containsi]", search);
+        params.append(
+          "filters[$or][6][center][shortTitle][$containsi]",
+          search,
+        );
+        params.append(
+          "filters[$or][7][medical_service][title][$containsi]",
+          search,
+        );
+        params.append(
+          "filters[$or][8][medical_service][shortTitle][$containsi]",
+          search,
+        );
       }
 
-      if (clinicSlug && clinicSlug !== allValue) {
-        params.append("filters[clinic][slug][$eq]", clinicSlug);
+      if (parentSlug && parentSlug !== allValue) {
+        params.append("filters[$or][0][clinic][slug][$eq]", parentSlug);
+        params.append("filters[$or][1][unit][slug][$eq]", parentSlug);
+        params.append("filters[$or][2][center][slug][$eq]", parentSlug);
+        params.append("filters[$or][3][medical_service][slug][$eq]", parentSlug);
       }
 
       const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
@@ -360,66 +413,102 @@ export const useDoctors = (
 
       return {
         data:
-          json.data?.map((item) => ({
-            id: item.id,
-            documentId: item.documentId,
-            name: item.name || "",
-            slug: item.slug || "",
-            description: item?.clinic?.cardDesc || "",
-            experience: item.experience || "",
-            doctorRank: item.doctorRank || "",
-            gender: item.gender || "male",
-            featured: item.featured || false,
-            image: item.image?.url
-              ? STRAPI_URL + item.image.url
-              : item.gender === "female"
-                ? "/images/female-doctor-default.png"
-                : "/images/doctor-defalut.png",
-            specialty: item.clinic?.title || "",
-            department: item.clinic?.shortTitle || item.clinic?.title || "",
-            clinicSlug: item.clinic?.slug || "",
-            to: `/our-doctors/${item.slug || item.id}`,
-          })) || [],
+          json.data?.map((item) => {
+            const parent = getDoctorParent(item);
+
+            return {
+              id: item.id,
+              documentId: item.documentId,
+              name: item.name || "",
+              slug: item.slug || "",
+              description: parent.cardDesc || "",
+              experience: item.experience || "",
+              doctorRank: item.doctorRank || "",
+              gender: item.gender || "male",
+              featured: item.featured || false,
+              image: item.image?.url
+                ? STRAPI_URL + item.image.url
+                : item.gender === "female"
+                  ? "/images/female-doctor-default.png"
+                  : "/images/doctor-defalut.png",
+              specialty: parent.title || "",
+              department: parent.shortTitle || parent.title || "",
+              parentSlug: parent.slug || "",
+              parentType: parent.type || "",
+              clinicSlug: item.clinic?.slug || "",
+              to: `/our-doctors/${item.slug || item.id}`,
+            };
+          }) || [],
         meta: json.meta?.pagination || null,
       };
     },
     placeholderData: (previousData) => previousData,
   });
 };
-export const useDoctorClinics = () => {
+export const useDoctorParents = () => {
   const { i18n } = useTranslation();
   const locale = i18n.language || "en";
 
   return useQuery({
-    queryKey: ["doctor-clinics", locale],
+    queryKey: ["doctor-parents", locale],
+
     queryFn: async () => {
-      const params = new URLSearchParams();
+      const buildParams = () => {
+        const params = new URLSearchParams();
 
-      params.append("locale", locale);
-      params.append("pagination[page]", 1);
-      params.append("pagination[pageSize]", 200);
-      params.append("fields[0]", "title");
-      params.append("fields[1]", "shortTitle");
-      params.append("fields[2]", "slug");
+        params.append("locale", locale);
+        params.append("pagination[page]", 1);
+        params.append("pagination[pageSize]", 200);
 
-      const res = await fetch(`${STRAPI_URL}/api/clinics?${params.toString()}`);
+        params.append("fields[0]", "title");
+        params.append("fields[1]", "shortTitle");
+        params.append("fields[2]", "slug");
 
-      if (!res.ok) throw new Error("Failed to fetch clinics");
+        return params.toString();
+      };
 
-      const json = await res.json();
+      const [clinicsRes, unitsRes, centersRes, medicalServicesRes] =
+        await Promise.all([
+          fetch(`${STRAPI_URL}/api/clinics?${buildParams()}`),
+          fetch(`${STRAPI_URL}/api/units?${buildParams()}`),
+          fetch(`${STRAPI_URL}/api/centers?${buildParams()}`),
+          fetch(`${STRAPI_URL}/api/medical-services?${buildParams()}`),
+        ]);
 
-      return (
-        json.data?.map((item) => ({
+      if (!clinicsRes.ok) throw new Error("Failed to fetch clinics");
+      if (!unitsRes.ok) throw new Error("Failed to fetch units");
+      if (!centersRes.ok) throw new Error("Failed to fetch centers");
+      if (!medicalServicesRes.ok) {
+        throw new Error("Failed to fetch medical services");
+      }
+
+      const [clinicsJson, unitsJson, centersJson, medicalServicesJson] =
+        await Promise.all([
+          clinicsRes.json(),
+          unitsRes.json(),
+          centersRes.json(),
+          medicalServicesRes.json(),
+        ]);
+
+      const mapItems = (items, type) =>
+        items?.map((item) => ({
+          type,
           title: item.title || "",
           shortTitle: item.shortTitle || "",
           slug: item.slug || "",
-        })) || []
-      );
+        })) || [];
+
+      return [
+        ...mapItems(clinicsJson.data, "clinic"),
+        ...mapItems(unitsJson.data, "unit"),
+        ...mapItems(centersJson.data, "center"),
+        ...mapItems(medicalServicesJson.data, "medical-service"),
+      ];
     },
+
     staleTime: 5 * 60 * 1000,
   });
 };
-
 export const useDoctorBySlug = (slug) => {
   const { i18n } = useTranslation();
   const locale = i18n.language || "en";
@@ -439,20 +528,25 @@ export const useDoctorBySlug = (slug) => {
       params.append("fields[4]", "doctorRank");
       params.append("fields[5]", "shortBio");
       params.append("fields[6]", "gender");
+
       params.append("populate[0]", "image");
       params.append("populate[1]", "clinic");
-      params.append("populate[2]", "specializations");
-      params.append("populate[3]", "qualifications");
+      params.append("populate[2]", "unit");
+      params.append("populate[3]", "center");
+      params.append("populate[4]", "medical_service");
+      params.append("populate[5]", "specializations");
+      params.append("populate[6]", "qualifications");
 
       const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
 
       if (!res.ok) throw new Error("Failed to fetch doctor profile");
 
       const json = await res.json();
-      console.log("json useDoctorBySlug", json);
       const item = json?.data?.[0];
 
       if (!item) return null;
+
+      const parent = getDoctorParent(item);
 
       return {
         id: item.id,
@@ -465,16 +559,20 @@ export const useDoctorBySlug = (slug) => {
         shortBio: item.shortBio || "",
         gender: item.gender || "male",
         image: item.image?.url ? STRAPI_URL + item.image.url : "",
-        clinic: {
-          title: item.clinic?.title || "",
-          shortTitle: item.clinic?.shortTitle || "",
-          slug: item.clinic?.slug || "",
-        },
+
+        parent,
+
+        clinic: item.clinic || null,
+        unit: item.unit || null,
+        center: item.center || null,
+        medicalService: item.medical_service || null,
+
         specializations:
           item.specializations?.map((sp, index) => ({
             id: sp.id || index,
             title: sp.title || "",
           })) || [],
+
         qualifications:
           item.qualifications?.map((q, index) => ({
             id: q.id || index,

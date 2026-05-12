@@ -45,6 +45,24 @@
       },
       "inversedBy": "doctors"
     },
+    "unit": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::unit.unit",
+      "inversedBy": "doctors"
+    },
+    "medical_service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::medical-service.medical-service",
+      "inversedBy": "doctors"
+    },
+    "center": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::center.center",
+      "inversedBy": "doctors"
+    },
     "experience": {
       "type": "integer",
       "pluginOptions": {

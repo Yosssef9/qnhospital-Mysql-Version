@@ -22,7 +22,7 @@ import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import SearchableSelect from "../components/SearchableSelect";
 
-import { useDoctors, useDoctorClinics } from "../api/strapi";
+import { useDoctors, useDoctorParents } from "../api/strapi";
 import { useDebounce } from "../hooks/useDebounce";
 import { formatArabicYears } from "../helpers/formatArabicYears";
 import { t } from "i18next";
@@ -33,41 +33,51 @@ export default function OurDoctorsPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const allClinicsValue = "all";
-  const allClinicsLabel = t("ourDoctorsPage.filters.all");
-
+  const allParentsValue = "all";
+  const allParentsLabel = t("ourDoctorsPage.filters.all");
   const [query, setQuery] = useState(() => searchParams.get("search") || "");
   const debouncedQuery = useDebounce(query, 500);
 
   const currentPage = parseInt(searchParams.get("page")) || 1;
-  const activeClinic = searchParams.get("clinic") || allClinicsValue;
+  const activeParent = searchParams.get("parent") || allParentsValue;
 
-  const doctorsQuery = useDoctors(currentPage, debouncedQuery, activeClinic, 6);
+  const doctorsQuery = useDoctors(currentPage, debouncedQuery, activeParent, 6);
   console.log("doctorsQuery", doctorsQuery);
-  const clinicsQuery = useDoctorClinics();
+  const parentsQuery = useDoctorParents();
 
   const doctors = doctorsQuery.data?.data || [];
   const pagination = doctorsQuery.data?.meta || null;
 
-  const clinicOptions = useMemo(() => {
-    const clinics = clinicsQuery.data || [];
+  const parentOptions = useMemo(() => {
+    const parents = parentsQuery.data || [];
 
     return [
       {
-        value: allClinicsValue,
-        label: allClinicsLabel,
+        value: allParentsValue,
+        label: allParentsLabel,
         en: "All",
         ar: "الكل",
       },
-      ...clinics.map((clinic) => ({
-        value: clinic.slug,
-        label: clinic.title,
-        en: clinic.title,
-        ar: clinic.title,
+
+      ...parents.map((parent) => ({
+        value: parent.slug,
+
+        label:
+          parent.type === "clinic"
+            ? `🏥 ${parent.title}`
+            : parent.type === "unit"
+              ? `🚑 ${parent.title}`
+              : parent.type === "center"
+                ? `🏢 ${parent.title}`
+                : `🩺 ${parent.title}`,
+
+        en: parent.title,
+        ar: parent.title,
+
+        type: parent.type,
       })),
     ];
-  }, [clinicsQuery.data, allClinicsLabel]);
-
+  }, [parentsQuery.data, allParentsLabel]);
   const heroStats = [
     {
       icon: Users,
@@ -76,7 +86,7 @@ export default function OurDoctorsPage() {
     },
     {
       icon: BriefcaseMedical,
-      value: `${(clinicsQuery.data || []).length}+`,
+      value: `${(parentsQuery.data || []).length}+`,
       label: t("ourDoctorsPage.heroStats.specialties"),
     },
     {
@@ -108,16 +118,16 @@ export default function OurDoctorsPage() {
     });
   };
 
-  const handleClinicChange = (e) => {
+  const handleParentChange = (e) => {
     const value = e.target.value;
 
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
 
-      if (!value || value === allClinicsValue) {
-        params.delete("clinic");
+      if (!value || value === allParentsValue) {
+        params.delete("parent");
       } else {
-        params.set("clinic", value);
+        params.set("parent", value);
       }
 
       params.set("page", 1);
@@ -269,11 +279,11 @@ export default function OurDoctorsPage() {
             </div>
 
             <SearchableSelect
-              name="clinic"
-              value={activeClinic}
-              onChange={handleClinicChange}
-              options={clinicOptions}
-              placeholder={allClinicsLabel}
+              name="parent"
+              value={activeParent}
+              onChange={handleParentChange}
+              options={parentOptions}
+              placeholder={allParentsLabel}
               searchPlaceholder={t("ourDoctorsPage.searchSpecialtyPlaceholder")}
               noResultsText={t("ourDoctorsPage.noSpecialtyResults")}
               inputBaseClass={`h-13 w-full rounded-2xl border border-slate-200 bg-[#f8fbfe] px-4 text-sm font-medium outline-none transition focus:border-[rgba(21,98,160,0.35)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(21,98,160,0.08)] ${
@@ -350,12 +360,13 @@ export default function OurDoctorsPage() {
                       )}
 
                       <img
-  src={
-    doctor.image ||
-    (doctor.gender === "female"
-      ? "/images/female-doctor-default.png"
-      : "/images/doctor-defalut.png")
-  }                        alt={doctor.name}
+                        src={
+                          doctor.image ||
+                          (doctor.gender === "female"
+                            ? "/images/female-doctor-default.png"
+                            : "/images/doctor-defalut.png")
+                        }
+                        alt={doctor.name}
                         className="h-[320px] w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                       />
                       <div className="absolute inset-0 flex translate-y-4 flex-col items-center justify-center gap-4 bg-slate-950/55 px-5 text-center opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">

@@ -29,13 +29,13 @@ export default function DoctorProfilePage() {
   const doctor = doctorQuery.data;
   console.log("doctor", doctor);
   useEffect(() => {
-  if (!doctor) return;
+    if (!doctor) return;
 
-  trackEvent("doctor_profile_view", {
-    doctor_name: doctor.name,
-    clinic: doctor.clinic?.title || "",
-  });
-}, [doctor]);
+    trackEvent("doctor_profile_view", {
+      doctor_name: doctor.name,
+      parent: doctor.parent?.title || "",
+    });
+  }, [doctor]);
   if (doctorQuery.isLoading) {
     return (
       <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f6fbff]">
@@ -214,15 +214,15 @@ export default function DoctorProfilePage() {
                   )}
 
                   <img
- src={
-    doctor.image ||
-    (doctor.gender === "female"
-      ? "/images/female-doctor-default.png"
-      : "/images/doctor-defalut.png")
-  }                    alt={doctor.name}
+                    src={
+                      doctor.image ||
+                      (doctor.gender === "female"
+                        ? "/images/female-doctor-default.png"
+                        : "/images/doctor-defalut.png")
+                    }
+                    alt={doctor.name}
                     className="relative z-[1] h-[420px] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                   />
-                  
                 </div>
               </div>
             </motion.div>
@@ -233,7 +233,7 @@ export default function DoctorProfilePage() {
               transition={{ duration: 0.5, delay: 0.05 }}
               className={`${isRTL ? "text-right" : "text-left"} order-1 lg:order-2`}
             >
-              <SectionBadge>{doctor.clinic?.title}</SectionBadge>
+              <SectionBadge>{doctor.parent?.title}</SectionBadge>
 
               <SectionTitle className="max-w-3xl font-light leading-tight">
                 {t("doctor.prefix")} {doctor.name}
@@ -249,7 +249,7 @@ export default function DoctorProfilePage() {
                         doctor.doctorRank,
                       ),
                       department:
-                        doctor.clinic?.shortTitle || doctor.clinic?.title || "",
+                        doctor.parent?.shortTitle || doctor.parent?.title || "",
                     })}
                   </div>
                 )}

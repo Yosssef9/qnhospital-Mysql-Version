@@ -152,6 +152,12 @@
           "localized": true
         }
       }
+    },
+    "doctors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::doctor.doctor",
+      "mappedBy": "medical_service"
     }
   }
 }

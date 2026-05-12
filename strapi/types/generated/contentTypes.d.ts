@@ -660,6 +660,7 @@ export interface ApiCenterCenter extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    doctors: Schema.Attribute.Relation<'oneToMany', 'api::doctor.doctor'>;
     hero: Schema.Attribute.Component<'department-sections.hero', false> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -856,6 +857,7 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    center: Schema.Attribute.Relation<'manyToOne', 'api::center.center'>;
     clinic: Schema.Attribute.Relation<'manyToOne', 'api::clinic.clinic'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -907,6 +909,10 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::doctor.doctor'>;
+    medical_service: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::medical-service.medical-service'
+    >;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -946,6 +952,7 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    unit: Schema.Attribute.Relation<'manyToOne', 'api::unit.unit'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1523,6 +1530,7 @@ export interface ApiMedicalServiceMedicalService
           localized: true;
         };
       }>;
+    doctors: Schema.Attribute.Relation<'oneToMany', 'api::doctor.doctor'>;
     hero: Schema.Attribute.Component<'department-sections.hero', false> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1995,6 +2003,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    doctors: Schema.Attribute.Relation<'oneToMany', 'api::doctor.doctor'>;
     hero: Schema.Attribute.Component<'department-sections.hero', false> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

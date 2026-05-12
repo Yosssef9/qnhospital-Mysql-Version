@@ -328,16 +328,8 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
+import { iconMap } from "../constants/iconMap";
 import { usePrivacyPolicy, useWebsiteLinks } from "../api/strapi";
-
-const iconMap = {
-  user: UserRoundCheck,
-  database: Database,
-  lock: LockKeyhole,
-  eye: Eye,
-  file: FileText,
-  refresh: RefreshCcw,
-};
 
 export default function PrivacyPolicy() {
   const { i18n } = useTranslation();
