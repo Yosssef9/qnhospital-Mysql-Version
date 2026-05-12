@@ -78,11 +78,7 @@ export default function NavBarQNH() {
         ? x <= edgeThreshold
         : x >= screenWidth - edgeThreshold;
 
-      if (touchingEdge) {
-        touchStartX.current = x;
-      } else {
-        touchStartX.current = null;
-      }
+      touchStartX.current = touchingEdge ? x : null;
     };
 
     const handleTouchMove = (e) => {
@@ -91,9 +87,10 @@ export default function NavBarQNH() {
       if (touchStartX.current == null) return;
 
       const currentX = e.touches[0].clientX;
+
       const delta = isArabic
-        ? currentX - touchStartX.current
-        : touchStartX.current - currentX;
+        ? currentX - touchStartX.current // swipe right
+        : touchStartX.current - currentX; // swipe left
 
       if (delta > openThreshold) {
         setOpen(true);
