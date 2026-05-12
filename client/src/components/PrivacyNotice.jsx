@@ -63,9 +63,7 @@ export default function PrivacyNotice() {
 
             <div>
               <h3 className="mb-1 text-base font-bold text-slate-900">
-                {isRTL
-                  ? "معلومات وسياسات الموقع"
-                  : "Website Information & Policies"}
+                {isRTL ? "سياسة الخصوصية" : "Privacy Policy"}
               </h3>
 
               <p className="text-sm leading-6 text-slate-600">
