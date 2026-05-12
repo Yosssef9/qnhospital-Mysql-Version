@@ -15,6 +15,7 @@
     "@tanstack/react-query-devtools": "^5.95.0",
     "framer-motion": "^12.23.24",
     "i18next": "^25.10.9",
+    "klaro": "^0.7.21",
     "lucide-react": "^0.577.0",
     "react": "^19.1.1",
     "react-datepicker": "^9.1.0",

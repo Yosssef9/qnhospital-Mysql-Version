@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import GlobalSpinner from "./components/GlobalSpinner";
 import { useTranslation } from "react-i18next";
 import FloatingSocialLogo from "./components/FloatingSocialLogo";
+import KlaroManager from "./components/KlaroManager";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(() => {
@@ -41,6 +42,7 @@ export default function App() {
         <>
           <RouterProvider router={router} />
           <FloatingSocialLogo />
+          <KlaroManager />
         </>
       )}
     </>

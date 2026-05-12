@@ -68,23 +68,57 @@ export default function FloatingSocialLogo() {
 
   return (
     <>
-      <button
+      <motion.button
         type="button"
-        onClick={() => setOpen(true)}
-        // className={`fixed bottom-6 z-[9998] flex h-16 w-16 items-center justify-center rounded-full border border-white/70 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.18)] transition hover:scale-105 ${
-        //   isRTL ? "left-6" : "right-6"
-        // }`}
-        className={`fixed bottom-6 z-[9998] flex h-16 w-16 items-center justify-center rounded-full border-2 border-white bg-white shadow-[0_0_0_3px_rgba(21,98,160,0.10),0_14px_40px_rgba(15,23,42,0.18),0_0_28px_rgba(21,98,160,0.22)] transition duration-300 hover:scale-110 hover:shadow-[0_0_0_5px_rgba(21,98,160,0.14),0_18px_50px_rgba(15,23,42,0.24),0_0_40px_rgba(21,98,160,0.30)] ${
+        onClick={() => setOpen((prev) => !prev)}
+        whileTap={{
+          scale: 0.9,
+        }}
+        animate={{
+          y: [0, -4, 0],
+          rotate: open ? 360 : 0,
+        }}
+        transition={{
+          y: {
+            duration: 2.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
+          rotate: {
+            duration: 0.7,
+            ease: "easeInOut",
+          },
+          scale: {
+            type: "spring",
+            stiffness: 300,
+            damping: 15,
+          },
+        }}
+        className={`cursor-pointer group fixed bottom-6 z-[9998] flex h-16 w-16 items-center justify-center rounded-full border-2 border-white bg-white shadow-[0_0_0_3px_rgba(21,98,160,0.10),0_14px_40px_rgba(15,23,42,0.18),0_0_28px_rgba(21,98,160,0.22)] ${
           isRTL ? "left-6" : "right-6"
         }`}
       >
+        {/* Glow Ring */}
+        <motion.div
+          animate={{
+            scale: [1, 1.18, 1],
+            opacity: [0.35, 0, 0.35],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+          className="absolute inset-0 rounded-full border-2 border-[var(--main-color)]"
+        />
+
+        {/* Logo */}
         <img
           src="/Logo.png"
           alt="Qassim National Hospital"
-          className="h-12 w-12 rounded-full object-contain"
+          className="relative z-10 h-12 w-12 rounded-full object-contain"
         />
-      </button>
-
+      </motion.button>
       <AnimatePresence>
         {open && (
           <>

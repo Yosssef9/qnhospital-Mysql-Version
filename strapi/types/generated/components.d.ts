@@ -168,7 +168,7 @@ export interface PrivacyPolicyPoints extends Struct.ComponentSchema {
     displayName: 'points ';
   };
   attributes: {
-    text: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
   };
 }
 

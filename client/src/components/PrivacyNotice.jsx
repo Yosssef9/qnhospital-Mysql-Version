@@ -63,17 +63,19 @@ export default function PrivacyNotice() {
 
             <div>
               <h3 className="mb-1 text-base font-bold text-slate-900">
-                {isRTL ? "خصوصيتك مهمة لنا" : "Your privacy matters"}
+                {isRTL
+                  ? "معلومات وسياسات الموقع"
+                  : "Website Information & Policies"}
               </h3>
 
               <p className="text-sm leading-6 text-slate-600">
                 {isRTL
-                  ? "تعرف على كيفية حماية بياناتك واستخدامها داخل موقع مستشفى قاسم الوطني."
-                  : "Learn how Qassim National Hospital protects and uses your data on our website."}
+                  ? "تعرف على سياسات الموقع وكيفية استخدام الخدمات والمعلومات داخل موقع مستشفى القصيم الوطني."
+                  : "Learn more about our website policies, services, and how information is handled on Qassim National Hospital website."}
               </p>
 
               <span className="mt-3 inline-block text-sm font-bold text-[var(--main-color)]">
-                {isRTL ? "عرض سياسة الخصوصية" : "View Privacy Policy"}
+                {isRTL ? "عرض التفاصيل" : "View Details"}
               </span>
             </div>
           </div>
