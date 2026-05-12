@@ -511,17 +511,23 @@ export default function PrivacyPolicy() {
 
             <div className="flex flex-wrap gap-3">
               {content.contactPhone && (
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
+                <a
+                  href={`tel:${content.contactPhone}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold transition hover:bg-white/25"
+                >
                   <Phone className="h-4 w-4" />
                   {content.contactPhone}
-                </div>
+                </a>
               )}
 
               {contactEmail && (
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold transition hover:bg-white/25"
+                >
                   <Mail className="h-4 w-4" />
                   {contactEmail}
-                </div>
+                </a>
               )}
 
               {content.contactServiceLabel && (
