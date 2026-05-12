@@ -31,9 +31,9 @@ export default function NavBarQNH() {
   const { t, i18n } = useTranslation();
   const controls = useAnimation();
   const touchStartX = useRef(null);
-  const edgeThreshold = 28; // swipe start area from screen edge
-  const openThreshold = 70; // how far user must swipe to open
-  const closeThreshold = 90; // how far user must swipe to close
+  const edgeThreshold = 85; // user can start swipe from 45px edge area
+  const openThreshold = 30; // easier to open
+  const closeThreshold = 60; // still intentional to close
   const nav = useMemo(() => getSiteNav(t), [t]);
   const { data: websiteLinks, isLoading } = useWebsiteLinks();
   console.log("nav", nav);
@@ -69,31 +69,51 @@ export default function NavBarQNH() {
 
     const handleTouchStart = (e) => {
       if (window.innerWidth >= 1024) return;
-      if (open) return;
 
       const x = e.touches[0].clientX;
       const screenWidth = window.innerWidth;
 
-      const touchingEdge = isArabic
-        ? x <= edgeThreshold
-        : x >= screenWidth - edgeThreshold;
+      // OPEN gesture
+      if (!open) {
+        const touchingEdge = isArabic
+          ? x <= edgeThreshold
+          : x >= screenWidth - edgeThreshold;
 
-      touchStartX.current = touchingEdge ? x : null;
+        touchStartX.current = touchingEdge ? x : null;
+        return;
+      }
+
+      // CLOSE gesture
+      touchStartX.current = x;
     };
 
     const handleTouchMove = (e) => {
       if (window.innerWidth >= 1024) return;
-      if (open) return;
       if (touchStartX.current == null) return;
 
       const currentX = e.touches[0].clientX;
 
-      const delta = isArabic
-        ? currentX - touchStartX.current // swipe right
-        : touchStartX.current - currentX; // swipe left
+      // OPEN
+      if (!open) {
+        const delta = isArabic
+          ? currentX - touchStartX.current
+          : touchStartX.current - currentX;
 
-      if (delta > openThreshold) {
-        setOpen(true);
+        if (delta > openThreshold) {
+          setOpen(true);
+          touchStartX.current = null;
+        }
+
+        return;
+      }
+
+      // CLOSE
+      const closeDelta = isArabic
+        ? touchStartX.current - currentX
+        : currentX - touchStartX.current;
+
+      if (closeDelta > closeThreshold) {
+        setOpen(false);
         touchStartX.current = null;
       }
     };
@@ -102,9 +122,17 @@ export default function NavBarQNH() {
       touchStartX.current = null;
     };
 
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+
+    window.addEventListener("touchmove", handleTouchMove, {
+      passive: true,
+    });
+
+    window.addEventListener("touchend", handleTouchEnd, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
