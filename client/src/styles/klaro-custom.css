@@ -217,23 +217,49 @@ html[dir="rtl"] #klaro {
 }
 
 /* Mobile */
-
 @media (max-width: 640px) {
-  #klaro .cookie-notice {
-    width: calc(100vw - 24px) !important;
+  #klaro .cm-modal,
+  #klaro .cm-modal-inner {
+    max-height: calc(100vh - 24px) !important;
+    border-radius: 24px !important;
+  }
 
-    max-width: none !important;
-
-    border-radius: 18px !important;
+  #klaro .cm-body {
+    max-height: calc(100vh - 240px) !important;
   }
 }
 
 /* Preferences modal */
 
-#klaro .cookie-modal,
+/* Preferences modal */
+
+#klaro .cookie-modal {
+  display: flex !important;
+
+  align-items: flex-start !important;
+
+  justify-content: center !important;
+
+  padding: 24px 16px !important;
+
+  overflow-y: auto !important;
+}
+
 #klaro .cm-modal,
 #klaro .cm-modal-inner {
   border-radius: 32px !important;
 
   overflow: hidden !important;
+
+  max-height: calc(100vh - 32px) !important;
+}
+
+/* ONLY modal content scrolls */
+
+#klaro .cm-body {
+  overflow-y: auto !important;
+
+  max-height: calc(100vh - 220px) !important;
+
+  scrollbar-width: thin;
 }
