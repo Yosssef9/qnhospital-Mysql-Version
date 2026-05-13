@@ -857,11 +857,16 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    center: Schema.Attribute.Relation<'manyToOne', 'api::center.center'>;
+    center: Schema.Attribute.Relation<'manyToOne', 'api::center.center'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     clinic: Schema.Attribute.Relation<'manyToOne', 'api::clinic.clinic'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     createdAt: Schema.Attribute.DateTime;
@@ -912,7 +917,12 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
     medical_service: Schema.Attribute.Relation<
       'manyToOne',
       'api::medical-service.medical-service'
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -952,7 +962,12 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    unit: Schema.Attribute.Relation<'manyToOne', 'api::unit.unit'>;
+    unit: Schema.Attribute.Relation<'manyToOne', 'api::unit.unit'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

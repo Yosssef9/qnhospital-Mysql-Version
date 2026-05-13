@@ -40,7 +40,7 @@
       "target": "api::clinic.clinic",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "inversedBy": "doctors"
@@ -49,18 +49,33 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::unit.unit",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
       "inversedBy": "doctors"
     },
     "medical_service": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::medical-service.medical-service",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
       "inversedBy": "doctors"
     },
     "center": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::center.center",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
       "inversedBy": "doctors"
     },
     "experience": {
@@ -81,10 +96,7 @@
       },
       "required": true,
       "default": "male",
-      "enum": [
-        "male",
-        "female"
-      ]
+      "enum": ["male", "female"]
     },
     "featured": {
       "type": "boolean",
@@ -103,12 +115,7 @@
         }
       },
       "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "doctorRank": {
       "type": "enumeration",
@@ -118,10 +125,7 @@
         }
       },
       "required": true,
-      "enum": [
-        "consultant",
-        "specialist"
-      ]
+      "enum": ["consultant", "specialist"]
     },
     "shortBio": {
       "type": "text",
