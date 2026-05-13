@@ -306,7 +306,7 @@ export default function OurDoctorsPage() {
           </div>
         ) : (
           <div
-            className={`grid gap-6 md:grid-cols-2 xl:grid-cols-3 transition-opacity duration-200 ${
+          className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 transition-opacity duration-200 ${
               showFetchingSkeleton ? "opacity-70" : "opacity-100"
             }`}
           >
