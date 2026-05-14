@@ -217,7 +217,7 @@ export default function DoctorProfilePage() {
                     src={
                       doctor.image ||
                       (doctor.gender === "female"
-                        ? "/images/female-doctor-default.png"
+                        ? "/images/female-doctor-default.jpeg"
                         : "/images/doctor-defalut.png")
                     }
                     alt={doctor.name}

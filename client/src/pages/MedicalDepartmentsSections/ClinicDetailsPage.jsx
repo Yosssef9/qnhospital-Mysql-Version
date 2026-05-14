@@ -134,7 +134,7 @@ export default function ClinicDetailsPage() {
               }`}
             >
               <Link
-                to={`/our-doctors?page=1&clinic=${clinic.slug}`}
+             to={`/our-doctors?page=1&parent=${clinic.slug}`}
                 className="inline-flex min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.22)] bg-[rgb(21,98,160)] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(21,98,160,0.22)] transition hover:scale-[1.02] hover:border-white/40 hover:bg-[rgb(17,84,138)]"
               >
                 {t("medicalDepartments.viewDoctors", {

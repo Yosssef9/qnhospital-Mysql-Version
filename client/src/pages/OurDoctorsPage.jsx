@@ -41,7 +41,7 @@ export default function OurDoctorsPage() {
   const currentPage = parseInt(searchParams.get("page")) || 1;
   const activeParent = searchParams.get("parent") || allParentsValue;
 
-  const doctorsQuery = useDoctors(currentPage, debouncedQuery, activeParent, 6);
+  const doctorsQuery = useDoctors(currentPage, debouncedQuery, activeParent, 8);
   console.log("doctorsQuery", doctorsQuery);
   const parentsQuery = useDoctorParents();
 
@@ -247,8 +247,7 @@ export default function OurDoctorsPage() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-16">
-        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+<section className="relative z-10 mx-auto max-w-[1800px] px-6 py-12 md:px-8 xl:px-12 2xl:px-16">        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className={isRTL ? "text-right" : "text-left"}>
             <SectionBadge>{t("ourDoctorsPage.gridBadge")}</SectionBadge>
             <SectionTitle className="font-light">
@@ -306,12 +305,12 @@ export default function OurDoctorsPage() {
           </div>
         ) : (
           <div
-          className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 transition-opacity duration-200 ${
+className={`grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 transition-opacity duration-200 ${
               showFetchingSkeleton ? "opacity-70" : "opacity-100"
             }`}
           >
             {(showInitialSkeleton || showFetchingSkeleton
-              ? [...Array(6)]
+              ? [...Array(8)]
               : doctors
             ).map((doctor, index) =>
               showInitialSkeleton || showFetchingSkeleton ? (
@@ -363,7 +362,7 @@ export default function OurDoctorsPage() {
                         src={
                           doctor.image ||
                           (doctor.gender === "female"
-                            ? "/images/female-doctor-default.png"
+                            ? "/images/female-doctor-default.jpeg"
                             : "/images/doctor-defalut.png")
                         }
                         alt={doctor.name}

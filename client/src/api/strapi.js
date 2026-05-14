@@ -398,12 +398,27 @@ export const useDoctors = (
         );
       }
 
-      if (parentSlug && parentSlug !== allValue) {
-        params.append("filters[$or][0][clinic][slug][$eq]", parentSlug);
-        params.append("filters[$or][1][unit][slug][$eq]", parentSlug);
-        params.append("filters[$or][2][center][slug][$eq]", parentSlug);
-        params.append("filters[$or][3][medical_service][slug][$eq]", parentSlug);
-      }
+if (parentSlug && parentSlug !== allValue) {
+  params.append(
+    "filters[$and][0][$or][0][clinic][slug][$eq]",
+    parentSlug,
+  );
+
+  params.append(
+    "filters[$and][0][$or][1][unit][slug][$eq]",
+    parentSlug,
+  );
+
+  params.append(
+    "filters[$and][0][$or][2][center][slug][$eq]",
+    parentSlug,
+  );
+
+  params.append(
+    "filters[$and][0][$or][3][medical_service][slug][$eq]",
+    parentSlug,
+  );
+}
 
       const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
 
@@ -429,7 +444,7 @@ export const useDoctors = (
               image: item.image?.url
                 ? STRAPI_URL + item.image.url
                 : item.gender === "female"
-                  ? "/images/female-doctor-default.png"
+                  ? "/images/female-doctor-default.jpeg"
                   : "/images/doctor-defalut.png",
               specialty: parent.title || "",
               department: parent.shortTitle || parent.title || "",
