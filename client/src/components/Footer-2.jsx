@@ -164,7 +164,7 @@ export default function Footer2() {
             <a
               href="https://www.chi.gov.sa/pages/Home.aspx"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-sm font-semibold text-[rgb(21,98,160)] hover:underline"
             >
               Visit

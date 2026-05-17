@@ -30,12 +30,27 @@ export default function FooterDesignV2() {
   );
 
   const socialLinks = [
-    { Icon: FaFacebookF, href: `${websiteLinks?.socialMediaLinks?.facebook}` },
-    { Icon: FaXTwitter, href: `${websiteLinks?.socialMediaLinks?.twitter}` },
-    { Icon: FaInstagram, href: `${websiteLinks?.socialMediaLinks?.instagram}` },
-    { Icon: FaYoutube, href: `${websiteLinks?.socialMediaLinks?.youtube}` },
-  ];
-
+    {
+      Icon: FaFacebookF,
+      href: websiteLinks?.socialMediaLinks?.facebook,
+      label: "Facebook",
+    },
+    {
+      Icon: FaXTwitter,
+      href: websiteLinks?.socialMediaLinks?.twitter,
+      label: "X (Twitter)",
+    },
+    {
+      Icon: FaInstagram,
+      href: websiteLinks?.socialMediaLinks?.instagram,
+      label: "Instagram",
+    },
+    {
+      Icon: FaYoutube,
+      href: websiteLinks?.socialMediaLinks?.youtube,
+      label: "YouTube",
+    },
+  ].filter((item) => item.href);
   return (
     <footer
       dir={isRTL ? "rtl" : "ltr"}
@@ -137,12 +152,12 @@ export default function FooterDesignV2() {
               </div>
 
               <div className={`mt-8 flex items-center gap-3 `}>
-                {socialLinks.map(({ Icon, href }, i) => (
+                {socialLinks.map(({ Icon, href, label }, i) => (
                   <a
                     key={i}
                     href={href}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-[rgba(21,98,160,0.35)] hover:bg-[rgba(21,98,160,0.06)] hover:text-[rgb(21,98,160)]"
-                    aria-label="social"
+                    className={`flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-[rgba(21,98,160,0.35)] hover:bg-[rgba(21,98,160,0.06)] hover:text-[rgb(21,98,160)] ${isRTL ? "hover:-translate-x-1" : "hover:translate-x-1"}`}
+                    aria-label={`Visit our ${label} page`}
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -185,7 +200,7 @@ export default function FooterDesignV2() {
             © {new Date().getFullYear()} {t("footer.brand.name")} .{" "}
             {t("footer.poweredBy")}{" "}
             <span className="font-semibold text-[rgb(21,98,160)] whitespace-nowrap">
-              QNH Team
+              QNH IT Team
             </span>
           </div>
 
@@ -199,7 +214,7 @@ export default function FooterDesignV2() {
             <a
               href="https://www.chi.gov.sa/pages/Home.aspx"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-sm font-semibold text-[rgb(21,98,160)] transition hover:text-[rgb(15,75,125)]"
             >
               {t("footer.chi.visit")}
@@ -244,7 +259,7 @@ function FooterCol({ title, links, isRTL }) {
               key={`${title}-${l.label}-${href}`}
               href={href}
               target={href.startsWith("http") ? "_blank" : undefined}
-              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
               className="text-sm text-slate-600 transition hover:text-[rgb(21,98,160)]"
             >
               {l.label}

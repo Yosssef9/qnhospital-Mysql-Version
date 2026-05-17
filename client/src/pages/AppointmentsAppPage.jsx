@@ -99,7 +99,7 @@ export default function AppointmentsAppPage() {
                     location: "appointments_app_page",
                   })
                 }
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[rgb(21,98,160)] shadow-sm transition hover:bg-slate-50 hover:shadow-md ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -118,7 +118,7 @@ export default function AppointmentsAppPage() {
               <a
                 href={websiteLinks?.mobileAppLinks?.ios}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 onClick={() =>
                   trackEvent("app_download_ios", {
                     location: "appointments_app_page",
@@ -137,7 +137,7 @@ export default function AppointmentsAppPage() {
               <a
                 href={`https://wa.me/966${websiteLinks?.contactInfo?.callCenterPhone}`}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:scale-[1.02] hover:shadow-md ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -339,7 +339,7 @@ export default function AppointmentsAppPage() {
               <a
                 href={websiteLinks?.mobileAppLinks?.android}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[rgb(21,98,160)] transition hover:opacity-95 ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -356,7 +356,7 @@ export default function AppointmentsAppPage() {
               <a
                 href={websiteLinks?.mobileAppLinks?.ios}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -367,7 +367,7 @@ export default function AppointmentsAppPage() {
               {/* <a
                 href={`https://wa.me/966${websiteLinks?.contactInfo?.callCenterPhone}`}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-95 ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}

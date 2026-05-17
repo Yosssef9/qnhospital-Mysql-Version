@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useWebsiteLinks } from "../api/strapi";
 
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
@@ -30,6 +31,7 @@ import { t } from "i18next";
 export default function OurDoctorsPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+  const { data: websiteLinks } = useWebsiteLinks();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -182,13 +184,15 @@ export default function OurDoctorsPage() {
                   {t("ourDoctorsPage.bookButton")}
                 </Link>
 
-                <Link
-                  to="/contact"
+                <a
+                  href={`https://wa.me/966${websiteLinks?.contactInfo?.phone?.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                 >
                   <HeartPulse className="h-4 w-4 text-[rgb(21,98,160)]" />
                   {t("ourDoctorsPage.cta.contact")}
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -247,7 +251,9 @@ export default function OurDoctorsPage() {
         </div>
       </section>
 
-<section className="relative z-10 mx-auto max-w-[1800px] px-6 py-12 md:px-8 xl:px-12 2xl:px-16">        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <section className="relative z-10 mx-auto max-w-[1800px] px-6 py-12 md:px-8 xl:px-12 2xl:px-16">
+        {" "}
+        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className={isRTL ? "text-right" : "text-left"}>
             <SectionBadge>{t("ourDoctorsPage.gridBadge")}</SectionBadge>
             <SectionTitle className="font-light">
@@ -305,7 +311,7 @@ export default function OurDoctorsPage() {
           </div>
         ) : (
           <div
-className={`grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 transition-opacity duration-200 ${
+            className={`grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 transition-opacity duration-200 ${
               showFetchingSkeleton ? "opacity-70" : "opacity-100"
             }`}
           >
@@ -419,7 +425,13 @@ className={`grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 transition-opac
                       >
                         {t("ourDoctorsPage.profileButton")}
 
-                        <span className="transition-transform duration-300 group-hover:translate-x-1">
+                        <span
+                          className={`transition-transform duration-300 ${
+                            isRTL
+                              ? "group-hover:-translate-x-1"
+                              : "group-hover:translate-x-1"
+                          }`}
+                        >
                           {isRTL ? (
                             <ArrowLeft className="h-4 w-4" />
                           ) : (
@@ -434,7 +446,6 @@ className={`grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 transition-opac
             )}
           </div>
         )}
-
         {pagination && doctors.length > 0 && (
           <div className="mt-12 flex flex-col items-center gap-4">
             <p className="text-sm text-slate-500">

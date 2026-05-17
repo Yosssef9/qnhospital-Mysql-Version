@@ -13,7 +13,7 @@ New-Item -ItemType Directory -Path $tempFolder | Out-Null
 Write-Host "Copying React and Strapi project files..."
 
 robocopy . $tempFolder /E `
-  /XD node_modules .git dist build coverage .vite .next out .cache .strapi tmp temp logs uploads public\uploads $tempFolder `
+/XD node_modules .git dist build coverage .vite .next out .cache .strapi tmp temp logs public $tempFolder `
   /XF .env .env.local .env.production .env.development *.zip *.log package-lock.json yarn.lock pnpm-lock.yaml `
   /NFL /NDL /NJH /NJS /nc /ns /np
 

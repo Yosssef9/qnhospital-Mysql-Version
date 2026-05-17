@@ -73,10 +73,10 @@ const router = createBrowserRouter([
       { path: "latest-news", element: <NewsPage /> },
       { path: "News&Achievements", element: <NewsAchievementsPage /> },
       { path: "privacy-policy", element: <PrivacyPolicy /> },
-      // {
-      //   path: "*",
-      //   element: <ErrorPage />,
-      // },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);

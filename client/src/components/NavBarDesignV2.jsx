@@ -416,7 +416,7 @@ export default function NavBarDesignV2() {
                             key={child.label}
                             href={child.to}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[rgba(21,98,160,0.08)] hover:text-[rgb(21,98,160)]"
                           >
                             {child.label}
@@ -555,7 +555,7 @@ export default function NavBarDesignV2() {
                               key={child.label}
                               href={child.to}
                               target="_blank"
-                              rel="noreferrer"
+                              rel="noopener noreferrer"
                               onClick={() => setOpen(false)}
                               className="block rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-[rgba(21,98,160,0.06)] hover:text-[rgb(21,98,160)]"
                             >

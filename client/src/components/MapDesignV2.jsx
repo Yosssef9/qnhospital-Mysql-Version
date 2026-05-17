@@ -95,7 +95,7 @@ export default function MapDesignV2() {
               <a
                 href="https://maps.google.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95 transition"
               >
                 Get Directions

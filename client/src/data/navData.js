@@ -14,10 +14,10 @@ export function getSiteNav(t) {
           label: t("navbar.hospitalAccreditations"),
           to: "/hospital-accreditations",
         },
-        {
-          label: t("navbar.staffPortal"),
-          to: "https://www.qnhospital.com/portal/",
-        },
+        // {
+        //   label: t("navbar.staffPortal"),
+        //   to: "https://www.qnhospital.com/portal/",
+        // },
       ],
     },
 

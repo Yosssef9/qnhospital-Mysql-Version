@@ -109,7 +109,7 @@ export default function MobileAppHomeSection() {
               <a
                 href={websiteLinks?.mobileAppLinks?.android}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[rgb(21,98,160)] shadow-sm transition hover:bg-slate-50 hover:shadow-md ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
@@ -128,7 +128,6 @@ export default function MobileAppHomeSection() {
               <a
                 href={websiteLinks?.mobileAppLinks?.ios}
                 target="_blank"
-                rel="noreferrer"
                 className={`inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-[rgb(21,98,160)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95 ${
                   isRTL ? "flex-row-reverse" : ""
                 }`}
