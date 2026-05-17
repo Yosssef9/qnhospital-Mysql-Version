@@ -789,7 +789,8 @@ export default function NavBarQNH() {
             >
               <PhoneCall className="h-4 w-4 text-[rgb(21,98,160)]" />
               <span>
-                {t("topnav.emergency")}: {websiteLinks?.contactInfo?.phone}
+                {t("ourDoctorsPage.cta.contact")}:{" "}
+                {websiteLinks?.contactInfo?.phone}
               </span>
             </a>
           </div>
