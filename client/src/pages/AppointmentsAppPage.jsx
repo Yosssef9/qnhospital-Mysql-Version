@@ -118,7 +118,7 @@ export default function AppointmentsAppPage() {
               >
                 {/* <FaGooglePlay className="h-4 w-4" /> */}
                 <img
-                  src="images\google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
+                  src="/images/google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
                   alt="Google Play"
                   className="h-5 w-5"
                 />
@@ -196,7 +196,7 @@ export default function AppointmentsAppPage() {
                     <div className="text-sm font-semibold text-slate-900">
                       {/* QNH App */}
                       <img
-                        src="\images\newLogo-removebg-preview.png"
+                        src="/images/newLogo-removebg-preview.png"
                         alt="Qassim National Hospital"
                         className="h-10 w-auto object-contain"
                       />
@@ -357,7 +357,7 @@ export default function AppointmentsAppPage() {
                 }`}
               >
                 <img
-                  src="images\google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
+                  src="/images/google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
                   alt="Google Play"
                   className="h-5 w-5"
                 />

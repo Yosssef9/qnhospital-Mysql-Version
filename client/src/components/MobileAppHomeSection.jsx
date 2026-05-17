@@ -116,7 +116,7 @@ export default function MobileAppHomeSection() {
               >
                 {/* <FaGooglePlay className="h-4 w-4" /> */}
                 <img
-                  src="images\google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
+                  src="/images/google-play-store-transparent-google-play-icon-11553530990d0xpnylfqx-removebg-preview.png"
                   alt="Google Play"
                   className="h-5 w-5"
                 />
