@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SEO from "../components/SEO";
+import { withLang } from "../utils/languageRouting";
 export default function MedicalDepartments() {
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -240,7 +241,7 @@ export default function MedicalDepartments() {
 
                         <div className="mt-5">
                           <Link
-                            to={item.to}
+                            to={withLang(item.to, i18n.language || "en")}
                             className={`inline-flex items-center gap-2 text-sm font-semibold text-[rgb(21,98,160)] transition hover:gap-3 
                             
                             `}

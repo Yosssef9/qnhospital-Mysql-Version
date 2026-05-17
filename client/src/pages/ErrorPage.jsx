@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Home, ArrowLeft, SearchX } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
+import { withLang } from "../utils/languageRouting";
 export default function ErrorPage() {
   const { t, i18n } = useTranslation();
 
@@ -52,7 +52,7 @@ export default function ErrorPage() {
         {/* Actions */}
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
-            to="/"
+           to={withLang("/", i18n.language || "en")}
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95 sm:w-auto"
           >
             <Home className="h-4 w-4" />
