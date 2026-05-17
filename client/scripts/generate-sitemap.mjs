@@ -1,3 +1,4 @@
+import "dotenv/config";
 const SITE_URL = "https://qnhospital.com.sa";
 const STRAPI_URL = process.env.VITE_STRAPI_URL;
 
