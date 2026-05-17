@@ -138,6 +138,38 @@ export default function UnitDetailsPage() {
                 </div>
               )}
             </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to={withLang(
+                  `/our-doctors?page=1&parent=${unit.slug}`,
+                  i18n.language || "en",
+                )}
+                className="inline-flex min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.22)] bg-[rgb(21,98,160)] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(21,98,160,0.22)] transition hover:scale-[1.02] hover:border-white/40 hover:bg-[rgb(17,84,138)]"
+              >
+                {t("medicalDepartments.viewDoctors", {
+                  clinic: unit.title,
+                })}
+              </Link>
+
+              {unit?.whatsAppNumber && (
+                <a
+                  href={`https://wa.me/966${unit?.whatsAppNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "unit_details_hero",
+                      unit: unit.title,
+                      slug: unit.slug,
+                    })
+                  }
+                  className="inline-flex min-w-max items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/25 bg-[#25D366] px-6 py-3 text-sm font-main text-white shadow-[0_10px_30px_rgba(37,211,102,0.28)] transition hover:scale-[1.02] hover:border-white/40 hover:bg-[#20bd5a]"
+                >
+                  <FaWhatsapp className="h-4 w-4" />
+                  WhatsApp
+                </a>
+              )}
+            </div>
           </div>
 
           <motion.div
@@ -219,46 +251,6 @@ export default function UnitDetailsPage() {
                   {item}
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-16">
-        <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-[linear-gradient(135deg,rgba(21,98,160,1),rgba(36,124,194,1))] p-8 text-white shadow-[0_24px_60px_rgba(21,98,160,0.22)] md:p-10">
-          <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-          <div className="pointer-events-none absolute -bottom-10 left-10 h-36 w-36 rounded-full bg-white/10 blur-2xl" />
-
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <h3 className="text-2xl font-main md:text-3xl">
-                {unit?.cta?.title}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-white/90 md:text-base">
-                {unit?.cta?.description}
-              </p>
-            </div>
-
-            <div className="flex flex-nowrap gap-3">
-              {unit?.whatsAppNumber && (
-                <a
-                  href={`https://wa.me/966${unit?.whatsAppNumber}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackEvent("whatsapp_click", {
-                      location: "unit_details_page",
-                      unit: unit.title,
-                      slug: unit.slug,
-                    })
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:bg-white/10 hover:border-blue-400"
-                >
-                  <FaWhatsapp className="h-4 w-4 " />
-                  WhatsApp
-                </a>
-              )}
             </div>
           </div>
         </div>
