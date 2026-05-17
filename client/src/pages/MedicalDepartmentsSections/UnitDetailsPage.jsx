@@ -11,7 +11,9 @@ import {
   Stethoscope,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-
+import SEO from "../../components/SEO";
+import { withLang } from "../../utils/languageRouting";
+import { trackEvent } from "../../utils/analytics";
 import SectionBadge from "../../components/reusableComponents/SectionBadge";
 
 import BreadcrumbArea from "../../components/reusableComponents/BreadcrumbArea";
@@ -46,9 +48,14 @@ export default function UnitDetailsPage() {
   if (isLoading) {
     return <MedicalDepartmentsDetailsSkeletonPage />;
   }
-  if (isError || !data)
-    return <Navigate to="/medical-departments?tab=Units" replace />;
-
+  if (isError || !data) {
+    return (
+      <Navigate
+        to={withLang("/medical-departments?tab=Units", i18n.language || "en")}
+        replace
+      />
+    );
+  }
   const unit = data;
 
   const mainImage =
@@ -67,6 +74,30 @@ export default function UnitDetailsPage() {
 
   return (
     <div className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? `${unit.title} | وحدة طبية | مستشفى القصيم الوطني`
+            : `${unit.title} | Medical Unit | Qassim National Hospital`
+        }
+        description={
+          unit?.hero?.description || "Qassim National Hospital medical unit."
+        }
+        image={mainImage}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "MedicalClinic",
+          name: unit.title,
+          image: mainImage,
+          url: `https://qnhospital.com.sa/${i18n.language || "en"}/units/${unit.slug}`,
+          medicalSpecialty: unit.title,
+          hospitalAffiliation: {
+            "@type": "Hospital",
+            name: "Qassim National Hospital",
+            url: "https://qnhospital.com.sa",
+          },
+        }}
+      />
       {/* Breadcrumb */}
       <BreadcrumbArea
         imgUrl={breadcrumbImage}
@@ -215,6 +246,13 @@ export default function UnitDetailsPage() {
                   href={`https://wa.me/966${unit?.whatsAppNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "unit_details_page",
+                      unit: unit.title,
+                      slug: unit.slug,
+                    })
+                  }
                   className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:bg-white/10 hover:border-blue-400"
                 >
                   <FaWhatsapp className="h-4 w-4 " />

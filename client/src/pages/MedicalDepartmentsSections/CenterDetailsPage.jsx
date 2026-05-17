@@ -22,7 +22,8 @@ import getItems from "../../helpers/getItems";
 import { useTranslation } from "react-i18next";
 import SectionBadge from "../../components/reusableComponents/SectionBadge";
 import MedicalDepartmentsDetailsSkeletonPage from "../../components/reusableComponents/MedicalDepartmentsDetailsSkeletonPage";
-
+import SEO from "../../components/SEO";
+import { withLang } from "../../utils/languageRouting";
 export default function CenterDetailsPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -51,7 +52,12 @@ export default function CenterDetailsPage() {
 
   // Handle not found or error
   if (isError || !data) {
-    return <Navigate to="/medical-departments?tab=Centers" replace />;
+    return (
+      <Navigate
+        to={withLang("/medical-departments?tab=Centers", i18n.language || "en")}
+        replace
+      />
+    );
   }
 
   const center = data;
@@ -74,6 +80,31 @@ export default function CenterDetailsPage() {
   const technologyItems = getItems(center?.technology?.items, "item");
   return (
     <div className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? `${center.title} | مركز طبي | مستشفى القصيم الوطني`
+            : `${center.title} | Medical Center | Qassim National Hospital`
+        }
+        description={
+          center?.hero?.description ||
+          "Qassim National Hospital specialized medical center."
+        }
+        image={mainImage}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "MedicalClinic",
+          name: center.title,
+          image: mainImage,
+          url: `https://qnhospital.com.sa/${i18n.language || "en"}/centers/${center.slug}`,
+          medicalSpecialty: center.title,
+          hospitalAffiliation: {
+            "@type": "Hospital",
+            name: "Qassim National Hospital",
+            url: "https://qnhospital.com.sa",
+          },
+        }}
+      />
       <BreadcrumbArea
         imgUrl={breadcrumbImage}
         items={[

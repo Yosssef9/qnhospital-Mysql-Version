@@ -12,13 +12,14 @@ import {
   CalendarDays,
   Microscope,
 } from "lucide-react";
-
+import SEO from "../components/SEO";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import { useDoctorBySlug } from "../api/strapi";
 import { formatArabicYears } from "../helpers/formatArabicYears";
 import { trackEvent } from "../utils/analytics";
+import { withLang } from "../utils/languageRouting";
 import { useEffect } from "react";
 export default function DoctorProfilePage() {
   const { slug } = useParams();
@@ -143,6 +144,11 @@ export default function DoctorProfilePage() {
   if (!doctor) {
     return (
       <div className="bg-[#f6fbff] flex-1">
+        <SEO
+          title="Doctor Not Found | Qassim National Hospital"
+          description="The requested doctor profile could not be found."
+          noIndex
+        />
         <BreadcrumbArea
           imgUrl="/images/about-us-header.jpg"
           items={[
@@ -168,6 +174,33 @@ export default function DoctorProfilePage() {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f6fbff]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? `${t("doctor.prefix")} ${doctor.name} | ${doctor.parent?.title || "طبيب"} | مستشفى القصيم الوطني`
+            : `${doctor.name} | ${doctor.parent?.title || "Doctor"} | Qassim National Hospital`
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? `احجز موعدك مع ${doctor.name} في ${doctor.parent?.title || "مستشفى القصيم الوطني"}.`
+            : `Book an appointment with ${doctor.name} at Qassim National Hospital.`
+        }
+        image={doctor.image || "/Logo.png"}
+        type="profile"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Physician",
+          name: doctor.name,
+          image: doctor.image || "https://qnhospital.com.sa/Logo.png",
+          worksFor: {
+            "@type": "Hospital",
+            name: "Qassim National Hospital",
+            url: "https://qnhospital.com.sa",
+          },
+          medicalSpecialty: doctor.parent?.title || "",
+          url: `https://qnhospital.com.sa/${i18n.language || "en"}/our-doctors/${doctor.slug}`,
+        }}
+      />
       <BreadcrumbArea
         imgUrl="/images/about-us-header.jpg"
         items={[
@@ -266,7 +299,7 @@ export default function DoctorProfilePage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  to="/appointments-App"
+                  to={withLang("/appointments-App", i18n.language || "en")}
                   onClick={() =>
                     trackEvent("book_appointment_click", {
                       location: "doctor_profile_page",

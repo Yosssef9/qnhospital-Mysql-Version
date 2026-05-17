@@ -10,6 +10,7 @@ import "@fontsource/plus-jakarta-sans/700.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./i18n";
+import { HelmetProvider } from "react-helmet-async";
 import "klaro/dist/klaro.min.css";
 import "./styles/klaro-custom.css";
 import { initGA } from "./utils/analytics";
@@ -25,13 +26,15 @@ const queryClient = new QueryClient({
 });
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <LoadingProvider>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        {import.meta.env.DEV && (
-          <ReactQueryDevtools initialIsOpen={false} />
-        )}{" "}
-      </QueryClientProvider>
-    </LoadingProvider>
+    <HelmetProvider>
+      <LoadingProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          {import.meta.env.DEV && (
+            <ReactQueryDevtools initialIsOpen={false} />
+          )}{" "}
+        </QueryClientProvider>
+      </LoadingProvider>
+    </HelmetProvider>
   </StrictMode>,
 );

@@ -28,17 +28,41 @@ import OurDoctorsSection from "../components/OurDoctorsSection";
 import MobileAppHomeSection from "../components/MobileAppHomeSection";
 import HeroSection2 from "../components/HeroSection2";
 import PrivacyNotice from "../components/PrivacyNotice";
+import { useTranslation } from "react-i18next";
+import SEO from "../components/SEO";
 export default function Home() {
-  const images = [
-    "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_f8fa0789.jpg",
-    "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_2d9ec9d3.jpg",
-    "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_db7198c2.jpg",
-    "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_3901e3cb.jpg",
-    "/images/Carousel/WhatsApp Image 2025-11-01 at 17.41.58_f3000e90.jpg",
-  ];
+  const { i18n } = useTranslation();
+  const isArabic = i18n.language?.startsWith("ar");
+
+  const homeTitle = isArabic
+    ? "مستشفى القصيم الوطني | رعاية طبية متخصصة في القصيم"
+    : "Qassim National Hospital | Specialized Healthcare in Qassim";
+
+  const homeDescription = isArabic
+    ? "مستشفى القصيم الوطني يقدم خدمات طبية متخصصة، عيادات متعددة، أطباء مؤهلين، ورعاية صحية متكاملة في منطقة القصيم."
+    : "Qassim National Hospital provides specialized healthcare services, clinics, experienced doctors, and patient-centered medical care in Qassim, Saudi Arabia.";
+
+  const hospitalSchema = {
+    "@context": "https://schema.org",
+    "@type": "Hospital",
+    name: "Qassim National Hospital",
+    alternateName: "مستشفى القصيم الوطني",
+    url: "https://qnhospital.com.sa",
+    logo: "https://qnhospital.com.sa/Logo.png",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "SA",
+      addressRegion: "Qassim",
+    },
+  };
 
   return (
     <div className=" ">
+      <SEO
+        title={homeTitle}
+        description={homeDescription}
+        structuredData={hospitalSchema}
+      />
       <PrivacyNotice />
 
       <HeroWithNvabar />

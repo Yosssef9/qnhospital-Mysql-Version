@@ -21,7 +21,7 @@ import SectionTitle from "../components/reusableComponents/SectionTitle";
 import { CONTACT } from "../data/contact";
 import { useWebsiteLinks } from "../api/strapi";
 import { trackEvent } from "../utils/analytics";
-
+import SEO from "../components/SEO";
 export default function AppointmentsAppPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -60,6 +60,18 @@ export default function AppointmentsAppPage() {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "حجز المواعيد | مستشفى القصيم الوطني"
+            : "Appointments App | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "احجز مواعيدك الطبية في مستشفى القصيم الوطني بسهولة من خلال تطبيق المواعيد."
+            : "Book your medical appointments at Qassim National Hospital easily through the appointments app."
+        }
+      />
       {/* <BreadcrumbArea
         imgUrl="/images/about-us-header.jpg"
         items={[

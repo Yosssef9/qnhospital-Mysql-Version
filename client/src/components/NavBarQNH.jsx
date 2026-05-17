@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { withLang, switchPathLanguage } from "../utils/languageRouting";
 import {
   Menu,
   X,
@@ -36,6 +37,22 @@ export default function NavBarQNH() {
   const closeThreshold = 60; // still intentional to close
   const nav = useMemo(() => getSiteNav(t), [t]);
   const { data: websiteLinks, isLoading } = useWebsiteLinks();
+  const navigate = useNavigate();
+  const currentLang = i18n.language || "en";
+
+  const localize = (path) => withLang(path, currentLang);
+
+  const changeLanguage = (newLang) => {
+    localStorage.setItem("lang", newLang);
+
+    navigate(
+      `${switchPathLanguage(location.pathname, newLang)}${location.search}`,
+      {
+        replace: true,
+        preventScrollReset: true,
+      },
+    );
+  };
   console.log("nav", nav);
   const handleLinkClick = () => {
     setOpen(false);
@@ -184,19 +201,18 @@ export default function NavBarQNH() {
 
     if (item.children) {
       return item.children.some(
-        (child) => !child.to.startsWith("http") && path === child.to,
+        (child) => !child.to.startsWith("http") && path === localize(child.to),
       );
     }
 
     if (item.sections) {
       return item.sections.some((section) =>
-        section.links.some((child) => path === child.to),
+        section.links.some((child) => path === localize(child.to)),
       );
     }
 
     return false;
   };
-
   const renderDesktopNav = () => (
     <nav className="hidden lg:flex items-center gap-8">
       {nav.map((item) => {
@@ -247,7 +263,7 @@ export default function NavBarQNH() {
                       </p>
 
                       <Link
-                        to={item.intro.to}
+                        to={localize(item.intro.to)}
                         onClick={handleLinkClick}
                         className="mt-6 inline-flex items-center gap-2 rounded-full bg-[rgb(21,98,160)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-95"
                       >
@@ -278,7 +294,7 @@ export default function NavBarQNH() {
                               {section.links.map((child) => (
                                 <NavLink
                                   key={child.label}
-                                  to={child.to}
+                                  to={localize(child.to)}
                                   onClick={handleLinkClick}
                                   className={({ isActive }) =>
                                     [
@@ -301,7 +317,7 @@ export default function NavBarQNH() {
 
                             {section.moreLink && (
                               <NavLink
-                                to={section.moreLink.to}
+                                to={localize(section.moreLink.to)}
                                 className="mt-2 inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-[rgb(21,98,160)] transition hover:opacity-80"
                               >
                                 {section.moreLink.label}
@@ -367,7 +383,7 @@ export default function NavBarQNH() {
                     ) : (
                       <NavLink
                         key={child.label}
-                        to={child.to}
+                        to={localize(child.to)}
                         onClick={handleLinkClick}
                         className={({ isActive }) =>
                           [
@@ -391,7 +407,7 @@ export default function NavBarQNH() {
         return (
           <NavLink
             key={item.label}
-            to={item.to}
+            to={localize(item.to)}
             onClick={() => {
               handleLinkClick();
               if (item.to === "/") {
@@ -475,7 +491,7 @@ export default function NavBarQNH() {
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
               <Link
-                to="/"
+                to={localize("/")}
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3"
               >
@@ -550,7 +566,7 @@ export default function NavBarQNH() {
                                   ) : (
                                     <NavLink
                                       key={child.label}
-                                      to={child.to}
+                                      to={localize(child.to)}
                                       onClick={() => setOpen(false)}
                                       className={({ isActive }) =>
                                         [
@@ -589,7 +605,7 @@ export default function NavBarQNH() {
                                         {section.links.map((child) => (
                                           <NavLink
                                             key={child.label}
-                                            to={child.to}
+                                            to={localize(child.to)}
                                             onClick={() => setOpen(false)}
                                             className={({ isActive }) =>
                                               [
@@ -606,7 +622,7 @@ export default function NavBarQNH() {
 
                                         {section.moreLink && (
                                           <NavLink
-                                            to={section.moreLink.to}
+                                            to={localize(section.moreLink.to)}
                                             onClick={() => setOpen(false)}
                                             className="inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-semibold text-[rgb(21,98,160)]"
                                           >
@@ -625,7 +641,7 @@ export default function NavBarQNH() {
 
                               {item.type === "mega" && item.intro?.to && (
                                 <Link
-                                  to={item.intro.to}
+                                  to={localize(item.intro.to)}
                                   onClick={() => setOpen(false)}
                                   className="mt-1 inline-flex items-center justify-center rounded-xl bg-[rgb(21,98,160)] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95"
                                 >
@@ -640,7 +656,7 @@ export default function NavBarQNH() {
                   ) : (
                     <NavLink
                       key={item.label}
-                      to={item.to}
+                      to={localize(item.to)}
                       onClick={() => setOpen(false)}
                       className={({ isActive }) =>
                         [
@@ -661,9 +677,7 @@ export default function NavBarQNH() {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => {
-                      const newLang = i18n.language === "en" ? "ar" : "en";
-                      i18n.changeLanguage(newLang);
-                      localStorage.setItem("lang", newLang);
+                      changeLanguage(i18n.language === "en" ? "ar" : "en");
                     }}
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-[rgb(21,98,160)] transition hover:bg-slate-50"
                   >
@@ -681,7 +695,7 @@ export default function NavBarQNH() {
                 </div>
 
                 <Link
-                  to="/appointments-App"
+                  to={localize("/appointments-App")}
                   onClick={() => setOpen(false)}
                   className="inline-flex w-full items-center justify-center rounded-xl bg-[rgb(21,98,160)] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95"
                 >
@@ -716,7 +730,7 @@ export default function NavBarQNH() {
     >
       <div className="absolute inset-x-0 bottom-0 h-[2px] bg-[rgb(21,98,160)]/40" />{" "}
       <div className="mx-auto px-6 md:px-16 xl:px-24 h-[82px] flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-3 shrink-0">
+        <Link to={localize("/")} className="flex items-center gap-3 shrink-0">
           <img
             src="/images/newLogo-removebg-preview.png"
             alt="Qassim National Hospital"
@@ -729,9 +743,7 @@ export default function NavBarQNH() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
-              const newLang = i18n.language === "en" ? "ar" : "en";
-              i18n.changeLanguage(newLang);
-              localStorage.setItem("lang", newLang);
+              changeLanguage(i18n.language === "en" ? "ar" : "en");
             }}
             className="hidden md:inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-[rgb(21,98,160)] hover:bg-[rgba(21,98,160,0.05)] transition"
           >
@@ -748,7 +760,7 @@ export default function NavBarQNH() {
           </a>
 
           <Link
-            to="/appointments-App"
+            to={localize("/appointments-App")}
             className="hidden md:inline-flex items-center justify-center rounded-xl bg-[rgb(21,98,160)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-95 transition"
           >
             {t("common.bookAppointment")}

@@ -8,7 +8,7 @@ import { getSiteNav } from "../data/navData";
 import SectionPrimaryButton from "./SectionPrimaryButton";
 import { useWebsiteLinks } from "../api/strapi";
 import { FaXTwitter } from "react-icons/fa6";
-
+import { withLang } from "../utils/languageRouting";
 export default function FooterDesignV2() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -233,6 +233,7 @@ export default function FooterDesignV2() {
 }
 
 function FooterCol({ title, links, isRTL }) {
+  const { i18n } = useTranslation();
   return (
     <div className={isRTL ? "text-right" : "text-left"}>
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[rgb(21,98,160)]">
@@ -249,7 +250,7 @@ function FooterCol({ title, links, isRTL }) {
           return isInternal ? (
             <Link
               key={`${title}-${l.label}-${href}`}
-              to={href}
+              to={withLang(href, i18n.language || "en")}
               className="text-sm text-slate-600 transition hover:text-[rgb(21,98,160)]"
             >
               {l.label}

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import { useTranslation } from "react-i18next";
-
+import SEO from "../components/SEO";
 export default function QnhHistory() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -38,6 +38,18 @@ export default function QnhHistory() {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"}>
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "تاريخ مستشفى القصيم الوطني"
+            : "Qassim National Hospital History"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "تعرف على تاريخ مستشفى القصيم الوطني ومراحل تطوره في تقديم الرعاية الصحية."
+            : "Learn about the history and development of Qassim National Hospital in healthcare services."
+        }
+      />
       <BreadcrumbArea
         imgUrl={"/images/about-us-header.jpg"}
         items={[

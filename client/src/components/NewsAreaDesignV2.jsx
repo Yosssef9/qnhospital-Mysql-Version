@@ -9,7 +9,7 @@ import SectionBadge from "./reusableComponents/SectionBadge";
 import SectionPrimaryButton from "./SectionPrimaryButton";
 import SectionSpinner from "./SectionSpinner";
 import { useNewsAchievementsHomeSection } from "../api/strapi";
-
+import { withLang } from "../utils/languageRouting";
 export default function NewsAreaDesignV2() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -283,7 +283,10 @@ export default function NewsAreaDesignV2() {
               </div>
 
               <Link
-                to={`/News&Achievements?tab=${tab}&page=1`}
+                to={withLang(
+                  `/News&Achievements?tab=${tab}&page=1`,
+                  i18n.language || "en",
+                )}
                 className="text-sm font-semibold text-[rgb(21,98,160)] hover:underline"
               >
                 {t("newsAreaSection.viewAll")}

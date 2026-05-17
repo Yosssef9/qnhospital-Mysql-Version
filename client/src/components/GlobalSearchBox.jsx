@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDebounce } from "../hooks/useDebounce";
 import { useGlobalSearch } from "../api/strapi";
-
+import { withLang } from "../utils/languageRouting";
 export default function GlobalSearchBox({ onSelect }) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -16,7 +16,7 @@ export default function GlobalSearchBox({ onSelect }) {
   const { data: results = [], isFetching } = useGlobalSearch(debouncedSearch);
 
   const handleGo = (item) => {
-    navigate(item.to);
+  navigate(withLang(item.to, i18n.language || "en"));
     setSearch("");
     onSelect?.();
   };

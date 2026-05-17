@@ -114,7 +114,7 @@ export default function HospitalStorySection() {
             </div>
 
             <div className="mt-8">
-              <SectionPrimaryButton to="/about">
+              <SectionPrimaryButton to="/qnh-history">
                 {t("hospitalStorySection.button")}
               </SectionPrimaryButton>
             </div>

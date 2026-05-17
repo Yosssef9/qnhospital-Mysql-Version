@@ -27,7 +27,7 @@ import { useJoinUsSettings } from "../api/strapi";
 import LoadingOverlay2 from "../components/LoadingOverlay-2";
 import getMediaUrl from "../helpers/getMediaUrl";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
-
+import SEO from "../components/SEO";
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
 
 export default function JoinUs() {
@@ -52,6 +52,18 @@ export default function JoinUs() {
   const isFormOpen = data?.isFormActive && isWithinDate;
   return (
     <div className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "انضم إلينا | مستشفى القصيم الوطني"
+            : "Join Us | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "قدّم طلبك للانضمام إلى فريق مستشفى القصيم الوطني واستعرض فرص العمل المتاحة."
+            : "Apply to join Qassim National Hospital team and explore available career opportunities."
+        }
+      />
       <BreadcrumbArea
         imgUrl={breadcrumbImage}
         items={[

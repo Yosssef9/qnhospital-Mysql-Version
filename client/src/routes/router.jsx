@@ -1,5 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate, useLocation } from "react-router-dom";
 import { lazy } from "react";
+import { useTranslation } from "react-i18next";
+import { stripLangFromPath, SUPPORTED_LANGS } from "../utils/languageRouting";
 
 const MainLayout = lazy(() => import("../layout/MainLayout"));
 const Home = lazy(() => import("../pages/Home"));
@@ -32,9 +34,32 @@ const NewsAchievementsPage = lazy(
   () => import("../pages/NewsAchievementsPage"),
 );
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
+
+function LanguageRedirect() {
+  const location = useLocation();
+  const { i18n } = useTranslation();
+
+  const currentLang = SUPPORTED_LANGS.includes(i18n.language)
+    ? i18n.language
+    : localStorage.getItem("lang") || "en";
+
+  const cleanPath = stripLangFromPath(location.pathname);
+
+  return (
+    <Navigate
+      to={`/${currentLang}${cleanPath}${location.search}${location.hash}`}
+      replace
+    />
+  );
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LanguageRedirect />,
+  },
+  {
+    path: "/:lang",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -46,10 +71,7 @@ const router = createBrowserRouter([
         path: "hospital-accreditations/:certificateKey?",
         element: <HospitalAccreditations />,
       },
-      {
-        path: "medical-departments",
-        element: <MedicalDepartments />,
-      },
+      { path: "medical-departments", element: <MedicalDepartments /> },
       { path: "join-us", element: <JoinUs /> },
       { path: "clinics/:slug", element: <ClinicDetailsPage /> },
       { path: "units/:slug", element: <UnitDetailsPage /> },
@@ -58,26 +80,17 @@ const router = createBrowserRouter([
         path: "medical-services/:slug",
         element: <MedicalServiceDetailsPage />,
       },
-      {
-        path: "/our-doctors",
-        element: <OurDoctorsPage />,
-      },
-      {
-        path: "/appointments-App",
-        element: <AppointmentsAppPage />,
-      },
-      {
-        path: "/our-doctors/:slug",
-        element: <DoctorProfilePage />,
-      },
-      { path: "latest-news", element: <NewsPage /> },
+      { path: "our-doctors", element: <OurDoctorsPage /> },
+      { path: "appointments-App", element: <AppointmentsAppPage /> },
+      { path: "our-doctors/:slug", element: <DoctorProfilePage /> },
       { path: "News&Achievements", element: <NewsAchievementsPage /> },
       { path: "privacy-policy", element: <PrivacyPolicy /> },
-      {
-        path: "*",
-        element: <ErrorPage />,
-      },
+      { path: "*", element: <ErrorPage /> },
     ],
+  },
+  {
+    path: "*",
+    element: <LanguageRedirect />,
   },
 ]);
 

@@ -28,7 +28,7 @@ export default function PrivacyNotice() {
   const goToPrivacyPolicy = () => {
     privacyNoticeClosed = true;
     setShow(false);
-    navigate("/privacy-policy");
+    navigate(`/${i18n.language || "en"}/privacy-policy`);
   };
 
   return (

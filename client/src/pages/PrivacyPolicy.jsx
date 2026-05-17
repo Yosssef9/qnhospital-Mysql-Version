@@ -330,7 +330,7 @@ import { useTranslation } from "react-i18next";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import { iconMap } from "../constants/iconMap";
 import { usePrivacyPolicy, useWebsiteLinks } from "../api/strapi";
-
+import SEO from "../components/SEO";
 export default function PrivacyPolicy() {
   const { i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -368,6 +368,18 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="bg-white">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "سياسة الخصوصية | مستشفى القصيم الوطني"
+            : "Privacy Policy | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "اقرأ سياسة الخصوصية الخاصة بموقع مستشفى القصيم الوطني وكيفية التعامل مع البيانات."
+            : "Read the privacy policy of Qassim National Hospital website and how information is handled."
+        }
+      />
       <BreadcrumbArea
         imgUrl={content.breadcrumbImage || "/images/about.jpg"}
         items={[

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
+  <url>
+    <loc>https://qnhospital.com.sa/en</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar</loc>
+  </url>
+
+  <!-- QNH History -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/qnh-history</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/qnh-history</loc>
+  </url>
+
+  <!-- Mission Vision -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/mission-vision</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/mission-vision</loc>
+  </url>
+
+  <!-- Patients Rights -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/patients-rights</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/patients-rights</loc>
+  </url>
+
+  <!-- Medical Departments -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/medical-departments</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/medical-departments</loc>
+  </url>
+
+  <!-- Doctors -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/our-doctors</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/our-doctors</loc>
+  </url>
+
+  <!-- News -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/latest-news</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/latest-news</loc>
+  </url>
+
+  <!-- Privacy -->
+  <url>
+    <loc>https://qnhospital.com.sa/en/privacy-policy</loc>
+  </url>
+
+  <url>
+    <loc>https://qnhospital.com.sa/ar/privacy-policy</loc>
+  </url>
+
+</urlset>

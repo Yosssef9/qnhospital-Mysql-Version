@@ -17,12 +17,12 @@ import {
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useWebsiteLinks } from "../api/strapi";
-
+import { withLang } from "../utils/languageRouting";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import SearchableSelect from "../components/SearchableSelect";
-
+import SEO from "../components/SEO";
 import { useDoctors, useDoctorParents } from "../api/strapi";
 import { useDebounce } from "../hooks/useDebounce";
 import { formatArabicYears } from "../helpers/formatArabicYears";
@@ -147,6 +147,18 @@ export default function OurDoctorsPage() {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f6fbff]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "الأطباء | مستشفى القصيم الوطني"
+            : "Doctors | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "تعرف على أطباء مستشفى القصيم الوطني حسب التخصص والعيادة واحجز موعدك بسهولة."
+            : "Explore Qassim National Hospital doctors by specialty and clinic, and book your appointment easily."
+        }
+      />
       <BreadcrumbArea
         imgUrl="/images/about-us-header.jpg"
         items={[
@@ -177,7 +189,7 @@ export default function OurDoctorsPage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  to="/appointments-App"
+                  to={withLang("/appointments-App", i18n.language || "en")}
                   className="inline-flex items-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(21,98,160,0.22)] transition hover:-translate-y-0.5 hover:bg-[rgb(15,75,125)]"
                 >
                   <CalendarDays className="h-4 w-4" />
@@ -382,7 +394,7 @@ export default function OurDoctorsPage() {
                         )}
 
                         <Link
-                          to={doctor.to}
+                          to={withLang(doctor.to, i18n.language || "en")}
                           className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[rgb(21,98,160)] shadow-md transition hover:scale-[1.03]"
                         >
                           {t("ourDoctorsPage.profileButton")}
@@ -416,7 +428,7 @@ export default function OurDoctorsPage() {
 
                     <div className="mt-auto pt-6">
                       <Link
-                        to={doctor.to}
+                        to={withLang(doctor.to, i18n.language || "en")}
                         className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl 
     bg-[linear-gradient(135deg,rgba(21,98,160,1),rgba(36,124,194,1))] 
     px-5 py-3 text-sm font-semibold text-white 

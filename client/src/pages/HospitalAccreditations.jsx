@@ -177,12 +177,26 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useHospitalAccreditations } from "../api/strapi";
-
+import SEO from "../components/SEO";
+import { withLang } from "../utils/languageRouting";
 export default function HospitalAccreditations() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div>
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "الاعتمادات والشهادات | مستشفى القصيم الوطني"
+            : "Accreditations and Certificates | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "تعرف على الاعتمادات والشهادات التي حصل عليها مستشفى القصيم الوطني في الجودة والرعاية الصحية."
+            : "Explore Qassim National Hospital accreditations and certificates in healthcare quality and patient care."
+        }
+      />
+
       <BreadcrumbArea
         imgUrl="/images/HospitalAccreditations/awards-header.jpg"
         items={[
@@ -225,26 +239,27 @@ function PictureSelector() {
     if (!matchedPicture) return;
 
     setSelected(matchedPicture);
-
-    if (firstLoad.current) {
-      certificateRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      firstLoad.current = false;
-    }
+    firstLoad.current = false;
   }, [matchedPicture]);
-
   const handleSelect = (pic) => {
     setSelected(pic);
 
     if (pic?.slug) {
-      navigate(`/hospital-accreditations/${pic.slug}`, {
-        replace: false,
-        preventScrollReset: true,
-      });
+      navigate(
+        withLang(`/hospital-accreditations/${pic.slug}`, i18n.language || "en"),
+        {
+          replace: true,
+          preventScrollReset: true,
+        },
+      );
     }
+
+    window.requestAnimationFrame(() => {
+      certificateRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
   };
 
   if (isLoading) {
@@ -276,13 +291,8 @@ function PictureSelector() {
             key={pic.id}
             src={pic.iconImage || "/images/defalutImageNews.jpg"}
             alt={pic.title || "Accreditation Icon"}
-            onClick={(e) => {
+            onClick={() => {
               handleSelect(pic);
-
-              e.currentTarget.scrollIntoView({
-                behavior: "smooth",
-                inline: "center",
-              });
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

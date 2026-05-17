@@ -15,7 +15,7 @@ import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import { useDebounce } from "../hooks/useDebounce";
 import { useNews, useAchievements } from "../api/strapi";
-
+import SEO from "../components/SEO";
 export default function NewsAchievementsPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -89,6 +89,26 @@ export default function NewsAchievementsPage() {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="bg-[#f6fbff]">
+      <SEO
+        title={
+          activeTab === "achievements"
+            ? i18n.language?.startsWith("ar")
+              ? "الإنجازات | مستشفى القصيم الوطني"
+              : "Achievements | Qassim National Hospital"
+            : i18n.language?.startsWith("ar")
+              ? "الأخبار | مستشفى القصيم الوطني"
+              : "News | Qassim National Hospital"
+        }
+        description={
+          activeTab === "achievements"
+            ? i18n.language?.startsWith("ar")
+              ? "تابع أحدث إنجازات مستشفى القصيم الوطني في الرعاية الصحية والخدمات الطبية."
+              : "Follow the latest achievements of Qassim National Hospital in healthcare and medical services."
+            : i18n.language?.startsWith("ar")
+              ? "تابع آخر أخبار مستشفى القصيم الوطني والتحديثات الطبية والمجتمعية."
+              : "Read the latest news, updates, and healthcare announcements from Qassim National Hospital."
+        }
+      />
       <section className="relative z-30 overflow-hidden border-b border-slate-200/70 bg-white">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-16 right-0 h-[360px] w-[360px] rounded-full bg-[rgba(21,98,160,0.08)] blur-3xl" />

@@ -1,8 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { withLang, isSupportedLang } from "../../utils/languageRouting";
 
 export default function BreadcrumbArea({ imgUrl, items }) {
   const location = useLocation();
-  const paths = location.pathname.split("/").filter(Boolean);
+  const { i18n } = useTranslation();
+
+  const lang = i18n.language || "en";
+
+  const paths = location.pathname
+    .split("/")
+    .filter(Boolean)
+    .filter((part, index) => !(index === 0 && isSupportedLang(part)));
 
   const formatLabel = (text) => {
     return text
@@ -52,7 +61,7 @@ export default function BreadcrumbArea({ imgUrl, items }) {
                     </span>
                   ) : (
                     <Link
-                      to={item.to}
+                      to={withLang(item.to, lang)}
                       className="inline-block text-black transition-all duration-300 hover:text-[var(--main-color)]"
                     >
                       {item.label}

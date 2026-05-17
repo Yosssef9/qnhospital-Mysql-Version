@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import { useTranslation } from "react-i18next";
-
+import SEO from "../components/SEO";
 export default function MssionVision() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -22,6 +22,18 @@ export default function MssionVision() {
 
   return (
     <div>
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "الرؤية والرسالة | مستشفى القصيم الوطني"
+            : "Mission and Vision | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "تعرف على رؤية ورسالة مستشفى القصيم الوطني وقيمه في تقديم رعاية صحية متميزة."
+            : "Learn about the mission, vision, and values of Qassim National Hospital."
+        }
+      />
       <BreadcrumbArea
         imgUrl={"/images/about-us-header.jpg"}
         items={[

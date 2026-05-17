@@ -12,7 +12,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-
+import { trackEvent } from "../../utils/analytics";
 import SectionBadge from "../../components/reusableComponents/SectionBadge";
 
 import BreadcrumbArea from "../../components/reusableComponents/BreadcrumbArea";
@@ -23,7 +23,8 @@ import { useEntityBySlug } from "../../api/strapi";
 import getMediaUrl from "../../helpers/getMediaUrl";
 import getItems from "../../helpers/getItems";
 import { useTranslation } from "react-i18next";
-
+import SEO from "../../components/SEO";
+import { withLang } from "../../utils/languageRouting";
 export default function MedicalServiceDetailsPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -51,9 +52,17 @@ export default function MedicalServiceDetailsPage() {
   if (isLoading) {
     return <MedicalDepartmentsDetailsSkeletonPage />;
   }
-  if (isError || !data)
-    return <Navigate to="/medical-departments?tab=medical-services" replace />;
-
+  if (isError || !data) {
+    return (
+      <Navigate
+        to={withLang(
+          "/medical-departments?tab=medical-services",
+          i18n.language || "en",
+        )}
+        replace
+      />
+    );
+  }
   const service = data;
 
   const mainImage =
@@ -73,6 +82,30 @@ export default function MedicalServiceDetailsPage() {
 
   return (
     <div className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? `${service.title} | خدمة طبية | مستشفى القصيم الوطني`
+            : `${service.title} | Medical Service | Qassim National Hospital`
+        }
+        description={
+          service?.hero?.description ||
+          "Qassim National Hospital medical services."
+        }
+        image={mainImage}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "MedicalTherapy",
+          name: service.title,
+          image: mainImage,
+          url: `https://qnhospital.com.sa/${i18n.language || "en"}/medical-services/${service.slug}`,
+          provider: {
+            "@type": "Hospital",
+            name: "Qassim National Hospital",
+            url: "https://qnhospital.com.sa",
+          },
+        }}
+      />
       {/* Breadcrumb */}
       <BreadcrumbArea
         imgUrl={breadcrumbImage}
@@ -260,6 +293,13 @@ export default function MedicalServiceDetailsPage() {
                   href={`https://wa.me/966${service?.whatsAppNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "medical_service_details_page",
+                      service: service.title,
+                      slug: service.slug,
+                    })
+                  }
                   className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-main text-white transition hover:bg-white/10 hover:border-blue-400"
                 >
                   <FaWhatsapp className="h-4 w-4 " />

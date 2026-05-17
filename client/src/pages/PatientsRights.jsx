@@ -3,7 +3,7 @@ import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
 import React from "react";
 import { CiCircleChevRight, CiCircleChevLeft } from "react-icons/ci";
 import { useTranslation } from "react-i18next";
-
+import SEO from "../components/SEO";
 export default function PatientsRightss() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
@@ -27,6 +27,18 @@ export default function PatientsRightss() {
 
   return (
     <div>
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "حقوق وواجبات المرضى | مستشفى القصيم الوطني"
+            : "Patients Rights and Responsibilities | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "تعرف على حقوق وواجبات المرضى في مستشفى القصيم الوطني لضمان تجربة رعاية صحية آمنة وواضحة."
+            : "Learn about patients rights and responsibilities at Qassim National Hospital."
+        }
+      />
       <BreadcrumbArea
         imgUrl={"/images/about.jpg"}
         items={[

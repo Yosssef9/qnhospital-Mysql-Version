@@ -283,7 +283,7 @@ import SectionTitle from "./reusableComponents/SectionTitle";
 import { useTranslation } from "react-i18next";
 import SectionBadge from "./reusableComponents/SectionBadge";
 import SectionPrimaryButton from "./SectionPrimaryButton";
-
+import { withLang } from "../utils/languageRouting";
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
@@ -447,7 +447,7 @@ export default function DepartmentsSectionSwiper() {
             <ArrowRight className="h-4 w-4" />
             {t("medicalDepartments.viewAllDepartments")}
           </Link> */}
-          <SectionPrimaryButton to="/medical-Departments">
+          <SectionPrimaryButton to="/medical-departments">
             {t("medicalDepartments.viewAllDepartments")}
           </SectionPrimaryButton>
         </motion.div>
@@ -485,7 +485,7 @@ overflow-hidden flex flex-col"
         </p>
         <div className="mt-auto pt-5">
           <Link
-            to={item.to}
+            to={withLang(item.to, i18n.language || "en")}
             className="inline-flex items-center justify-center rounded-xl
     border border-slate-200 bg-white px-4 py-2 text-sm font-main
     text-slate-500 transition-all duration-300

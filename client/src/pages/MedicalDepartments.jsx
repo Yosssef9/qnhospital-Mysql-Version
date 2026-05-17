@@ -9,7 +9,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import SectionBadge from "../components/reusableComponents/SectionBadge";
-
+import SEO from "../components/SEO";
 export default function MedicalDepartments() {
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,6 +47,18 @@ export default function MedicalDepartments() {
     departmentsQuery.isFetching && !departmentsQuery.isLoading;
   return (
     <div className="bg-[#f8fbfe]">
+      <SEO
+        title={
+          i18n.language?.startsWith("ar")
+            ? "الأقسام الطبية | مستشفى القصيم الوطني"
+            : "Medical Departments | Qassim National Hospital"
+        }
+        description={
+          i18n.language?.startsWith("ar")
+            ? "استعرض العيادات والمراكز والوحدات والخدمات الطبية المتوفرة في مستشفى القصيم الوطني."
+            : "Explore clinics, centers, units, and medical services available at Qassim National Hospital."
+        }
+      />
       <BreadcrumbArea
         imgUrl="/images/about-us-header.jpg"
         items={[
