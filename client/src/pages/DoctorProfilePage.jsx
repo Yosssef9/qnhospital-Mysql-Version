@@ -255,7 +255,7 @@ export default function DoctorProfilePage() {
                       doctor.image ||
                       (doctor.gender === "female"
                         ? "/images/female-doctor-default.jpeg"
-                        : "/images/doctor-defalut.png")
+                        : "/images/doctor-defalut.jpeg")
                     }
                     alt={doctor.name}
                     className="relative z-[1] h-[420px] w-full object-cover transition duration-500 group-hover:scale-[1.02]"

@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   CalendarDays,
   Sparkles,
+  Star,
   ShieldCheck,
   HeartPulse,
   Users,
@@ -368,21 +369,70 @@ export default function OurDoctorsPage() {
                           <ExperienceBadge experience={doctor.experience} />
                         </div>
                       )} */}
-                      {doctor.featured && (
+                      {/* {doctor.featured && (
                         <div className="absolute right-4 top-4 z-10">
                           <div className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(21,98,160)] px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                             <Sparkles className="h-3 w-3" />
                             {t("ourDoctorsPage.featuredLabel")}
                           </div>
                         </div>
+                      )} */}
+                      {doctor.featured && (
+                        <div className="absolute right-4 top-4 z-10">
+                          <div
+                            className="
+        group/featured
+        flex h-10 w-10 items-center justify-center
+        rounded-2xl
+        border border-white/70
+     bg-[linear-gradient(135deg,#f4f9fd,#edf5fb)]
+        shadow-[0_10px_25px_rgba(15,23,42,0.12)]
+        backdrop-blur-xl
+        transition-all duration-300
+        hover:scale-110
+        hover:-translate-y-0.5
+      "
+                          >
+                            <Star
+                              className="
+          h-5 w-5
+          fill-yellow-400
+          text-yellow-400
+          drop-shadow-sm
+          transition-transform duration-300
+          group-hover/featured:scale-110
+        "
+                            />
+                          </div>
+                        </div>
                       )}
-
+                      {/* {doctor.featured && (
+                        <div className="absolute right-4 top-4 z-10">
+                          <div
+                            className="
+        group/featured
+        flex h-10 w-10 items-center justify-center
+        rounded-2xl
+        border border-white/30
+        bg-[linear-gradient(135deg,rgba(21,98,160,1),rgba(36,124,194,1))]
+        text-white
+        shadow-[0_10px_30px_rgba(21,98,160,0.35)]
+        backdrop-blur-md
+        transition-all duration-300
+        hover:scale-110
+        hover:rotate-6
+      "
+                          >
+                            <Sparkles className="h-5 w-5 drop-shadow-sm transition-transform duration-300 group-hover/featured:scale-110" />
+                          </div>
+                        </div>
+                      )} */}
                       <img
                         src={
                           doctor.image ||
                           (doctor.gender === "female"
                             ? "/images/female-doctor-default.jpeg"
-                            : "/images/doctor-defalut.png")
+                            : "/images/doctor-defalut.jpeg")
                         }
                         alt={doctor.name}
                         className="h-[320px] w-full object-contain transition duration-500 group-hover:scale-[1.04]"
