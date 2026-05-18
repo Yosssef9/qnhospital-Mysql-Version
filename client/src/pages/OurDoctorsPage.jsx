@@ -347,7 +347,7 @@ export default function OurDoctorsPage() {
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,rgba(21,98,160,0.06),transparent)]" />
 
                   <div className="relative px-5 pt-5">
-                    <div className="relative overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#f4f9fd,#edf5fb)]">
+                    <div className="relative h-[340px] overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#f4f9fd,#edf5fb)]">
                       <div className="absolute left-4 top-4 z-10">
                         {doctor.doctorRank && (
                           <div className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-0.5 text-[10px] font-semibold text-[rgb(21,98,160)] shadow-sm backdrop-blur">
@@ -435,7 +435,11 @@ export default function OurDoctorsPage() {
                             : "/images/doctor-defalut.jpeg")
                         }
                         alt={doctor.name}
-                        className="h-[320px] w-full object-contain transition duration-500 group-hover:scale-[1.04]"
+                        className={`h-full w-full transition duration-500 group-hover:scale-[1.04] ${
+                          doctor.image
+                            ? "object-cover"
+                            : "object-cover scale-[1.08]"
+                        }`}
                       />
                       <div className="absolute inset-0 flex translate-y-4 flex-col items-center justify-center gap-4 bg-slate-950/55 px-5 text-center opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                         {doctor.experience && (
