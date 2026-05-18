@@ -872,7 +872,9 @@ export interface ApiDoctorDoctor extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    doctorRank: Schema.Attribute.Enumeration<['consultant', 'specialist']> &
+    doctorRank: Schema.Attribute.Enumeration<
+      ['consultant', 'specialist', 'professor']
+    > &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

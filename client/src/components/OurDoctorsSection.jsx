@@ -12,6 +12,7 @@ import { useOurDoctorsSection } from "../api/strapi";
 import SectionSpinner from "./SectionSpinner";
 import { formatArabicYears } from "../helpers/formatArabicYears";
 import SectionPrimaryButton from "./SectionPrimaryButton";
+import getDoctorPrefix from "../utils/getDoctorPrefix";
 
 export default function OurDoctorsSection() {
   const { t, i18n } = useTranslation();
@@ -130,7 +131,8 @@ export default function OurDoctorsSection() {
                         {t("ourDoctorsSection.badge")}
                       </p>
                       <h3 className="mt-1 text-lg font-semibold md:text-xl">
-                        {t("doctor.prefix")} {data.doctorName}
+                        {getDoctorPrefix(data.doctorRank, i18n.language)}{" "}
+                        {data.doctorName}
                       </h3>
                       <p className="mt-1 text-sm text-white/80">
                         {data.doctorSpecialty}
@@ -194,7 +196,8 @@ export default function OurDoctorsSection() {
                 </div>
 
                 <h3 className="mt-5 text-2xl font-light leading-tight text-slate-900 md:text-3xl xl:text-[2.1rem]">
-                  {t("doctor.prefix")} {data.doctorName}
+                  {getDoctorPrefix(data.doctorRank, i18n.language)}{" "}
+                  {data.doctorName}
                 </h3>
 
                 <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">

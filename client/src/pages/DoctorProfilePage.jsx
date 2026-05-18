@@ -21,6 +21,8 @@ import { formatArabicYears } from "../helpers/formatArabicYears";
 import { trackEvent } from "../utils/analytics";
 import { withLang } from "../utils/languageRouting";
 import { useEffect } from "react";
+import getDoctorPrefix from "../utils/getDoctorPrefix";
+
 export default function DoctorProfilePage() {
   const { slug } = useParams();
   const { t, i18n } = useTranslation();
@@ -177,13 +179,13 @@ export default function DoctorProfilePage() {
       <SEO
         title={
           i18n.language?.startsWith("ar")
-            ? `${t("doctor.prefix")} ${doctor.name} | ${doctor.parent?.title || "طبيب"} | مستشفى القصيم الوطني`
-            : `${doctor.name} | ${doctor.parent?.title || "Doctor"} | Qassim National Hospital`
+            ? ` ${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name} | ${doctor.parent?.title || "طبيب"} | مستشفى القصيم الوطني`
+            : `${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name} | ${doctor.parent?.title || "Doctor"} | Qassim National Hospital`
         }
         description={
           i18n.language?.startsWith("ar")
-            ? `احجز موعدك مع ${doctor.name} في ${doctor.parent?.title || "مستشفى القصيم الوطني"}.`
-            : `Book an appointment with ${doctor.name} at Qassim National Hospital.`
+            ? `احجز موعدك مع ${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name} في ${doctor.parent?.title || "مستشفى القصيم الوطني"}.`
+            : `Book an appointment with ${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name} at Qassim National Hospital.`
         }
         image={doctor.image || "/Logo.png"}
         type="profile"
@@ -206,7 +208,9 @@ export default function DoctorProfilePage() {
         items={[
           { label: t("navbar.home"), to: "/" },
           { label: t("navbar.ourDoctors"), to: "/our-doctors" },
-          { label: `${t("doctor.prefix")} ${doctor.name}` },
+          {
+            label: `${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name}`,
+          },
         ]}
       />
 
@@ -269,7 +273,7 @@ export default function DoctorProfilePage() {
               <SectionBadge>{doctor.parent?.title}</SectionBadge>
 
               <SectionTitle className="max-w-3xl font-light leading-tight">
-                {t("doctor.prefix")} {doctor.name}
+                {`${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name}`}
               </SectionTitle>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 {" "}

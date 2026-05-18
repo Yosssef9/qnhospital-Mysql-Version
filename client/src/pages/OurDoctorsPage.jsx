@@ -27,6 +27,7 @@ import { useDoctors, useDoctorParents } from "../api/strapi";
 import { useDebounce } from "../hooks/useDebounce";
 import { formatArabicYears } from "../helpers/formatArabicYears";
 import { t } from "i18next";
+import getDoctorPrefix from "../utils/getDoctorPrefix";
 
 export default function OurDoctorsPage() {
   const { t, i18n } = useTranslation();
@@ -415,7 +416,7 @@ export default function OurDoctorsPage() {
                     `}
                   >
                     <h3 className="text-xl font-semibold text-slate-900">
-                      {t("doctor.prefix")} {doctor.name}
+                      {`${getDoctorPrefix(doctor.doctorRank, i18n.language)} ${doctor.name}`}
                     </h3>
 
                     <p className="mt-2 text-sm font-medium text-[rgb(21,98,160)]">

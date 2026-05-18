@@ -125,7 +125,7 @@
         }
       },
       "required": true,
-      "enum": ["consultant", "specialist"]
+      "enum": ["consultant", "specialist", "professor"]
     },
     "shortBio": {
       "type": "text",

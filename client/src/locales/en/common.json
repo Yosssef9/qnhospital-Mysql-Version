@@ -627,7 +627,8 @@
     "doctorRankBadge": "{{rank}} of {{department}}",
     "doctorRank": {
       "consultant": "Consultant",
-      "specialist": "Specialist"
+      "specialist": "Specialist",
+       "professor":"Professor"
     },
     "clinicLabel": "{{name}} Clinic",
     "featuredExperienceDesc": "A distinguished physician with strong clinical experience and patient-centered care.",

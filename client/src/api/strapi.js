@@ -263,7 +263,7 @@ export const useOurDoctorsSection = () => {
         doctorName: doctor?.name || "",
         doctorSlug: doctor?.slug || "",
         doctorExperience: doctor?.experience || 10,
-
+        doctorRank: doctor?.doctorRank || "",
         doctorImage: doctor?.image?.url ? STRAPI_URL + doctor.image.url : "",
 
         doctorSpecialty: parent?.title || "",
@@ -398,27 +398,24 @@ export const useDoctors = (
         );
       }
 
-if (parentSlug && parentSlug !== allValue) {
-  params.append(
-    "filters[$and][0][$or][0][clinic][slug][$eq]",
-    parentSlug,
-  );
+      if (parentSlug && parentSlug !== allValue) {
+        params.append(
+          "filters[$and][0][$or][0][clinic][slug][$eq]",
+          parentSlug,
+        );
 
-  params.append(
-    "filters[$and][0][$or][1][unit][slug][$eq]",
-    parentSlug,
-  );
+        params.append("filters[$and][0][$or][1][unit][slug][$eq]", parentSlug);
 
-  params.append(
-    "filters[$and][0][$or][2][center][slug][$eq]",
-    parentSlug,
-  );
+        params.append(
+          "filters[$and][0][$or][2][center][slug][$eq]",
+          parentSlug,
+        );
 
-  params.append(
-    "filters[$and][0][$or][3][medical_service][slug][$eq]",
-    parentSlug,
-  );
-}
+        params.append(
+          "filters[$and][0][$or][3][medical_service][slug][$eq]",
+          parentSlug,
+        );
+      }
 
       const res = await fetch(`${STRAPI_URL}/api/doctors?${params.toString()}`);
 

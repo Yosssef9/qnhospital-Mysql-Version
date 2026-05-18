@@ -627,7 +627,8 @@
     "doctorRankBadge": "{{rank}} {{department}}",
     "doctorRank": {
       "consultant": "استشاري",
-      "specialist": "أخصائي"
+      "specialist": "أخصائي",
+      "professor": "أستاذ دكتور"
     },
     "clinicLabel": "عيادة {{name}}",
     "featuredExperienceDesc": "طبيب متميز بخبرة سريرية قوية ورعاية تتمحور حول المريض.",
