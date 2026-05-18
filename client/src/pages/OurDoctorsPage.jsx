@@ -437,7 +437,7 @@ export default function OurDoctorsPage() {
                         alt={doctor.name}
                         className={`h-full w-full transition duration-500 group-hover:scale-[1.04] ${
                           doctor.image
-                            ? "object-cover"
+                            ? "object-contain"
                             : "object-cover scale-[1.08]"
                         }`}
                       />
