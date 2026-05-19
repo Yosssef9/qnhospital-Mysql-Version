@@ -435,11 +435,7 @@ export default function OurDoctorsPage() {
                             : "/images/doctor-defalut.jpeg")
                         }
                         alt={doctor.name}
-                        className={`h-full w-full transition duration-500 group-hover:scale-[1.04] ${
-                          doctor.image
-                            ? "object-contain"
-                            : "object-cover scale-[1.08]"
-                        }`}
+                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                       />
                       <div className="absolute inset-0 flex translate-y-4 flex-col items-center justify-center gap-4 bg-slate-950/55 px-5 text-center opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                         {doctor.experience && (

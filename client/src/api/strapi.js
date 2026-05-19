@@ -442,7 +442,7 @@ export const useDoctors = (
                 ? STRAPI_URL + item.image.url
                 : item.gender === "female"
                   ? "/images/female-doctor-default.jpeg"
-                  : "/images/doctor-defalut.png",
+                  : "/images/doctor-defalut.jpeg",
               specialty: parent.title || "",
               department: parent.shortTitle || parent.title || "",
               parentSlug: parent.slug || "",
