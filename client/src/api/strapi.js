@@ -1201,3 +1201,53 @@ export const usePrivacyPolicy = () => {
     staleTime: 5 * 60 * 1000,
   });
 };
+
+export const useOurDoctorsPageSetting = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["our-doctors-page-setting", locale],
+
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("fields[0]", "heroTitle");
+      params.append("fields[1]", "heroDescription");
+      params.append("fields[2]", "highlightTitle");
+      params.append("fields[3]", "highlightDescription");
+      params.append("fields[4]", "gridTitle");
+
+      params.append("populate", "breadcrumbImage");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/our-doctors-page-setting?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch doctors page settings");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        heroTitle: data?.heroTitle || "",
+        heroDescription: data?.heroDescription || "",
+
+        highlightTitle: data?.highlightTitle || "",
+        highlightDescription: data?.highlightDescription || "",
+
+        gridTitle: data?.gridTitle || "",
+
+        breadcrumbImage: data?.breadcrumbImage?.url
+          ? `${STRAPI_URL}${data.breadcrumbImage.url}`
+          : "/images/about-us-header.jpg",
+      };
+    },
+
+    staleTime: 5 * 60 * 1000,
+  });
+};

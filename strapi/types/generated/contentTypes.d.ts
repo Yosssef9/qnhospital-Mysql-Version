@@ -1834,6 +1834,76 @@ export interface ApiNewsAchievementsHomeSectionNewsAchievementsHomeSection
   };
 }
 
+export interface ApiOurDoctorsPageSettingOurDoctorsPageSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'our_doctors_page_settings';
+  info: {
+    displayName: 'our-doctors-page-setting';
+    pluralName: 'our-doctors-page-settings';
+    singularName: 'our-doctors-page-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    breadcrumbImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gridTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    heroDescription: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    heroTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    highlightDescription: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    highlightTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::our-doctors-page-setting.our-doctors-page-setting'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOurDoctorsSectionOurDoctorsSection
   extends Struct.SingleTypeSchema {
   collectionName: 'our_doctors_sections';
@@ -2695,6 +2765,7 @@ declare module '@strapi/strapi' {
       'api::mobile-app-home-section.mobile-app-home-section': ApiMobileAppHomeSectionMobileAppHomeSection;
       'api::new.new': ApiNewNew;
       'api::news-achievements-home-section.news-achievements-home-section': ApiNewsAchievementsHomeSectionNewsAchievementsHomeSection;
+      'api::our-doctors-page-setting.our-doctors-page-setting': ApiOurDoctorsPageSettingOurDoctorsPageSetting;
       'api::our-doctors-section.our-doctors-section': ApiOurDoctorsSectionOurDoctorsSection;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
       'api::unit.unit': ApiUnitUnit;

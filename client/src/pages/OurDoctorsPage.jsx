@@ -24,7 +24,11 @@ import SectionBadge from "../components/reusableComponents/SectionBadge";
 import SectionTitle from "../components/reusableComponents/SectionTitle";
 import SearchableSelect from "../components/SearchableSelect";
 import SEO from "../components/SEO";
-import { useDoctors, useDoctorParents } from "../api/strapi";
+import {
+  useDoctors,
+  useDoctorParents,
+  useOurDoctorsPageSetting,
+} from "../api/strapi";
 import { useDebounce } from "../hooks/useDebounce";
 import { formatArabicYears } from "../helpers/formatArabicYears";
 import { t } from "i18next";
@@ -34,7 +38,7 @@ export default function OurDoctorsPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
   const { data: websiteLinks } = useWebsiteLinks();
-
+  const { data: pageSettings } = useOurDoctorsPageSetting();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const allParentsValue = "all";
@@ -162,7 +166,7 @@ export default function OurDoctorsPage() {
         }
       />
       <BreadcrumbArea
-        imgUrl="/images/about-us-header.jpg"
+        imgUrl={pageSettings?.breadcrumbImage || "/images/about-us-header.jpg"}
         items={[
           { label: t("navbar.home"), to: "/" },
           { label: t("navbar.ourDoctors") },
@@ -182,11 +186,12 @@ export default function OurDoctorsPage() {
               <SectionBadge>{t("ourDoctorsPage.badge")}</SectionBadge>
 
               <SectionTitle className="max-w-3xl font-light leading-tight">
-                {t("ourDoctorsPage.title")}
+                {pageSettings?.heroTitle || t("ourDoctorsPage.title")}
               </SectionTitle>
 
               <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
-                {t("ourDoctorsPage.description")}
+                {pageSettings?.heroDescription ||
+                  t("ourDoctorsPage.description")}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -251,10 +256,12 @@ export default function OurDoctorsPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold">
-                        {t("ourDoctorsPage.highlightCard.title")}
+                        {pageSettings?.highlightTitle ||
+                          t("ourDoctorsPage.highlightCard.title")}
                       </h3>
                       <p className="mt-2 text-sm leading-7 text-white/90">
-                        {t("ourDoctorsPage.highlightCard.desc")}
+                        {pageSettings?.highlightDescription ||
+                          t("ourDoctorsPage.highlightCard.desc")}
                       </p>
                     </div>
                   </div>
@@ -271,7 +278,7 @@ export default function OurDoctorsPage() {
           <div className={isRTL ? "text-right" : "text-left"}>
             <SectionBadge>{t("ourDoctorsPage.gridBadge")}</SectionBadge>
             <SectionTitle className="font-light">
-              {t("ourDoctorsPage.gridTitle")}
+              {pageSettings?.gridTitle || t("ourDoctorsPage.gridTitle")}
             </SectionTitle>
           </div>
 
