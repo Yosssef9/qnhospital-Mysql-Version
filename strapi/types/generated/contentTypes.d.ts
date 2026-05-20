@@ -1501,6 +1501,52 @@ export interface ApiJoinUsSettingJoinUsSetting extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiMedicalDepartmentsPageSettingMedicalDepartmentsPageSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'medical_departments_page_settings';
+  info: {
+    displayName: 'medical-departments-page-setting';
+    pluralName: 'medical-departments-page-settings';
+    singularName: 'medical-departments-page-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    breadcrumbImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::medical-departments-page-setting.medical-departments-page-setting'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiMedicalServiceMedicalService
   extends Struct.CollectionTypeSchema {
   collectionName: 'medical_services';
@@ -2761,6 +2807,7 @@ declare module '@strapi/strapi' {
       'api::hospital-accreditation.hospital-accreditation': ApiHospitalAccreditationHospitalAccreditation;
       'api::job-application.job-application': ApiJobApplicationJobApplication;
       'api::join-us-setting.join-us-setting': ApiJoinUsSettingJoinUsSetting;
+      'api::medical-departments-page-setting.medical-departments-page-setting': ApiMedicalDepartmentsPageSettingMedicalDepartmentsPageSetting;
       'api::medical-service.medical-service': ApiMedicalServiceMedicalService;
       'api::mobile-app-home-section.mobile-app-home-section': ApiMobileAppHomeSectionMobileAppHomeSection;
       'api::new.new': ApiNewNew;

@@ -1251,3 +1251,39 @@ export const useOurDoctorsPageSetting = () => {
     staleTime: 5 * 60 * 1000,
   });
 };
+export const useMedicalDepartmentsPageSetting = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["medical-departments-page-setting", locale],
+
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+      params.append("fields[0]", "description");
+      params.append("populate", "breadcrumbImage");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/medical-departments-page-setting?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch medical departments page setting");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        description: data?.description || "",
+        breadcrumbImage: data?.breadcrumbImage?.url
+          ? `${STRAPI_URL}${data.breadcrumbImage.url}`
+          : "/images/about-us-header.jpg",
+      };
+    },
+
+    staleTime: 5 * 60 * 1000,
+  });
+};

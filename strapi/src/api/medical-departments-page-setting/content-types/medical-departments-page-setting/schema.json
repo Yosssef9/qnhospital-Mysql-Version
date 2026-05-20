@@ -1,0 +1,42 @@
+{
+  "kind": "singleType",
+  "collectionName": "medical_departments_page_settings",
+  "info": {
+    "singularName": "medical-departments-page-setting",
+    "pluralName": "medical-departments-page-settings",
+    "displayName": "medical-departments-page-setting"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "description": {
+      "type": "blocks",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "breadcrumbImage": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

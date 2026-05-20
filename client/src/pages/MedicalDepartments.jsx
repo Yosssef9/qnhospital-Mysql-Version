@@ -3,7 +3,10 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Search, ArrowRight, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import BreadcrumbArea from "../components/reusableComponents/BreadcrumbArea";
-import { useDepartments } from "../api/strapi";
+import {
+  useDepartments,
+  useMedicalDepartmentsPageSetting,
+} from "../api/strapi";
 import SectionSpinner from "../components/sectionSpinner";
 import { useDebounce } from "../hooks/useDebounce";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,6 +16,7 @@ import SEO from "../components/SEO";
 import { withLang } from "../utils/languageRouting";
 export default function MedicalDepartments() {
   const { t, i18n } = useTranslation();
+  const { data: pageSettings } = useMedicalDepartmentsPageSetting();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState(() => {
@@ -61,7 +65,7 @@ export default function MedicalDepartments() {
         }
       />
       <BreadcrumbArea
-        imgUrl="/images/about-us-header.jpg"
+        imgUrl={pageSettings?.breadcrumbImage || "/images/about-us-header.jpg"}
         items={[
           { label: t("navbar.home"), to: "/" },
           { label: t("medicalDepartments.title") },
@@ -77,7 +81,7 @@ export default function MedicalDepartments() {
             <SectionBadge> {t("medicalDepartments.title")}</SectionBadge>
 
             <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
-              {t("medicalDepartments.description")}{" "}
+              {pageSettings?.description || t("medicalDepartments.description")}
             </p>
           </div>
         </div>
