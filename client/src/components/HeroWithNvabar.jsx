@@ -65,7 +65,15 @@ export default function HeroSwiperStyle() {
       }
     });
   }, [active]);
+  useEffect(() => {
+    setActive(0);
+    setVideoLoaded({});
+    videoRefs.current = {};
 
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(0, 0);
+    }
+  }, [i18n.language]);
   if (error) {
     return (
       <section className="h-[85vh] flex flex-col items-center justify-center bg-slate-900 text-center px-6">
@@ -97,6 +105,9 @@ export default function HeroSwiperStyle() {
         {!isLoading && slides.length > 0 && (
           <>
             <Swiper
+              key={i18n.language}
+              observer={true}
+              observeParents={true}
               modules={[Autoplay, EffectFade]}
               effect="fade"
               speed={1200}
@@ -110,11 +121,16 @@ export default function HeroSwiperStyle() {
               }}
               onSlideChange={(swiper) => {
                 setActive(swiper.realIndex);
+
+                setVideoLoaded((prev) => ({
+                  ...prev,
+                  [swiper.realIndex]: false,
+                }));
               }}
               className="h-full"
             >
               {slides.map((slide, index) => (
-                <SwiperSlide key={slide.id}>
+                <SwiperSlide key={`${i18n.language}-${slide.id}`}>
                   <div className="relative h-full w-full">
                     {/* <div className="relative h-full w-full bg-gradient-to-b from-white via-[#eef6fb] to-[rgb(21,98,160)]"> */}
                     {slide.isVideo ? (
