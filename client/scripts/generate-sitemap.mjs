@@ -15,7 +15,7 @@ const staticRoutes = [
   "hospital-accreditations",
   "medical-departments",
   "our-doctors",
-  "News&Achievements",
+  "news-achievements",
   "privacy-policy",
   "join-us",
   "appointments-App",

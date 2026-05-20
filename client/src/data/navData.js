@@ -140,7 +140,7 @@ export function getSiteNav(t) {
 
     { label: t("navbar.ourDoctors"), to: "/our-doctors" },
 
-    { label: t("navbar.NewsAchievements"), to: "/News&Achievements" },
+    { label: t("navbar.NewsAchievements"), to: "/news-achievements" },
     { label: t("navbar.JoinUs"), to: "/join-us" },
     // { label: t("navbar.contact"), to: "/contact" },
   ];

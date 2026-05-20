@@ -83,7 +83,7 @@ const router = createBrowserRouter([
       { path: "our-doctors", element: <OurDoctorsPage /> },
       { path: "appointments-App", element: <AppointmentsAppPage /> },
       { path: "our-doctors/:slug", element: <DoctorProfilePage /> },
-      { path: "News&Achievements", element: <NewsAchievementsPage /> },
+      { path: "news-achievements", element: <NewsAchievementsPage /> },
       { path: "privacy-policy", element: <PrivacyPolicy /> },
       { path: "*", element: <ErrorPage /> },
     ],

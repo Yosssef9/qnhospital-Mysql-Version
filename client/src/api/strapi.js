@@ -1019,13 +1019,13 @@ export const useGlobalSearch = (search = "") => {
         {
           type: "News",
           url: `${STRAPI_URL}/api/news?${buildParams("title")}`,
-          to: () => `/News&Achievements?tab=news&page=1`,
+          to: () => `/news-achievements?tab=news&page=1`,
           title: (item) => item.title,
         },
         {
           type: "Achievement",
           url: `${STRAPI_URL}/api/achievements?${buildParams("title")}`,
-          to: () => `/News&Achievements?tab=achievements&page=1`,
+          to: () => `/news-achievements?tab=achievements&page=1`,
           title: (item) => item.title,
         },
       ];

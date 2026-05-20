@@ -244,7 +244,7 @@ export default function NewsAreaDesignV2() {
                       </div>
 
                       <div className="mt-8">
-                        <SectionPrimaryButton to="/News&Achievements">
+                        <SectionPrimaryButton to="/news-achievements">
                           {t("newsAreaSection.readMore")}
                         </SectionPrimaryButton>
                       </div>
@@ -284,7 +284,7 @@ export default function NewsAreaDesignV2() {
 
               <Link
                 to={withLang(
-                  `/News&Achievements?tab=${tab}&page=1`,
+                  `/news-achievements?tab=${tab}&page=1`,
                   i18n.language || "en",
                 )}
                 className="text-sm font-semibold text-[rgb(21,98,160)] hover:underline"
