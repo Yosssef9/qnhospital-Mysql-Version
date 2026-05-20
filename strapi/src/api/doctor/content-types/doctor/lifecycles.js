@@ -1,32 +1,48 @@
 "use strict";
 
 const { ApplicationError } = require("@strapi/utils").errors;
-
-const {
-  syncLocalizedPublish,
-} = require("../../../../utils/sync-localized-publish");
+const slugify = require("slugify");
 
 const UID = "api::doctor.doctor";
 
 const parentFields = ["clinic", "unit", "medical_service", "center"];
 
-async function syncPublish(event) {
-  const { result } = event;
-
-  if (!result?.publishedAt) return;
-
-  await syncLocalizedPublish(strapi, UID, result, {
-    locales: ["en", "ar"],
+function generateEnglishSlug(name) {
+  return slugify(name, {
+    lower: true,
+    strict: true,
+    trim: true,
   });
+}
+
+function generateTemporarySlug() {
+  return `doctor-${Date.now()}`;
 }
 
 module.exports = {
   async beforeCreate(event) {
-    validateOnlyOneParent(event.params.data);
+    const data = event.params.data || {};
+
+    // EN locale → generate real English slug
+    if (data.locale === "en" && data.name) {
+      data.slug = generateEnglishSlug(data.name);
+    }
+
+    // AR locale before EN localization exists
+    if (data.locale === "ar" && !data.slug) {
+      data.slug = generateTemporarySlug();
+    }
+
+    validateOnlyOneParent(data);
   },
 
   async beforeUpdate(event) {
     const data = event.params.data || {};
+
+    // Regenerate slug when EN doctor name changes
+    if (data.locale === "en" && data.name) {
+      data.slug = generateEnglishSlug(data.name);
+    }
 
     const existingDoctor = await strapi.db.query(UID).findOne({
       where: event.params.where,
@@ -47,13 +63,35 @@ module.exports = {
   },
 
   async afterCreate(event) {
-    await syncPublish(event);
+    await syncSlugToLocalizations(event.result);
   },
 
   async afterUpdate(event) {
-    await syncPublish(event);
+    await syncSlugToLocalizations(event.result);
   },
 };
+
+async function syncSlugToLocalizations(result) {
+  // ONLY sync from EN locale
+  if (result.locale !== "en" || !result.slug || !result.localizations?.length) {
+    return;
+  }
+
+  for (const localization of result.localizations) {
+    try {
+      await strapi.documents(UID).update({
+        documentId: localization.documentId,
+        locale: localization.locale,
+        data: {
+          slug: result.slug,
+        },
+        status: "published",
+      });
+    } catch (err) {
+      strapi.log.error(`Failed syncing slug to ${localization.locale}:`, err);
+    }
+  }
+}
 
 function resolveRelationValue({ field, data, existingDoctor }) {
   const hasFieldInPayload = Object.prototype.hasOwnProperty.call(data, field);
@@ -85,9 +123,7 @@ function resolveRelationValue({ field, data, existingDoctor }) {
       return value.set.length > 0 ? value : null;
     }
 
-    // Important:
-    // Strapi sometimes sends empty relation operation objects during publish/edit.
-    // In this case, keep the existing relation instead of treating it as empty.
+    // Keep existing relation during empty publish payloads
     if (
       Array.isArray(value.connect) &&
       value.connect.length === 0 &&
@@ -140,6 +176,7 @@ function hasRelation(value) {
     if (value.id || value.documentId) return true;
 
     if (Array.isArray(value.connect) && value.connect.length > 0) return true;
+
     if (Array.isArray(value.set) && value.set.length > 0) return true;
 
     return false;

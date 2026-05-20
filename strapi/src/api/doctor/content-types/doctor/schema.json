@@ -16,13 +16,12 @@
   },
   "attributes": {
     "slug": {
-      "type": "uid",
+      "type": "string",
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
-      "targetField": "name",
       "required": true
     },
     "name": {
