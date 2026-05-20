@@ -67,12 +67,6 @@ export default function HeroSwiperStyle() {
   }, [active]);
   useEffect(() => {
     setActive(0);
-    setVideoLoaded({});
-    videoRefs.current = {};
-
-    if (swiperRef.current) {
-      swiperRef.current.slideToLoop(0, 0);
-    }
   }, [i18n.language]);
   if (error) {
     return (
@@ -121,11 +115,6 @@ export default function HeroSwiperStyle() {
               }}
               onSlideChange={(swiper) => {
                 setActive(swiper.realIndex);
-
-                setVideoLoaded((prev) => ({
-                  ...prev,
-                  [swiper.realIndex]: false,
-                }));
               }}
               className="h-full"
             >
@@ -134,32 +123,59 @@ export default function HeroSwiperStyle() {
                   <div className="relative h-full w-full">
                     {/* <div className="relative h-full w-full bg-gradient-to-b from-white via-[#eef6fb] to-[rgb(21,98,160)]"> */}
                     {slide.isVideo ? (
-                      <div className="absolute inset-0">
-                        {/* Poster overlay */}
-                        <motion.img
-                          src={"/images/BannerHeroSlide1.jpeg"}
-                          alt=""
-                          initial={{
-                            scale: 1.08,
-                            filter: "blur(6px)",
-                          }}
-                          animate={{
-                            scale: videoLoaded[index] ? 1 : 1.04,
-                            filter: videoLoaded[index]
-                              ? "blur(0px)"
-                              : "blur(4px)",
-                          }}
-                          transition={{
-                            duration: 1.4,
-                            ease: "easeOut",
-                          }}
-                          className={[
-                            "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms]",
-                            videoLoaded[index] ? "opacity-0" : "opacity-100",
-                          ].join(" ")}
-                        />
+                      index === 0 ? (
+                        <div className="absolute inset-0">
+                          {/* Poster overlay */}
+                          <motion.img
+                            src={"/images/BannerHeroSlide1.jpeg"}
+                            alt=""
+                            initial={{
+                              scale: 1.05,
+                              filter: "blur(3px)",
+                            }}
+                            animate={{
+                              scale: videoLoaded[index] ? 1 : 1.02,
+                              filter: videoLoaded[index]
+                                ? "blur(0px)"
+                                : "blur(3px)",
+                            }}
+                            transition={{
+                              duration: 1.4,
+                              ease: "easeOut",
+                            }}
+                            className={[
+                              "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms]",
+                              videoLoaded[index] ? "opacity-0" : "opacity-100",
+                            ].join(" ")}
+                          />
 
-                        {/* Video */}
+                          {/* Video */}
+                          <video
+                            ref={(el) => {
+                              videoRefs.current[index] = el;
+                            }}
+                            muted
+                            loop
+                            playsInline
+                            autoPlay
+                            preload="metadata"
+                            onLoadedData={() => {
+                              setVideoLoaded((prev) => ({
+                                ...prev,
+                                [index]: true,
+                              }));
+                            }}
+                            className={[
+                              "absolute inset-0 h-full w-full object-cover transition-all duration-[1800ms]",
+                              videoLoaded[index]
+                                ? "opacity-100 brightness-100"
+                                : "opacity-0 brightness-125",
+                            ].join(" ")}
+                          >
+                            <source src={slide.media} type={slide.mime} />
+                          </video>
+                        </div>
+                      ) : (
                         <video
                           ref={(el) => {
                             videoRefs.current[index] = el;
@@ -168,23 +184,12 @@ export default function HeroSwiperStyle() {
                           loop
                           playsInline
                           autoPlay
-                          preload="metadata"
-                          onLoadedData={() => {
-                            setVideoLoaded((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }));
-                          }}
-                          className={[
-                            "absolute inset-0 h-full w-full object-cover transition-all duration-[1800ms]",
-                            videoLoaded[index]
-                              ? "opacity-100 brightness-100"
-                              : "opacity-0 brightness-125",
-                          ].join(" ")}
+                          preload="none"
+                          className="absolute inset-0 h-full w-full object-cover"
                         >
                           <source src={slide.media} type={slide.mime} />
                         </video>
-                      </div>
+                      )
                     ) : (
                       <motion.img
                         src={slide.media}
