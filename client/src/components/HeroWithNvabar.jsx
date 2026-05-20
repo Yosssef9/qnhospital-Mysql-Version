@@ -44,6 +44,7 @@ const slides = [
 export default function HeroSwiperStyle() {
   const swiperRef = useRef(null);
   const videoRefs = useRef({});
+  const [videoLoaded, setVideoLoaded] = useState({});
   const [active, setActive] = useState(0);
   const { i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -117,20 +118,57 @@ export default function HeroSwiperStyle() {
                   <div className="relative h-full w-full">
                     {/* <div className="relative h-full w-full bg-gradient-to-b from-white via-[#eef6fb] to-[rgb(21,98,160)]"> */}
                     {slide.isVideo ? (
-                      <video
-                        ref={(el) => {
-                          videoRefs.current[index] = el;
-                        }}
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
-                        preload="metadata"
-                        poster="/images/Screenshot%202026-04-05%20101101.png"
-                        className="absolute inset-0 h-full w-full object-cover"
-                      >
-                        <source src={slide.media} type={slide.mime} />
-                      </video>
+                      <div className="absolute inset-0">
+                        {/* Poster overlay */}
+                        <motion.img
+                          src={"/images/BannerHeroSlide1.jpeg"}
+                          alt=""
+                          initial={{
+                            scale: 1.08,
+                            filter: "blur(6px)",
+                          }}
+                          animate={{
+                            scale: videoLoaded[index] ? 1 : 1.04,
+                            filter: videoLoaded[index]
+                              ? "blur(0px)"
+                              : "blur(4px)",
+                          }}
+                          transition={{
+                            duration: 1.4,
+                            ease: "easeOut",
+                          }}
+                          className={[
+                            "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms]",
+                            videoLoaded[index] ? "opacity-0" : "opacity-100",
+                          ].join(" ")}
+                        />
+
+                        {/* Video */}
+                        <video
+                          ref={(el) => {
+                            videoRefs.current[index] = el;
+                          }}
+                          muted
+                          loop
+                          playsInline
+                          autoPlay
+                          preload="metadata"
+                          onLoadedData={() => {
+                            setVideoLoaded((prev) => ({
+                              ...prev,
+                              [index]: true,
+                            }));
+                          }}
+                          className={[
+                            "absolute inset-0 h-full w-full object-cover transition-all duration-[1800ms]",
+                            videoLoaded[index]
+                              ? "opacity-100 brightness-100"
+                              : "opacity-0 brightness-125",
+                          ].join(" ")}
+                        >
+                          <source src={slide.media} type={slide.mime} />
+                        </video>
+                      </div>
                     ) : (
                       <motion.img
                         src={slide.media}
