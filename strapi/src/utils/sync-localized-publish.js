@@ -1,25 +1,43 @@
 "use strict";
 
-function isLocalizedAttribute(attribute) {
-  return attribute?.pluginOptions?.i18n?.localized === true;
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function isNonLocalizedAttribute(attribute) {
   return attribute?.pluginOptions?.i18n?.localized === false;
 }
 
+function getMediaValue(value, attribute) {
+  if (!value) return null;
+
+  if (attribute.multiple) {
+    return Array.isArray(value) ? value.map((item) => item.id || item) : [];
+  }
+
+  return value?.id || value;
+}
+
 function getRelationValue(value, attribute) {
-  if (!value) return value;
-
   if (attribute.type === "media") {
-    if (attribute.multiple) {
-      return Array.isArray(value) ? value.map((item) => item.id) : [];
-    }
-
-    return value?.id || null;
+    return getMediaValue(value, attribute);
   }
 
   return value;
+}
+
+function getNonLocalizedPopulate(schema) {
+  const populate = {};
+
+  Object.entries(schema.attributes || {}).forEach(([key, attribute]) => {
+    if (!isNonLocalizedAttribute(attribute)) return;
+
+    if (attribute.type === "media") {
+      populate[key] = true;
+    }
+  });
+
+  return populate;
 }
 
 function getNonLocalizedData(schema, entry) {
@@ -38,70 +56,83 @@ function getNonLocalizedData(schema, entry) {
 async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
   const locales = options.locales || ["en", "ar"];
 
-  if (!entry) return;
+  if (!entry?.documentId || !entry?.locale) return;
 
   const documentId = entry.documentId;
   const currentLocale = entry.locale;
 
-  if (!documentId || !currentLocale) return;
+  global.__syncLocalizedPublishRunning =
+    global.__syncLocalizedPublishRunning || new Set();
 
-  if (global.__syncLocalizedPublishRunning) return;
+  const lockKey = `${uid}:${documentId}:${currentLocale}`;
 
-  global.__syncLocalizedPublishRunning = true;
+  if (global.__syncLocalizedPublishRunning.has(lockKey)) return;
 
-  setTimeout(async () => {
-    try {
-      const schema = strapi.contentTypes[uid];
+  global.__syncLocalizedPublishRunning.add(lockKey);
 
-      if (!schema) {
-        strapi.log.warn(`[syncLocalizedPublish] Missing schema for ${uid}`);
-        return;
-      }
+  try {
+    const schema = strapi.contentTypes[uid];
 
-      const nonLocalizedData = getNonLocalizedData(schema, entry);
-
-      for (const locale of locales) {
-        if (locale === currentLocale) continue;
-
-        try {
-          const targetEntry = await strapi.documents(uid).findFirst({
-            documentId,
-            locale,
-          });
-
-          if (!targetEntry) {
-            strapi.log.warn(
-              `[syncLocalizedPublish] Missing localized entry | ${uid} | documentId=${documentId} | locale=${locale}`,
-            );
-            continue;
-          }
-
-          if (Object.keys(nonLocalizedData).length > 0) {
-            await strapi.documents(uid).update({
-              documentId,
-              locale,
-              data: nonLocalizedData,
-            });
-          }
-
-          await strapi.documents(uid).publish({
-            documentId,
-            locale,
-          });
-
-          strapi.log.info(
-            `[syncLocalizedPublish] Synced non-localized fields and published ${uid} | documentId=${documentId} | locale=${locale}`,
-          );
-        } catch (error) {
-          strapi.log.warn(
-            `[syncLocalizedPublish] Could not sync/publish ${uid} | documentId=${documentId} | locale=${locale}: ${error.message}`,
-          );
-        }
-      }
-    } finally {
-      global.__syncLocalizedPublishRunning = false;
+    if (!schema) {
+      strapi.log.warn(`[syncLocalizedPublish] Missing schema for ${uid}`);
+      return;
     }
-  }, 2000);
+
+    await sleep(800);
+
+    const populate = getNonLocalizedPopulate(schema);
+
+    const sourceEntry = await strapi.documents(uid).findFirst({
+      documentId,
+      locale: currentLocale,
+      populate,
+    });
+
+    if (!sourceEntry) return;
+
+    const nonLocalizedData = getNonLocalizedData(schema, sourceEntry);
+
+    for (const locale of locales) {
+      if (locale === currentLocale) continue;
+
+      const targetEntry = await strapi.documents(uid).findFirst({
+        documentId,
+        locale,
+      });
+
+      if (!targetEntry) {
+        strapi.log.warn(
+          `[syncLocalizedPublish] Missing localized entry | ${uid} | ${locale}`,
+        );
+        continue;
+      }
+
+      if (Object.keys(nonLocalizedData).length > 0) {
+        await strapi.documents(uid).update({
+          documentId,
+          locale,
+          data: nonLocalizedData,
+        });
+      }
+
+      await sleep(800);
+
+      await strapi.documents(uid).publish({
+        documentId,
+        locale,
+      });
+
+      strapi.log.info(
+        `[syncLocalizedPublish] Synced and published ${uid} | ${locale}`,
+      );
+    }
+  } catch (error) {
+    strapi.log.warn(
+      `[syncLocalizedPublish] Failed ${uid} | documentId=${documentId}: ${error.message}`,
+    );
+  } finally {
+    global.__syncLocalizedPublishRunning.delete(lockKey);
+  }
 }
 
 module.exports = {
