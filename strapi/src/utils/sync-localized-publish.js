@@ -1,14 +1,40 @@
 "use strict";
 
-/**
- * Publish all localizations of the same document when one locale is published.
- *
- * @param {object} strapi - Strapi instance
- * @param {string} uid - Content type UID
- * @param {object} entry - Lifecycle result entry
- * @param {object} options
- * @param {string[]} options.locales - Locales to publish, example: ["en", "ar"]
- */
+function isLocalizedAttribute(attribute) {
+  return attribute?.pluginOptions?.i18n?.localized === true;
+}
+
+function isNonLocalizedAttribute(attribute) {
+  return attribute?.pluginOptions?.i18n?.localized === false;
+}
+
+function getRelationValue(value, attribute) {
+  if (!value) return value;
+
+  if (attribute.type === "media") {
+    if (attribute.multiple) {
+      return Array.isArray(value) ? value.map((item) => item.id) : [];
+    }
+
+    return value?.id || null;
+  }
+
+  return value;
+}
+
+function getNonLocalizedData(schema, entry) {
+  const data = {};
+
+  Object.entries(schema.attributes || {}).forEach(([key, attribute]) => {
+    if (!isNonLocalizedAttribute(attribute)) return;
+    if (!(key in entry)) return;
+
+    data[key] = getRelationValue(entry[key], attribute);
+  });
+
+  return data;
+}
+
 async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
   const locales = options.locales || ["en", "ar"];
 
@@ -25,6 +51,15 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
 
   setTimeout(async () => {
     try {
+      const schema = strapi.contentTypes[uid];
+
+      if (!schema) {
+        strapi.log.warn(`[syncLocalizedPublish] Missing schema for ${uid}`);
+        return;
+      }
+
+      const nonLocalizedData = getNonLocalizedData(schema, entry);
+
       for (const locale of locales) {
         if (locale === currentLocale) continue;
 
@@ -41,17 +76,25 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
             continue;
           }
 
+          if (Object.keys(nonLocalizedData).length > 0) {
+            await strapi.documents(uid).update({
+              documentId,
+              locale,
+              data: nonLocalizedData,
+            });
+          }
+
           await strapi.documents(uid).publish({
             documentId,
             locale,
           });
 
           strapi.log.info(
-            `[syncLocalizedPublish] Published ${uid} | documentId=${documentId} | locale=${locale}`,
+            `[syncLocalizedPublish] Synced non-localized fields and published ${uid} | documentId=${documentId} | locale=${locale}`,
           );
         } catch (error) {
           strapi.log.warn(
-            `[syncLocalizedPublish] Could not publish ${uid} | documentId=${documentId} | locale=${locale}: ${error.message}`,
+            `[syncLocalizedPublish] Could not sync/publish ${uid} | documentId=${documentId} | locale=${locale}: ${error.message}`,
           );
         }
       }
