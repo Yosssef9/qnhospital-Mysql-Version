@@ -16,7 +16,13 @@
   },
   "attributes": {
     "slug": {
-      "type": "uid"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
     },
     "title": {
       "type": "string",
@@ -50,12 +56,7 @@
         }
       },
       "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "breadcrumbImage": {
       "type": "media",
@@ -65,12 +66,7 @@
         }
       },
       "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "cardDesc": {
       "type": "text",

@@ -24,7 +24,13 @@
       }
     },
     "slug": {
-      "type": "uid"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
     },
     "shortTitle": {
       "type": "string",
@@ -58,12 +64,7 @@
         }
       },
       "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "breadcrumbImage": {
       "type": "media",
@@ -73,12 +74,7 @@
         }
       },
       "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "hero": {
       "type": "component",

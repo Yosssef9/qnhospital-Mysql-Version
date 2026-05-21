@@ -1,10 +1,40 @@
 "use strict";
 
+const slugify = require("slugify");
+
 const {
   syncLocalizedPublish,
 } = require("../../../../utils/sync-localized-publish");
 
 const UID = "api::medical-service.medical-service";
+
+function generateEnglishSlug(title) {
+  return slugify(title, {
+    lower: true,
+    strict: true,
+    trim: true,
+  });
+}
+
+function generateTemporarySlug() {
+  return `medical-service-${Date.now()}`;
+}
+
+async function syncSlugToLocalizations(result) {
+  if (result.locale !== "en" || !result.slug || !result.localizations?.length) {
+    return;
+  }
+
+  for (const localization of result.localizations) {
+    await strapi.documents(UID).update({
+      documentId: localization.documentId,
+      locale: localization.locale,
+      data: {
+        slug: result.slug,
+      },
+    });
+  }
+}
 
 async function syncPublish(event) {
   const { result } = event;
@@ -17,11 +47,33 @@ async function syncPublish(event) {
 }
 
 module.exports = {
+  async beforeCreate(event) {
+    const data = event.params.data || {};
+
+    if (data.locale === "en" && data.title) {
+      data.slug = generateEnglishSlug(data.title);
+    }
+
+    if (data.locale === "ar" && !data.slug) {
+      data.slug = generateTemporarySlug();
+    }
+  },
+
+  async beforeUpdate(event) {
+    const data = event.params.data || {};
+
+    if (data.locale === "en" && data.title) {
+      data.slug = generateEnglishSlug(data.title);
+    }
+  },
+
   async afterCreate(event) {
+    await syncSlugToLocalizations(event.result);
     await syncPublish(event);
   },
 
   async afterUpdate(event) {
+    await syncSlugToLocalizations(event.result);
     await syncPublish(event);
   },
 };
