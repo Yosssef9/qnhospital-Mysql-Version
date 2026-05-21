@@ -224,7 +224,7 @@ export default function MedicalDepartments() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.04 }}
                       viewport={{ once: true }}
-                      className="group min-h-[420px] overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                      className="group flex min-h-[420px] flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
                     >
                       <div className="relative h-56 overflow-hidden bg-slate-100">
                         <img
@@ -234,28 +234,25 @@ export default function MedicalDepartments() {
                         />
                       </div>
 
-                      <div className="p-6">
+                      <div className="flex flex-1 flex-col p-6">
+                        {" "}
                         <h3 className="text-xl font-semibold text-slate-900">
                           {item.title}
                         </h3>
-
-                        <p className="mt-3 text-sm leading-7 text-slate-600">
+                        <p className="mt-3 flex-1 text-sm leading-7 text-slate-600">
                           {item.cardDesc}
                         </p>
-
-                        <div className="mt-5">
+                        <div className="mt-auto pt-5">
                           <Link
                             to={withLang(item.to, i18n.language || "en")}
-                            className={`inline-flex items-center gap-2 text-sm font-semibold text-[rgb(21,98,160)] transition hover:gap-3 
-                            
-                            `}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-[rgb(21,98,160)] transition-all duration-300 ease-out"
                           >
                             {t("common.learnMore")}
 
                             {i18n.language === "ar" ? (
-                              <ArrowLeft className="h-4 w-4" />
+                              <ArrowLeft className="h-4 w-4 transition-transform duration-300 ease-out group-hover:-translate-x-1" />
                             ) : (
-                              <ArrowRight className="h-4 w-4" />
+                              <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" />
                             )}
                           </Link>
                         </div>
@@ -377,7 +374,7 @@ function DepartmentCardSkeleton() {
     <div className="min-h-[570px]">
       <div className="overflow-hidden  rounded-[28px] border border-slate-200 bg-white shadow-sm">
         <div className="h-56 w-full animate-pulse bg-slate-200" />
-        <div className="p-6">
+        <div className="flex h-[calc(100%-14rem)] flex-col p-6">
           <div className="h-6 w-2/3 animate-pulse rounded-md bg-slate-200" />
           <div className="mt-4 h-4 w-full animate-pulse rounded-md bg-slate-200" />
           <div className="mt-2 h-4 w-5/6 animate-pulse rounded-md bg-slate-200" />
