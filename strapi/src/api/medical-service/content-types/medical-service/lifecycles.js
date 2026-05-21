@@ -26,13 +26,21 @@ async function syncSlugToLocalizations(result) {
   }
 
   for (const localization of result.localizations) {
-    await strapi.documents(UID).update({
-      documentId: localization.documentId,
-      locale: localization.locale,
-      data: {
-        slug: result.slug,
-      },
-    });
+    try {
+      await strapi.documents(UID).update({
+        documentId: localization.documentId,
+        locale: localization.locale,
+        data: {
+          slug: result.slug,
+        },
+        status: "published",
+      });
+    } catch (err) {
+      strapi.log.error(
+        `Failed syncing slug to ${localization.locale}:`,
+        err,
+      );
+    }
   }
 }
 
@@ -68,10 +76,12 @@ module.exports = {
   },
 
   async afterCreate(event) {
+    await syncSlugToLocalizations(event.result);
     await syncPublish(event);
   },
 
   async afterUpdate(event) {
+    await syncSlugToLocalizations(event.result);
     await syncPublish(event);
   },
 };
