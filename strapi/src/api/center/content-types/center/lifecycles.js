@@ -29,6 +29,7 @@ async function syncSlugToLocalizations(result) {
     await strapi.documents(UID).update({
       documentId: localization.documentId,
       locale: localization.locale,
+      status: "draft",
       data: {
         slug: result.slug,
       },
@@ -68,12 +69,12 @@ module.exports = {
   },
 
   async afterCreate(event) {
-    await syncSlugToLocalizations(event.result);
+   
     await syncPublish(event);
   },
 
   async afterUpdate(event) {
-    await syncSlugToLocalizations(event.result);
+  
     await syncPublish(event);
   },
 };

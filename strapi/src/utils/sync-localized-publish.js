@@ -14,13 +14,14 @@ function getMediaValue(value, attribute) {
 
   if (attribute.multiple) {
     if (!Array.isArray(value)) return [];
+
     return value.map((item) => item?.id || item).filter(Boolean);
   }
 
   return value?.id || value || null;
 }
 
-function getFieldValue(value, attribute) {
+function normalizeFieldValue(value, attribute) {
   if (attribute.type === "media") {
     return getMediaValue(value, attribute);
   }
@@ -28,7 +29,7 @@ function getFieldValue(value, attribute) {
   return value;
 }
 
-function getPopulateForNonLocalizedMedia(schema) {
+function getPopulate(schema) {
   const populate = {};
 
   Object.entries(schema.attributes || {}).forEach(([key, attribute]) => {
@@ -47,11 +48,9 @@ function getNonLocalizedData(schema, entry) {
     if (!isNonLocalizedAttribute(attribute)) return;
     if (!(key in entry)) return;
 
-    const value = getFieldValue(entry[key], attribute);
+    const value = normalizeFieldValue(entry[key], attribute);
 
-    if (value !== undefined) {
-      data[key] = value;
-    }
+    data[key] = value;
   });
 
   return data;
@@ -65,29 +64,24 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
   const documentId = entry.documentId;
   const currentLocale = entry.locale;
 
-  global.__syncLocalizedPublishRunning =
-    global.__syncLocalizedPublishRunning || new Set();
+  global.__localizedSyncLocks = global.__localizedSyncLocks || new Set();
 
-  // Important: lock by document, NOT by locale
   const lockKey = `${uid}:${documentId}`;
 
-  if (global.__syncLocalizedPublishRunning.has(lockKey)) {
+  if (global.__localizedSyncLocks.has(lockKey)) {
     return;
   }
 
-  global.__syncLocalizedPublishRunning.add(lockKey);
+  global.__localizedSyncLocks.add(lockKey);
 
   try {
     const schema = strapi.contentTypes[uid];
 
-    if (!schema) {
-      strapi.log.warn(`[syncLocalizedPublish] Missing schema for ${uid}`);
-      return;
-    }
+    if (!schema) return;
 
-    await sleep(500);
+    await sleep(300);
 
-    const populate = getPopulateForNonLocalizedMedia(schema);
+    const populate = getPopulate(schema);
 
     const sourceEntry = await strapi.documents(uid).findFirst({
       documentId,
@@ -109,15 +103,16 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
 
       if (!targetEntry) continue;
 
-      if (Object.keys(nonLocalizedData).length > 0) {
-        await strapi.documents(uid).update({
-          documentId,
-          locale,
-          data: nonLocalizedData,
-        });
-      }
+      await strapi.documents(uid).update({
+        documentId,
+        locale,
+        data: nonLocalizedData,
 
-      await sleep(500);
+        // VERY IMPORTANT
+        status: "draft",
+      });
+
+      await sleep(300);
 
       await strapi.documents(uid).publish({
         documentId,
@@ -125,11 +120,9 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
       });
     }
   } catch (error) {
-    strapi.log.warn(
-      `[syncLocalizedPublish] Failed ${uid} | documentId=${documentId}: ${error.message}`,
-    );
+    strapi.log.error(`[syncLocalizedPublish] ${uid}: ${error.message}`);
   } finally {
-    global.__syncLocalizedPublishRunning.delete(lockKey);
+    global.__localizedSyncLocks.delete(lockKey);
   }
 }
 
