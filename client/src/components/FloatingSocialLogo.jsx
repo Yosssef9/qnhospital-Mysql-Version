@@ -69,74 +69,84 @@ export default function FloatingSocialLogo() {
 
   return (
     <>
-      <motion.button
-        type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        whileHover={{ scale: 1.12, y: -4 }}
-        whileTap={{ scale: 0.9 }}
-        animate={{
-          y: [0, -4, 0],
-          rotate: open ? 360 : 0,
-        }}
-        transition={{
-          y: {
-            duration: 2.8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-          rotate: {
-            duration: 0.7,
-            ease: "easeInOut",
-          },
-          scale: {
-            type: "spring",
-            stiffness: 300,
-            damping: 15,
-          },
-        }}
-        className={`group fixed bottom-6 z-[9998] flex h-16 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-full p-[2px] shadow-[0_0_0_3px_rgba(21,98,160,0.10),0_14px_40px_rgba(15,23,42,0.18),0_0_28px_rgba(21,98,160,0.22)] transition-all duration-500 ease-out hover:shadow-[0_0_0_6px_rgba(21,98,160,0.12),0_22px_55px_rgba(15,23,42,0.26),0_0_45px_rgba(21,98,160,0.32)] ${
+      <div
+        className={`group fixed bottom-6 z-[9998] ${
           isRTL ? "left-6" : "right-6"
         }`}
       >
-        {/* Rotating Gradient Border */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear",
+        <motion.button
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          whileHover={{ scale: 1.12, y: -4 }}
+          whileTap={{ scale: 0.9 }}
+          animate={{
+            y: [0, -4, 0],
+            rotate: open ? 360 : 0,
           }}
-          className="absolute inset-[-8px] rounded-full bg-[conic-gradient(from_0deg,var(--main-color),#67e8f9,var(--main-light),var(--main-color))] opacity-80"
-        />
-
-        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-white bg-white">
-          {/* Glow Ring */}
-          <motion.div
-            animate={{
-              scale: [1, 1.18, 1],
-              opacity: [0.35, 0, 0.35],
-            }}
-            transition={{
-              duration: 2.5,
+          transition={{
+            y: {
+              duration: 2.8,
               repeat: Infinity,
-              ease: "easeOut",
+              ease: "easeInOut",
+            },
+            rotate: {
+              duration: 0.7,
+              ease: "easeInOut",
+            },
+            scale: {
+              type: "spring",
+              stiffness: 300,
+              damping: 15,
+            },
+          }}
+          className="flex h-16 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-full p-[2px] shadow-[0_0_0_3px_rgba(21,98,160,0.10),0_14px_40px_rgba(15,23,42,0.18),0_0_28px_rgba(21,98,160,0.22)] transition-all duration-500 ease-out hover:shadow-[0_0_0_6px_rgba(21,98,160,0.12),0_22px_55px_rgba(15,23,42,0.26),0_0_45px_rgba(21,98,160,0.32)]"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "linear",
             }}
-            className="absolute inset-0 rounded-full border-2 border-[var(--main-color)]"
+            className="absolute inset-[-8px] rounded-full bg-[conic-gradient(from_0deg,var(--main-color),#67e8f9,var(--main-light),var(--main-color))] opacity-80"
           />
 
-          {/* Hover Shine */}
-          <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-            <div className="absolute inset-y-0 -left-full w-1/2 rotate-12 bg-white/40 blur-md transition-all duration-700 group-hover:left-[140%]" />
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-white bg-white">
+            <motion.div
+              animate={{
+                scale: [1, 1.18, 1],
+                opacity: [0.35, 0, 0.35],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+              className="absolute inset-0 rounded-full border-2 border-[var(--main-color)]"
+            />
+
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <div className="absolute inset-y-0 -left-full w-1/2 rotate-12 bg-white/40 blur-md transition-all duration-700 group-hover:left-[140%]" />
+            </div>
+
+            <img
+              src="/Logo.png"
+              alt="Qassim National Hospital"
+              className="relative z-10 h-12 w-12 rounded-full object-contain transition-transform duration-500 group-hover:scale-110"
+            />
           </div>
+        </motion.button>
 
-          {/* Logo */}
-          <img
-            src="/Logo.png"
-            alt="Qassim National Hospital"
-            className="relative z-10 h-12 w-12 rounded-full object-contain transition-transform duration-500 group-hover:scale-110"
-          />
+        <div
+          className={`pointer-events-none absolute bottom-[78px] z-[9999] whitespace-nowrap rounded-full border border-white/60 bg-white/85 px-4 py-2 text-xs font-bold tracking-[0.08em] text-[var(--main-color)] shadow-[0_12px_35px_rgba(15,23,42,0.14)] backdrop-blur-md opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 ${
+            isRTL
+              ? "left-1/2 -translate-x-1/2 translate-y-1"
+              : "right-1/2 translate-x-1/2 translate-y-1"
+          }`}
+        >
+          {isRTL ? "تواصل معنا" : "Connect With Us"}
         </div>
-      </motion.button>
+      </div>
 
       <AnimatePresence>
         {open && (
@@ -160,8 +170,7 @@ export default function FloatingSocialLogo() {
               }`}
             >
               <div className="relative overflow-hidden bg-gradient-to-br from-[var(--main-color)] to-[var(--main-light)] px-5 pb-12 pt-5 text-white">
-                {/* Floating Particles */}
-                <div className="absolute inset-0 overflow-hidden">
+                <div className="pointer-events-none absolute inset-0 overflow-hidden">
                   <motion.span
                     animate={{ y: [0, -12, 0], opacity: [0.2, 0.5, 0.2] }}
                     transition={{ duration: 4, repeat: Infinity }}
@@ -182,11 +191,11 @@ export default function FloatingSocialLogo() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className={`absolute top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:scale-110 hover:bg-white/25 ${
+                  className={`absolute top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white/30 active:scale-95 ${
                     isRTL ? "left-4" : "right-4"
                   }`}
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5" />
                 </button>
 
                 <div className="relative z-10 flex items-center gap-4 pe-10">

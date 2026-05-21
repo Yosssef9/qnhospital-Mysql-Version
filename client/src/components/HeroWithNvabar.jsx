@@ -10,37 +10,7 @@ import { useHeroSlides } from "../api/strapi";
 import SectionSpinner from "./SectionSpinner";
 import LoadingOverlay2 from "./LoadingOverlay-2";
 import { useTranslation } from "react-i18next";
-const slides = [
-  {
-    type: "video",
-    title: "Welcome to Qassim National Hospital",
-    subtitle: "Trusted healthcare for the community",
-    video: "/videos/qnh-drone.mp4", // put your real video path here
-    tab: "Welcome",
-  },
-  {
-    type: "image",
-    title: "Recognized Medical Excellence",
-    subtitle: "Dedicated teams and advanced clinical services",
-    image: "/images/about.jpeg",
-    tab: "Achievements",
-  },
-  {
-    type: "image",
-    title: "International Quality Standards",
-    subtitle: "Patient-focused care aligned with best practices",
-    image: "/images/WhatsApp Image 2026-03-08 at 14.05.06 (2).jpeg",
-    tab: "International",
-  },
-  {
-    type: "image",
-    title: "Support Our Mission",
-    subtitle: "Together for better care and healthier lives",
-    image: "/images/WhatsApp Image 2026-03-08 at 14.05.06 (1).jpeg",
-    tab: "Support",
-  },
-];
-
+import { withLang } from "../utils/languageRouting";
 export default function HeroSwiperStyle() {
   const swiperRef = useRef(null);
   const videoRefs = useRef({});
@@ -261,7 +231,7 @@ export default function HeroSwiperStyle() {
               ))}
             </Swiper>
 
-            <FloatingCircleImages />
+            <FloatingCircleImages i18n={i18n} />
 
             <div className="absolute inset-x-0 bottom-0 z-20">
               <div className="mx-auto px-6 pb-8 md:px-12 xl:px-20">
@@ -485,56 +455,123 @@ function NavBarOverlay() {
   );
 }
 
-function FloatingCircleImages() {
+// function FloatingCircleImages() {
+//   const items = [
+//     {
+//       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.20.59_852243e0.jpg",
+//       link: "/hospital-accreditations/cbahi-accreditation",
+//     },
+//     {
+//       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.01_5642488e.jpg",
+//       link: "/hospital-accreditations/cap-accreditation",
+//     },
+//     {
+//       img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.00_75624687.jpg",
+//       link: "/hospital-accreditations/jci-accreditation",
+//     },
+//   ];
+
+//   return (
+//     <div className="absolute right-2 top-1/4 z-30 hidden -translate-y-1/2 flex-col gap-4 md:flex">
+//       {items.map((item, i) => {
+//         const content = (
+//           <motion.div
+//             initial={{ x: 40 }}
+//             whileHover={{ x: 12, scale: 1.08 }}
+//             transition={{ type: "spring", stiffness: 220, damping: 20 }}
+//             className="relative cursor-pointer"
+//           >
+//             {/* Glow */}
+//             <div className="absolute -inset-1 rounded-l-full bg-[rgb(21,98,160)]/20 blur-md" />
+
+//             {/* Gradient border */}
+//             <div className="relative rounded-l-full bg-gradient-to-l from-[rgb(21,98,160)] via-[rgb(99,179,237)] to-white/70 p-[3.5px] shadow-xl">
+//               {/* Inner container */}
+//               <div className="flex h-[64px] w-[64px] items-center justify-center rounded-l-full bg-white backdrop-blur-md">
+//                 {/* Icon circle */}
+//                 <img src={item.img} alt="" className="h-9 w-9 object-contain" />
+//               </div>
+//             </div>
+//           </motion.div>
+//         );
+
+//         return (
+//           <Link key={i}  to={withLang(item.link, i18n.language || "en")}>
+//             {content}
+//           </Link>
+//         );
+//       })}
+//     </div>
+//   );
+// }
+function FloatingCircleImages({ i18n }) {
   const items = [
     {
-      img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.20.59_852243e0.jpg",
+      img: "/images/HospitalAccreditations/Icons/cbahi-transparent.png",
       link: "/hospital-accreditations/cbahi-accreditation",
+      name: "CBAHI",
     },
     {
-      img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.01_5642488e.jpg",
+      img: "/images/HospitalAccreditations/Icons/cap-transparent.png",
       link: "/hospital-accreditations/cap-accreditation",
+      name: "CAP",
     },
     {
-      img: "/images/HospitalAccreditations/Icons/WhatsApp Image 2025-11-02 at 19.21.00_75624687.jpg",
+      img: "/images/HospitalAccreditations/Icons/jci-transparent.png",
       link: "/hospital-accreditations/jci-accreditation",
+      name: "JCI",
     },
   ];
 
   return (
-    <div className="absolute right-2 top-1/4 z-30 hidden -translate-y-1/2 flex-col gap-4 md:flex">
-      {items.map((item, i) => {
-        const content = (
+    <div className="absolute right-2 top-1/4 z-30 hidden -translate-y-1/2 flex-col items-end gap-4 md:flex">
+      {items.map((item, i) => (
+        <Link
+          key={i}
+          to={withLang(item.link, i18n.language || "en")}
+          className="group relative block h-[71px] w-[180px]"
+        >
           <motion.div
             initial={{ x: 40 }}
-            whileHover={{ x: 12, scale: 1.08 }}
+            whileHover={{ x: 12, scale: 1.05 }}
             transition={{ type: "spring", stiffness: 220, damping: 20 }}
-            className="relative cursor-pointer"
+            className="absolute right-0 top-0 flex cursor-pointer justify-end"
           >
             {/* Glow */}
-            <div className="absolute -inset-1 rounded-l-full bg-[rgb(21,98,160)]/20 blur-md" />
+            <div className="absolute -inset-1 rounded-l-full bg-[rgb(21,98,160)]/20 blur-md transition-all duration-300 group-hover:bg-[rgb(21,98,160)]/30" />
 
             {/* Gradient border */}
-            <div className="relative rounded-l-full bg-gradient-to-l from-[rgb(21,98,160)] via-[rgb(99,179,237)] to-white/70 p-[3.5px] shadow-xl">
+            <div className="relative flex h-[71px] w-[71px] justify-end overflow-hidden rounded-l-full bg-gradient-to-l from-[rgb(21,98,160)] via-[rgb(99,179,237)] to-white/70 p-[3.5px] shadow-xl transition-all duration-500 ease-out group-hover:w-[180px]">
               {/* Inner container */}
-              <div className="flex h-[64px] w-[64px] items-center justify-center rounded-l-full bg-white backdrop-blur-md">
-                {/* Icon circle */}
-                <img src={item.img} alt="" className="h-9 w-9 object-contain" />
+              <div className="relative flex h-[64px] w-full items-center justify-end overflow-hidden rounded-l-full bg-white backdrop-blur-md">
+                {/* Shine */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute inset-y-0 -left-full w-1/2 rotate-12 bg-white/60 blur-md transition-all duration-700 group-hover:left-[140%]" />
+                </div>
+
+                {/* Text */}
+                <span className="relative z-10 max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-500 ease-out group-hover:mr-3 group-hover:max-w-[105px] group-hover:opacity-100">
+                  <span className="inline-flex items-center rounded-full bg-[rgba(21,98,160,0.08)] px-3 py-1 text-xs font-extrabold tracking-[0.12em] text-[rgb(21,98,160)] shadow-[inset_0_0_0_1px_rgba(21,98,160,0.12)]">
+                    {item.name}
+                  </span>
+                </span>
+
+                {/* Fixed icon */}
+                <div className="relative z-10 flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:bg-[rgba(21,98,160,0.06)]">
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="h-9 w-9 object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-[3deg]"
+                  />
+                </div>
               </div>
             </div>
           </motion.div>
-        );
-
-        return (
-          <Link key={i} to={item.link}>
-            {content}
-          </Link>
-        );
-      })}
+        </Link>
+      ))}
     </div>
   );
 }
-
 // ===============================================================================
 
 // import { Link } from "react-router-dom";
@@ -860,7 +897,7 @@ function FloatingCircleImages() {
 //   return (
 //     <div className="absolute right-4 top-4 z-30 hidden gap-3 md:flex lg:right-6 lg:top-6">
 //       {items.map((item, i) => (
-//         <Link key={i} to={item.link}>
+//         <Link key={i}  to={withLang(item.link, i18n.language || "en")}>
 //           <motion.div
 //             initial={{ opacity: 0, y: -16 }}
 //             animate={{ opacity: 1, y: 0 }}
