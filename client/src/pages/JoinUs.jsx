@@ -728,12 +728,11 @@ function ClosedMessage() {
         </div>
 
         {/* Body */}
-        <div className="p-8 text-center">
+        {/* <div className="p-8 text-center">
           <p className="text-slate-600 text-sm leading-7">
             {t("joinUsPage.closed.note")}
           </p>
 
-          {/* Contact button */}
           <a
             href="mailto:hr@qnhospital.com"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-[rgb(21,98,160)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-95"
@@ -741,7 +740,7 @@ function ClosedMessage() {
             <Mail className="h-4 w-4" />
             {t("joinUsPage.closed.contact")}
           </a>
-        </div>
+        </div> */}
       </motion.div>
     </section>
   );
