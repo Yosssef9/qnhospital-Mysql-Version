@@ -9,16 +9,18 @@ function isNonLocalizedAttribute(attribute) {
 }
 
 function getMediaValue(value, attribute) {
-  if (!value) return null;
+  if (value === undefined) return undefined;
+  if (value === null) return null;
 
   if (attribute.multiple) {
-    return Array.isArray(value) ? value.map((item) => item.id || item) : [];
+    if (!Array.isArray(value)) return [];
+    return value.map((item) => item?.id || item).filter(Boolean);
   }
 
-  return value?.id || value;
+  return value?.id || value || null;
 }
 
-function getRelationValue(value, attribute) {
+function getFieldValue(value, attribute) {
   if (attribute.type === "media") {
     return getMediaValue(value, attribute);
   }
@@ -26,13 +28,11 @@ function getRelationValue(value, attribute) {
   return value;
 }
 
-function getNonLocalizedPopulate(schema) {
+function getPopulateForNonLocalizedMedia(schema) {
   const populate = {};
 
   Object.entries(schema.attributes || {}).forEach(([key, attribute]) => {
-    if (!isNonLocalizedAttribute(attribute)) return;
-
-    if (attribute.type === "media") {
+    if (isNonLocalizedAttribute(attribute) && attribute.type === "media") {
       populate[key] = true;
     }
   });
@@ -47,7 +47,11 @@ function getNonLocalizedData(schema, entry) {
     if (!isNonLocalizedAttribute(attribute)) return;
     if (!(key in entry)) return;
 
-    data[key] = getRelationValue(entry[key], attribute);
+    const value = getFieldValue(entry[key], attribute);
+
+    if (value !== undefined) {
+      data[key] = value;
+    }
   });
 
   return data;
@@ -64,9 +68,12 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
   global.__syncLocalizedPublishRunning =
     global.__syncLocalizedPublishRunning || new Set();
 
-  const lockKey = `${uid}:${documentId}:${currentLocale}`;
+  // Important: lock by document, NOT by locale
+  const lockKey = `${uid}:${documentId}`;
 
-  if (global.__syncLocalizedPublishRunning.has(lockKey)) return;
+  if (global.__syncLocalizedPublishRunning.has(lockKey)) {
+    return;
+  }
 
   global.__syncLocalizedPublishRunning.add(lockKey);
 
@@ -78,9 +85,9 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
       return;
     }
 
-    await sleep(800);
+    await sleep(500);
 
-    const populate = getNonLocalizedPopulate(schema);
+    const populate = getPopulateForNonLocalizedMedia(schema);
 
     const sourceEntry = await strapi.documents(uid).findFirst({
       documentId,
@@ -100,12 +107,7 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
         locale,
       });
 
-      if (!targetEntry) {
-        strapi.log.warn(
-          `[syncLocalizedPublish] Missing localized entry | ${uid} | ${locale}`,
-        );
-        continue;
-      }
+      if (!targetEntry) continue;
 
       if (Object.keys(nonLocalizedData).length > 0) {
         await strapi.documents(uid).update({
@@ -115,16 +117,12 @@ async function syncLocalizedPublish(strapi, uid, entry, options = {}) {
         });
       }
 
-      await sleep(800);
+      await sleep(500);
 
       await strapi.documents(uid).publish({
         documentId,
         locale,
       });
-
-      strapi.log.info(
-        `[syncLocalizedPublish] Synced and published ${uid} | ${locale}`,
-      );
     }
   } catch (error) {
     strapi.log.warn(
