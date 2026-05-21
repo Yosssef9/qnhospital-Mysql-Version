@@ -524,7 +524,10 @@ function FloatingCircleImages({ i18n }) {
   ];
 
   return (
-    <div className="absolute right-2 top-1/4 z-30 hidden -translate-y-1/2 flex-col items-end gap-4 md:flex">
+    <div
+      dir="ltr"
+      className="absolute right-2 top-1/4 z-30 hidden -translate-y-1/2 flex-col items-end gap-4 md:flex"
+    >
       {items.map((item, i) => (
         <Link
           key={i}
