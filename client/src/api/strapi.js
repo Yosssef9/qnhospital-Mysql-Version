@@ -68,7 +68,7 @@ export const useDepartments = (collection, page, search, pageSize = 3) => {
       const res = await fetch(
         `${STRAPI_URL}/api/${collection}?${params.toString()}`,
       );
-      console.log("res", res);
+   
 
       if (!res.ok) throw new Error("Failed to fetch " + collection);
 
@@ -246,7 +246,7 @@ export const useOurDoctorsSection = () => {
       const res = await fetch(
         `${STRAPI_URL}/api/our-doctors-section?${params.toString()}`,
       );
-      console.log("useOurDoctorsSection res", res);
+   
 
       if (!res.ok) throw new Error("Failed to fetch our doctors section");
 

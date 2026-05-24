@@ -5,7 +5,7 @@
 // import "swiper/css/pagination";
 // import { Link } from "react-router-dom";
 // import { useDepartments } from "../api/strapi";
-// import SectionSpinner from "./sectionSpinner";
+// import SectionSpinner from "./SectionSpinner";
 // import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 // import { motion, useInView } from "framer-motion";
 // import { useRef } from "react";
@@ -275,7 +275,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import { useDepartments } from "../api/strapi";
-import SectionSpinner from "./sectionSpinner";
+import SectionSpinner from "./SectionSpinner";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -316,9 +316,7 @@ export default function DepartmentsSectionSwiper() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px -15% 0px" });
   const { data, isLoading, error } = useDepartments("clinics", 1, "", 6);
-  console.log("useDepartments data", data);
   const departments = data?.data || [];
-  console.log("departments", departments);
 
   if (isLoading) return <SectionSpinner />;
   if (error) return <div>Error loading departments</div>;

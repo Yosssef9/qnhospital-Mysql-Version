@@ -182,14 +182,14 @@ export const getKlaroConfig = (language = "en") => {
               event_label: service.name,
             });
 
-            console.log("Cookies Accepted");
+            // console.log("Cookies Accepted");
           } else {
             window.gtag?.("event", "cookie_consent_reject", {
               event_category: "privacy",
               event_label: service.name,
             });
 
-            console.log("Cookies Rejected");
+            // console.log("Cookies Rejected");
           }
         },
       },

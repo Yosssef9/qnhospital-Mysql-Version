@@ -42,7 +42,7 @@ export default function ClinicDetailsPage() {
     "highlights.items",
     "cta",
   ]);
-  console.log("data", data);
+
 
   const clinic = data;
 
@@ -82,7 +82,7 @@ export default function ClinicDetailsPage() {
     "paragraph",
   );
   const highlightsItems = getItems(clinic?.highlights?.items, "paragraph");
-  console.log("highlightsItems", highlightsItems);
+  
   const treatedCasesItems = getItems(clinic?.treatedCases?.items, "item");
 
   return (

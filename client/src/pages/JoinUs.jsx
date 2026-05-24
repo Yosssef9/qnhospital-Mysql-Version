@@ -39,7 +39,7 @@ export default function JoinUs() {
     getMediaUrl(data.breadcrumbImage) ||
     getMediaUrl(data?.attributes?.breadcrumbImage) ||
     "/images/about-us-header.jpg";
-  console.log("data", data);
+
   const now = new Date();
 
   const startDate = data?.formStartDate ? new Date(data.formStartDate) : null;
@@ -297,7 +297,7 @@ function JoinUsForm() {
           method: "POST",
           body: uploadFormData,
         });
-        console.log("uploadRes", uploadRes);
+      
 
         if (!uploadRes.ok) {
           throw new Error("Failed to upload CV");
@@ -332,7 +332,7 @@ function JoinUsForm() {
         },
         body: JSON.stringify(payload),
       });
-      console.log("appRes", appRes);
+     
       if (!appRes.ok) {
         const errorData = await appRes.json().catch(() => null);
         console.error("Create error:", errorData);
@@ -340,7 +340,7 @@ function JoinUsForm() {
       }
 
       const appData = await appRes.json();
-      console.log("Application created:", appData);
+      // console.log("Application created:", appData);
 
       setSubmitted(true);
 

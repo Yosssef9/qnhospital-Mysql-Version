@@ -50,7 +50,7 @@ export default function OurDoctorsPage() {
   const activeParent = searchParams.get("parent") || allParentsValue;
 
   const doctorsQuery = useDoctors(currentPage, debouncedQuery, activeParent, 8);
-  console.log("doctorsQuery", doctorsQuery);
+ 
   const parentsQuery = useDoctorParents();
 
   const doctors = doctorsQuery.data?.data || [];

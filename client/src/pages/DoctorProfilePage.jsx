@@ -30,7 +30,7 @@ export default function DoctorProfilePage() {
 
   const doctorQuery = useDoctorBySlug(slug);
   const doctor = doctorQuery.data;
-  console.log("doctor", doctor);
+
   useEffect(() => {
     if (!doctor) return;
 

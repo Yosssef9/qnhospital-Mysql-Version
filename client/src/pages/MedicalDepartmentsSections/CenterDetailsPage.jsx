@@ -43,7 +43,7 @@ export default function CenterDetailsPage() {
     "technology.items",
     "cta",
   ]);
-  console.log("data :", data);
+ 
   // Handle loading
   if (isLoading) {
     return <MedicalDepartmentsDetailsSkeletonPage />;

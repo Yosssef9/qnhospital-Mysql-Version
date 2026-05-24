@@ -320,7 +320,7 @@ import { useTranslation } from "react-i18next";
 import SectionTitle from "./reusableComponents/SectionTitle";
 import SectionBadge from "./reusableComponents/SectionBadge";
 import { useAboutQnhSection } from "../api/strapi";
-import SectionSpinner from "./sectionSpinner";
+import SectionSpinner from "./SectionSpinner";
 import { iconMap } from "../constants/iconMap";
 
 export default function AboutAreaDesignV2() {
@@ -328,8 +328,7 @@ export default function AboutAreaDesignV2() {
   const isRTL = i18n.dir() === "rtl";
 
   const { data, isLoading, isError } = useAboutQnhSection();
-  console.log("About QNH Section Data:", data);
-  console.log("About QNH Section isError:", isError);
+
 
   if (isLoading) {
     return (

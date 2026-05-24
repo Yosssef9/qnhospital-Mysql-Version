@@ -15,7 +15,6 @@ export default function NewsAreaDesignV2() {
   const isRTL = i18n.dir() === "rtl";
 
   const { data, isLoading, error } = useNewsAchievementsHomeSection();
-  console.log("NewsAreaDesignV2 data", data);
   const [tab, setTab] = useState("achievements");
   const [active, setActive] = useState(0);
 

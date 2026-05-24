@@ -1928,7 +1928,7 @@ export interface ApiOurDoctorsPageSettingOurDoctorsPageSetting
           localized: true;
         };
       }>;
-    heroDescription: Schema.Attribute.Blocks &
+    heroDescription: Schema.Attribute.Text &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1940,7 +1940,7 @@ export interface ApiOurDoctorsPageSettingOurDoctorsPageSetting
           localized: true;
         };
       }>;
-    highlightDescription: Schema.Attribute.Blocks &
+    highlightDescription: Schema.Attribute.Text &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

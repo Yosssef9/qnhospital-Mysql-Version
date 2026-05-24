@@ -7,7 +7,7 @@ import {
   useDepartments,
   useMedicalDepartmentsPageSetting,
 } from "../api/strapi";
-import SectionSpinner from "../components/sectionSpinner";
+import SectionSpinner from "../components/SectionSpinner";
 import { useDebounce } from "../hooks/useDebounce";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
