@@ -10,10 +10,10 @@ module.exports = [
         "https://qnhospital.com.sa",
         "https://www.qnhospital.com.sa",
 
-        "http://localhost:4174",
-        "http://127.0.0.1:4174",
-        "http://10.0.110.28:4174",
         "http://localhost:5173",
+        "http://localhost:4174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:4174",
       ],
 
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
@@ -24,7 +24,11 @@ module.exports = [
         "Origin",
         "Accept",
         "X-Requested-With",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Methods",
       ],
+
       credentials: true,
     },
   },

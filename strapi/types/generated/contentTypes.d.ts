@@ -1692,6 +1692,86 @@ export interface ApiMedicalServiceMedicalService
   };
 }
 
+export interface ApiMissionVisionPageMissionVisionPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'mission_vision_pages';
+  info: {
+    displayName: 'Mission Vision Page';
+    pluralName: 'mission-vision-pages';
+    singularName: 'mission-vision-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    breadcrumbImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mission-vision-page.mission-vision-page'
+    >;
+    missionDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    missionImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    missionTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    visionDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    visionImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    visionTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface ApiMobileAppHomeSectionMobileAppHomeSection
   extends Struct.SingleTypeSchema {
   collectionName: 'mobile_app_home_sections';
@@ -2824,6 +2904,7 @@ declare module '@strapi/strapi' {
       'api::join-us-setting.join-us-setting': ApiJoinUsSettingJoinUsSetting;
       'api::medical-departments-page-setting.medical-departments-page-setting': ApiMedicalDepartmentsPageSettingMedicalDepartmentsPageSetting;
       'api::medical-service.medical-service': ApiMedicalServiceMedicalService;
+      'api::mission-vision-page.mission-vision-page': ApiMissionVisionPageMissionVisionPage;
       'api::mobile-app-home-section.mobile-app-home-section': ApiMobileAppHomeSectionMobileAppHomeSection;
       'api::new.new': ApiNewNew;
       'api::news-achievements-home-section.news-achievements-home-section': ApiNewsAchievementsHomeSectionNewsAchievementsHomeSection;

@@ -68,7 +68,6 @@ export const useDepartments = (collection, page, search, pageSize = 3) => {
       const res = await fetch(
         `${STRAPI_URL}/api/${collection}?${params.toString()}`,
       );
-   
 
       if (!res.ok) throw new Error("Failed to fetch " + collection);
 
@@ -246,7 +245,6 @@ export const useOurDoctorsSection = () => {
       const res = await fetch(
         `${STRAPI_URL}/api/our-doctors-section?${params.toString()}`,
       );
-   
 
       if (!res.ok) throw new Error("Failed to fetch our doctors section");
 
@@ -1281,6 +1279,66 @@ export const useMedicalDepartmentsPageSetting = () => {
         breadcrumbImage: data?.breadcrumbImage?.url
           ? `${STRAPI_URL}${data.breadcrumbImage.url}`
           : "/images/about-us-header.jpg",
+      };
+    },
+
+    staleTime: 5 * 60 * 1000,
+  });
+};
+export const useMissionVisionPage = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["mission-vision-page", locale],
+
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      // text fields
+      params.append("fields[0]", "missionTitle");
+      params.append("fields[1]", "missionDescription");
+      params.append("fields[2]", "visionTitle");
+      params.append("fields[3]", "visionDescription");
+
+      // images
+      params.append("populate[0]", "breadcrumbImage");
+      params.append("populate[1]", "missionImage");
+      params.append("populate[2]", "visionImage");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/mission-vision-page?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch mission vision page");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      return {
+        breadcrumbImage: data?.breadcrumbImage?.url
+          ? `${STRAPI_URL}${data.breadcrumbImage.url}`
+          : "/images/about-us-header.jpg",
+
+        missionImage: data?.missionImage?.url
+          ? `${STRAPI_URL}${data.missionImage.url}`
+          : "",
+
+        missionTitle: data?.missionTitle || "",
+
+        missionDescription: data?.missionDescription || "",
+
+        visionImage: data?.visionImage?.url
+          ? `${STRAPI_URL}${data.visionImage.url}`
+          : "",
+
+        visionTitle: data?.visionTitle || "",
+
+        visionDescription: data?.visionDescription || "",
       };
     },
 
