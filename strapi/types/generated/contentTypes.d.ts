@@ -2185,6 +2185,55 @@ export interface ApiPrivacyPolicyPrivacyPolicy extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiQnhHistoryPageQnhHistoryPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'qnh_history_pages';
+  info: {
+    displayName: 'Qnh History Page';
+    pluralName: 'qnh-history-pages';
+    singularName: 'qnh-history-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    breadcrumbImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    historySections: Schema.Attribute.Component<
+      'qnh-history-page.history-sections',
+      true
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qnh-history-page.qnh-history-page'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
   collectionName: 'units';
   info: {
@@ -2911,6 +2960,7 @@ declare module '@strapi/strapi' {
       'api::our-doctors-page-setting.our-doctors-page-setting': ApiOurDoctorsPageSettingOurDoctorsPageSetting;
       'api::our-doctors-section.our-doctors-section': ApiOurDoctorsSectionOurDoctorsSection;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
+      'api::qnh-history-page.qnh-history-page': ApiQnhHistoryPageQnhHistoryPage;
       'api::unit.unit': ApiUnitUnit;
       'api::website-link.website-link': ApiWebsiteLinkWebsiteLink;
       'plugin::content-releases.release': PluginContentReleasesRelease;

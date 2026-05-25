@@ -1345,3 +1345,53 @@ export const useMissionVisionPage = () => {
     staleTime: 5 * 60 * 1000,
   });
 };
+export const useQnhHistoryPage = () => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language || "en";
+
+  return useQuery({
+    queryKey: ["qnh-history-page", locale],
+
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      params.append("locale", locale);
+
+      params.append("populate[breadcrumbImage]", "true");
+      params.append("populate[historySections][populate][0]", "image");
+
+      const res = await fetch(
+        `${STRAPI_URL}/api/qnh-history-page?${params.toString()}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch QNH history page");
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      const getImageUrl = (image) => {
+        if (!image?.url) return "";
+        return image.url.startsWith("http")
+          ? image.url
+          : `${STRAPI_URL}${image.url}`;
+      };
+
+      return {
+        breadcrumbImage:
+          getImageUrl(data?.breadcrumbImage) || "/images/about-us-header.jpg",
+
+        historySections: Array.isArray(data?.historySections)
+          ? data.historySections.map((section) => ({
+              year: section?.year || "",
+              description: section?.description || "",
+              image: getImageUrl(section?.image),
+            }))
+          : [],
+      };
+    },
+
+    staleTime: 5 * 60 * 1000,
+  });
+};

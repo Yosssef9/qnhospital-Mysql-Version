@@ -290,6 +290,33 @@ export interface PrivacyPolicyPrivacySection extends Struct.ComponentSchema {
   };
 }
 
+export interface QnhHistoryPageHistorySections extends Struct.ComponentSchema {
+  collectionName: 'components_qnh_history_page_history_sections';
+  info: {
+    displayName: 'historySections';
+  };
+  attributes: {
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    year: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface WebsiteLinksContactInfo extends Struct.ComponentSchema {
   collectionName: 'components_website_links_contact_infos';
   info: {
@@ -344,6 +371,7 @@ declare module '@strapi/strapi' {
       'news-achievements.content-base': NewsAchievementsContentBase;
       'privacy-policy.points': PrivacyPolicyPoints;
       'privacy-policy.privacy-section': PrivacyPolicyPrivacySection;
+      'qnh-history-page.history-sections': QnhHistoryPageHistorySections;
       'website-links.contact-info': WebsiteLinksContactInfo;
       'website-links.mobile-app-links': WebsiteLinksMobileAppLinks;
       'website-links.social-media-links': WebsiteLinksSocialMediaLinks;

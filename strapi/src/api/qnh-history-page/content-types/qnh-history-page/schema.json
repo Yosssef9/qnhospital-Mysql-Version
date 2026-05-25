@@ -1,0 +1,44 @@
+{
+  "kind": "singleType",
+  "collectionName": "qnh_history_pages",
+  "info": {
+    "singularName": "qnh-history-page",
+    "pluralName": "qnh-history-pages",
+    "displayName": "Qnh History Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "breadcrumbImage": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "historySections": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "qnh-history-page.history-sections",
+      "repeatable": true
+    }
+  }
+}
